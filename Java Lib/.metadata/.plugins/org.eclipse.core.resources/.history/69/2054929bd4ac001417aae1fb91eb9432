@@ -1,7 +1,0 @@
-package twitter;
-
-public class SnowDayTwitter {
-	public static void main(String[] args) {
-		OAuthSignpostClient oauthClient
-	}
-}
