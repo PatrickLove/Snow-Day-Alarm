@@ -1,0 +1,38 @@
+package twitter;
+
+public class KeywordSet {
+	public static final boolean OR=true;
+	public static final boolean AND=false;
+	private KeywordSet[] keywords;
+	
+	/**
+	 * Boolean which defines whether this set is ANDed or ORed<br>
+	 * 
+	 * true = or;<br>
+	 * false = and;
+	 * 
+	 * See {@link #isTriggered} for the explanation of this
+	 * 
+	 * @see #isTriggered(String)
+	 */
+	private boolean opBool;
+	
+	/**
+	 * Iterates until opBool is found, then return opBool, otherwise returns !opBool;<br>
+	 * <br>
+	 * This has the effect of running an AND operation when opBool = false (fail immediately once one is false, otherwise true)
+	 * and an OR operation if it is true (return true immediately once one is true, otherwise false).
+	 * @param s The string to search
+	 * @return whether a match was found for this KeywordSet in the string
+	 * 
+	 * @see #opBool
+	 */
+	public boolean isTriggered(String s){
+		for(KeywordSet set : keywords){
+			if(set.isTriggered(s) == opBool){
+				return opBool;
+			}
+		}
+		return !opBool;
+	}
+}

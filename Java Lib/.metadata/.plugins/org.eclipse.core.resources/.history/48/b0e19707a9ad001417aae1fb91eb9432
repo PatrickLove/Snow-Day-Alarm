@@ -1,0 +1,9 @@
+package twitter;
+
+public class TweetAnalyzer {
+	
+	public static final String[] keywords = new String[] {
+		
+	};
+
+}

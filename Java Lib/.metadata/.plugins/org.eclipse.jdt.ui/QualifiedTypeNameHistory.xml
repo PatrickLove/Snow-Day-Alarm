@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="winterwell.jtwitter.OAuthSignpostClient"/>
+<fullyQualifiedTypeName name="winterwell.jtwitter.Twitter"/>
+<fullyQualifiedTypeName name="java.net.URL"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="java.io.InputStreamReader"/>
+<fullyQualifiedTypeName name="java.io.BufferedReader"/>
+<fullyQualifiedTypeName name="twitter4j.Twitter"/>
+<fullyQualifiedTypeName name="twitter4j.TwitterFactory"/>
+<fullyQualifiedTypeName name="java.awt.List"/>
+<fullyQualifiedTypeName name="twitter4j.conf.ConfigurationBuilder"/>
+<fullyQualifiedTypeName name="twitter4j.Paging"/>
+<fullyQualifiedTypeName name="com.joestelmach.natty.DateGroup"/>
+<fullyQualifiedTypeName name="com.joestelmach.natty.Parser"/>
+<fullyQualifiedTypeName name="twitter.KeywordSet"/>
+<fullyQualifiedTypeName name="twitter.Keyword"/>
+<fullyQualifiedTypeName name="java.util.List"/>
+<fullyQualifiedTypeName name="twitter4j.Status"/>
+<fullyQualifiedTypeName name="twitter.TweetAnalyzer"/>
+<fullyQualifiedTypeName name="twitter.TweetAnalysis"/>
+</qualifiedTypeNameHistroy>

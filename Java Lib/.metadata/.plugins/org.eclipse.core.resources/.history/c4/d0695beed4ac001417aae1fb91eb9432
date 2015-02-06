@@ -1,0 +1,35 @@
+package twitter;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import winterwell.jtwitter.OAuthSignpostClient;
+import winterwell.jtwitter.Twitter;
+
+public class SnowDayTwitter {
+	public static final String OAUTH_USERNAME = "cbsdsnowdayalarm@gmail.com";
+	public static final String OAUTH_SECRET = "snowdayalarm";
+	public static final String OAUTH_ACCESS_TOKEN = "";
+	public static final String OAUTH_ACCESS_SECRET = "";
+			
+	public static void main(String[] args) throws IOException {
+		URL url = new URL("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=CBSDInfo");
+		InputStream is = url.openStream();
+		try {
+			BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+			String line;
+			String response = "";
+			do{
+				line = reader.readLine();
+				response += line;
+			} while(line != null);
+			System.out.println(response);
+		} finally {
+		  is.close();
+		}
+	}
+}
