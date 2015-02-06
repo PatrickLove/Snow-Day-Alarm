@@ -45,6 +45,6 @@ public class TweetAnalyzer {
 	}
 	
 	public static TweetAnalysis analyzeTweet(Status tweet, TweetAnalysis analysis){
-		
+		return new TweetAnalysis();
 	}
 }
