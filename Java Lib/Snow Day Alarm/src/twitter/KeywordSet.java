@@ -5,9 +5,18 @@ public class KeywordSet {
 	public static final boolean AND=false;
 	
 	
-	public static final KeywordSet masterFilter = new KeywordSet(
+	public static final KeywordSet MASTER_CANCEL_FILTER = new KeywordSet(
 			new KeywordSet[] {
-					new KeywordSet(new String[] {"are closed", "will be closed"}, OR),
+					new KeywordSet(new String[] {"closed", "are closed", "will be closed"}, OR),
+					new Keyword("all"),
+					new NotKeyword("two hour")
+				},
+			AND);
+	
+	public static final KeywordSet MASTER_DELAY_FILTER = new KeywordSet(
+			new KeywordSet[] {
+					new KeywordSet(new String[] {	"two hour delay", 	"open two hours late",
+													"2 hour delay", 	"open 2 hours late"}, OR),
 					new Keyword("all")
 				},
 			AND);
