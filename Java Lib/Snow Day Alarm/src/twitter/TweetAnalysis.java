@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import twitter4j.Status;
-
 public class TweetAnalysis {
 
 	private String tweetText;

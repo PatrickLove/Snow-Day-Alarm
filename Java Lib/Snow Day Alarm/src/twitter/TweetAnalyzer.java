@@ -1,13 +1,12 @@
 package twitter;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import twitter4j.Status;
 
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
-
-import twitter4j.Status;
 
 /**
  * Tools which takes a set of tweets and will analyze them to determine snow days, 2hr delays, etc.
