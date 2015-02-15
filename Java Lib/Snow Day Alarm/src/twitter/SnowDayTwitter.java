@@ -30,18 +30,35 @@ public class SnowDayTwitter {
 		CONFIG = cb.build();
 	}
 	
-	public static void main(String[] args) {
-		List<SpecialDate> dates = analyzeRecent(5);
-		for(SpecialDate date : dates){
-			if(date.isCancelled()){
-				System.out.println("    There was a cancellation on " + date.date);
+	public static List<SpecialDate> analyzeSince(String tweet){
+		Twitter twit = new TwitterFactory(CONFIG).getInstance();
+		List<Status> allTweets = new ArrayList<>();
+		Paging page;
+		int i = 1;
+		int tweetCount;
+		grabPages:
+		do{
+			page = new Paging(i, 200);
+			try{
+				List<Status> pageTweets = twit.getUserTimeline(TARGET_USERNAME, page);
+				tweetCount = pageTweets.size();
+				for(int j = 0; j < tweetCount; j++){
+					Status s = pageTweets.get(j);
+					if(s.getText().equals(tweet)){
+						break grabPages;
+					}
+					allTweets.add(s);
+				}
 			}
-			else if(date.isDelay()){
-				System.out.println("    There was a delay on " + date.date);
+			catch(TwitterException e){
+				e.printStackTrace();
+				break;
 			}
-		}
+		} while (tweetCount == 200);
+		
+		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
+		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
 	}
-	
 	
 	public static List<SpecialDate> analyzeRecent(int num){
 		Twitter twit = new TwitterFactory(CONFIG).getInstance();
