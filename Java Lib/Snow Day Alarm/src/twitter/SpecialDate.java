@@ -2,6 +2,11 @@ package twitter;
 
 import java.util.Date;
 
+/**
+ * Stores a Java Date object and a {@link DayState} to represent a closing or cancelation
+ * @author Patrick Love
+ *
+ */
 public class SpecialDate {
 	public Date date;
 	public DayState state;
@@ -11,9 +16,9 @@ public class SpecialDate {
 	}
 	
 	public boolean isCancelled(){
-		return state.equals(DayState.CANCELLATION);
+		return state == DayState.CANCELLATION;
 	}
 	public boolean isDelay(){
-		return state.equals(DayState.DELAY_2_HR);
+		return state == DayState.DELAY_2_HR;
 	}
 }

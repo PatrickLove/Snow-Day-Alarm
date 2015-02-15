@@ -1,7 +1,17 @@
 package twitter;
 
+/**
+ * Same as {@link KeywordSet} except negated (evaluates true if the associated KeywordSet would not match)
+ * @author Patrick Love
+ *
+ * @see KeywordSet
+ * @see Keyword
+ * @see NotKeyword
+ */
 public class NotKeywordSet extends KeywordSet {
-
+	public static final boolean NOR=true;
+	public static final boolean NAND=false;
+	
 	public NotKeywordSet(String[] words, boolean op) {
 		super(words, op);
 	}

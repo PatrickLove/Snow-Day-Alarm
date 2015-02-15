@@ -11,6 +11,11 @@ import twitter4j.TwitterFactory;
 import twitter4j.conf.Configuration;
 import twitter4j.conf.ConfigurationBuilder;
 
+/**
+ * Contains methods for retrieving tweets from @CBSDInfo
+ * @author Patrick Love
+ *
+ */
 public class SnowDayTwitter {
 			
 	public static final String OAUTH_CONSUMER_KEY = "fKic7d6P8ZriFr1uZTzgHMFTk";
@@ -30,7 +35,7 @@ public class SnowDayTwitter {
 		CONFIG = cb.build();
 	}
 	
-	public static List<SpecialDate> analyzeSince(String tweet){
+	public static List<Status> getTweetsSince(String tweet){
 		Twitter twit = new TwitterFactory(CONFIG).getInstance();
 		List<Status> allTweets = new ArrayList<>();
 		Paging page;
@@ -55,12 +60,10 @@ public class SnowDayTwitter {
 				break;
 			}
 		} while (tweetCount == 200);
-		
-		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
-		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
+		return allTweets;
 	}
 	
-	public static List<SpecialDate> analyzeRecent(int num){
+	public static List<Status> getRecent(int num){
 		Twitter twit = new TwitterFactory(CONFIG).getInstance();
 		List<Status> allTweets = new ArrayList<>();
 		Paging page;
@@ -91,9 +94,7 @@ public class SnowDayTwitter {
 				break;
 			}
 		}
-		
-		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
-		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
+		return allTweets;
 	}
 	
 }

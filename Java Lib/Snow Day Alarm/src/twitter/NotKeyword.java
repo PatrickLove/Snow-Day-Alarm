@@ -1,5 +1,13 @@
 package twitter;
 
+/**
+ * Same as {@link Keyword} except negated (evaluates true if the string does not contain the word)
+ * @author Patrick Love
+ *
+ * @see KeywordSet
+ * @see NotKeywordSet
+ * @see Keyword
+ */
 public class NotKeyword extends Keyword {
 
 	public NotKeyword(String s) {

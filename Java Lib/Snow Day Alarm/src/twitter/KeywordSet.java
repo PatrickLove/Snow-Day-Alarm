@@ -1,18 +1,59 @@
 package twitter;
 
+/**
+ * Highest level word matching object<br>
+ * A KeywordSet is evaluated by a call to isTriggered and is the basic matching element used to detect
+ * special day types from tweets.  They function by grouping other KeywordSets and performing an AND or OR
+ * operation on their evaluations.  Those sets can contain other sets until all evaluations come from
+ * {@link Keyword Keywords} (or NotKeywords).  See {@link #MASTER_DELAY_FILTER} or {@link #MASTER_CANCEL_FILTER}
+ * for an example of nested KeywordSet construction
+ * 
+ * @author Patrick Love
+ *
+ * @see NotKeywordSet
+ * @see Keyword
+ * @see NotKeyword
+ */
 public class KeywordSet {
 	public static final boolean OR=true;
 	public static final boolean AND=false;
 	
-	
+	/**
+	 * Defines the filter used to determine cancellations<p>
+	 * Specifically anything which contains "closed" and "all", but does not contain "two hour" or "2 hour" will match<br>
+	 * In particular the construction is the following:<br>
+	 * <pre>
+	 * 	new KeywordSet(
+	 *		new KeywordSet[] {
+	 *			new Keyword("closed"),
+	 *			new Keyword("all"),
+	 *			new NotKeywordSet(new String[] {"two hour", "2 hour"}, NotKeywordSet.NOR)
+	 *		},
+	 *	AND);
+	 *</pre>
+	 */
 	public static final KeywordSet MASTER_CANCEL_FILTER = new KeywordSet(
 			new KeywordSet[] {
-					new KeywordSet(new String[] {"closed", "are closed", "will be closed"}, OR),
+					new Keyword("closed"),
 					new Keyword("all"),
-					new NotKeyword("two hour")
+					new KeywordSet(new String[] {"two hour", "2 hour"}, OR).negate()
 				},
 			AND);
-	
+	/**
+	 * Defines the filter used to determine delays<p>
+	 * Specifically anything which contains any of "two hour delay", "open two hours late", "2 hour delay", and "open 2 hours late",
+	 * while also containing "all" will match
+	 * In particular the construction is the following:<br>
+	 * <pre>
+	 * 	new KeywordSet(
+	 * 		new KeywordSet[] {
+	 *			new KeywordSet(new String[] {"two hour delay", "open two hours late",
+	 *						"2 hour delay", 	"open 2 hours late"}, KeywordSet.OR),
+	 *			new Keyword("all")
+	 *		},
+	 *	KeywordSet.AND);
+	 *</pre>
+	 */
 	public static final KeywordSet MASTER_DELAY_FILTER = new KeywordSet(
 			new KeywordSet[] {
 					new KeywordSet(new String[] {	"two hour delay", 	"open two hours late",
@@ -20,6 +61,8 @@ public class KeywordSet {
 					new Keyword("all")
 				},
 			AND);
+	
+	
 	
 	
 	public KeywordSet(KeywordSet[] words, boolean op){
@@ -31,8 +74,12 @@ public class KeywordSet {
 		this.opBool = op;
 	}
 	
+	public KeywordSet negate(){
+		return new NotKeywordSet(keywords, opBool);
+	}
+	
 	/**
-	 * Keywords or KeywordSets which will be checked and 
+	 * Keywords or KeywordSets which will be evaluated and then performs either and AND or OR operation on all results
 	 */
 	private KeywordSet[] keywords;
 	
