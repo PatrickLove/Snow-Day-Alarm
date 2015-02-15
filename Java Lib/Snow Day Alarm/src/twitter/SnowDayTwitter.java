@@ -31,7 +31,7 @@ public class SnowDayTwitter {
 	}
 	
 	public static void main(String[] args) {
-		List<SpecialDate> dates = analyzeRecent(300);
+		List<SpecialDate> dates = analyzeRecent(5);
 		for(SpecialDate date : dates){
 			if(date.isCancelled()){
 				System.out.println("    There was a cancellation on " + date.date);
