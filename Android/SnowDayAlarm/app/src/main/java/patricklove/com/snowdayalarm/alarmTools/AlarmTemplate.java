@@ -1,12 +1,9 @@
 package patricklove.com.snowdayalarm.alarmTools;
 
-import android.util.TimeUtils;
-
 import java.util.Calendar;
-import java.util.Date;
 
+import patricklove.com.snowdayalarm.databases.AlarmTemplateInterface;
 import twitter.DayState;
-import twitter.SpecialDate;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -102,12 +99,17 @@ public class AlarmTemplate {
         return false;
     }
 
-    public DailyAlarm generateDefaultAlarm(){
-        Calendar nowTime = Calendar.getInstance();
-        nowTime.setTimeInMillis(System.currentTimeMillis());
-        nowTime.set(Calendar.HOUR_OF_DAY, this.time.get(Calendar.HOUR_OF_DAY));
-        nowTime.set(Calendar.MINUTE, this.time.get(Calendar.MINUTE));
-        return new DailyAlarm(0L, this.time, AlarmAction.NO_CHANGE, this);
+    public DailyAlarm generateNextAlarm(){
+        Calendar date = DateUtils.getToday();
+        do{
+            date.add(Calendar.DATE, 1);
+        } while(!isActiveForDate(date));
+        Calendar alarm = DateUtils.dateTime(date, time);
+        return new DailyAlarm(0L, alarm, AlarmAction.NO_CHANGE, this);
+    }
+
+    public void save(AlarmTemplateInterface helper){
+        helper.add(this);
     }
 
     public Calendar getTime(){

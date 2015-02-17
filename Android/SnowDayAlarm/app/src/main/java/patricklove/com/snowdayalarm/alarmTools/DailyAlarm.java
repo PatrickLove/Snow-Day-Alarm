@@ -1,7 +1,12 @@
 package patricklove.com.snowdayalarm.alarmTools;
 
+import android.content.Context;
+import android.content.Intent;
+
 import java.util.Calendar;
 
+import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
 import twitter.DayState;
 
 /**
@@ -51,7 +56,17 @@ public class DailyAlarm {
         return associatedAlarm.getTime();
     }
 
+    public void save(DailyAlarmInterface helper){
+        helper.add(this);
+    }
+
     public boolean isCancelled(){
         return triggerTime == null;
+    }
+
+    public Intent getTriggerIntent(){
+        Intent ret = new Intent(AlarmScheduler.INTENT_TRIGGER_ALARM);
+        ret.putExtra(AlarmScheduler.EXTRA_ALARM_ID, this.id);
+        return ret;
     }
 }
