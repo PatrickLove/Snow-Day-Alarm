@@ -3,6 +3,7 @@
     package="patricklove.com.snowdayalarm" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -26,15 +27,12 @@
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
-        </receiver>
-        <receiver
-            android:name=".alarmTools.receivers.AlarmTriggerReceiver"
-            android:enabled="true"
-            android:exported="true" >
-            <intent-filter>
-                <action android:name="com.patricklove.snowdayalarm.triggerAlarm" />
-            </intent-filter>
-        </receiver>
+    </receiver>
+
+        <service
+            android:name=".alarmTools.scheduling.AlarmHandlingService"
+            android:exported="false" >
+        </service>
     </application>
 
 </manifest>

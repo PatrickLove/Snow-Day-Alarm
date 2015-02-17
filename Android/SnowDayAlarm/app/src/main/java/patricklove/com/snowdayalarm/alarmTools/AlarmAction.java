@@ -29,4 +29,8 @@ public enum AlarmAction {
         }
         return null;
     }
+
+    public boolean atOrBefore(AlarmAction action) {
+        return action.code <= code;
+    }
 }

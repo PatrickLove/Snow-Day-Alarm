@@ -34,16 +34,35 @@ public class AlarmScheduler {
         this.manager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void scheduleAll(){
+    public void updatePast(){
+        dbHelper.open();
+        List<DailyAlarm> toUpdate = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + "<=" + createTime);
+        for(DailyAlarm alarm : toUpdate){
+            scheduleNextAlarm(alarm);
+        }
+    }
+
+    public void scheduleNextAlarm(DailyAlarm now){
+        DailyAlarm next = now.getAssociatedAlarm().generateNextAlarm();
+        new AlarmScheduler(context).schedule(next); //schedule intent
+
+        dbHelper.open(); //save to database (for ui display and
+        next.saveIfNew(dbHelper);
+        dbHelper.close();
+    }
+
+    public void scheduleAllFuture(){
+        dbHelper.open();
         List<DailyAlarm> toSchedule = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + ">=" + createTime);
+        dbHelper.close();
         for(DailyAlarm alarm : toSchedule){
-            schedule(alarm);
+            scheduleNextAlarm(alarm);
         }
     }
 
     public void schedule(DailyAlarm alarm){
-        Intent broadcastIntent = alarm.getTriggerIntent();
-        PendingIntent action = PendingIntent.getBroadcast(context, (int)alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent broadcastIntent = alarm.getTriggerIntent(context);
+        PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTimeInMillis(), action);
     }
 }

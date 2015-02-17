@@ -84,7 +84,20 @@ public class DailyAlarmInterface {
         database.insert(SnowDayDatabase.TABLE_DAILY_ALARMS, null, values);
     }
 
+    public void update(DailyAlarm dailyAlarm) {
+        ContentValues values = new ContentValues();
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTimeInMillis());
+        values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
+        values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());
+
+        database.update(SnowDayDatabase.TABLE_DAILY_ALARMS, values, SnowDayDatabase.COLUMN_ID + "=" + dailyAlarm.getId(), null);
+    }
+
     public void clearAll(){
         database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, null, null);
+    }
+
+    public void delete(String selection) {
+        database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, selection, null);
     }
 }
