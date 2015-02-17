@@ -1,16 +1,25 @@
 package twitter;
 
-import java.util.Date;
+import java.util.Calendar;
 
 /**
- * Stores a Java Date object and a {@link DayState} to represent a closing or cancelation
+ * Stores a Java Date object and a {@link DayState} to represent a closing or cancellation
  * @author Patrick Love
  *
  */
 public class SpecialDate {
-	public Date date;
-	public DayState state;
-	public SpecialDate(Date d, DayState s){
+	private Calendar date;
+	
+	public Calendar getDate() {
+		return date;
+	}
+	public DayState getState() {
+		return state;
+	}
+	
+	private DayState state;
+	
+	public SpecialDate(Calendar d, DayState s){
 		this.date = d;
 		this.state = s;
 	}

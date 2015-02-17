@@ -24,7 +24,7 @@ public enum DayState {
 		this.code = code;
 	}
 	
-	public DayState getStateFromCode(int code){
+	public static DayState getFromCode(int code){
 		switch(code){
 			case 0:
 				return NO_CHANGE;

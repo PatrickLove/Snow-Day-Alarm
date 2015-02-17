@@ -1,14 +1,14 @@
 package twitter;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 public class TweetAnalysis {
 
 	private String tweetText;
 	private DayState dayState;
-	private Date date;
+	private Calendar date;
 	private String dateSource;
 	public String getTweetText() {
 		return tweetText;
@@ -34,10 +34,10 @@ public class TweetAnalysis {
 	/**
 	 * @return Date when the given state will be in effect (or null if dayState is NO_CHANGE)
 	 */
-	public Date getDate() {
+	public Calendar getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(Calendar date) {
 		this.date = date;
 	}
 	/**
