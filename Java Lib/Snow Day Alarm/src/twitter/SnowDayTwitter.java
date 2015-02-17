@@ -18,10 +18,10 @@ import twitter4j.conf.ConfigurationBuilder;
  */
 public class SnowDayTwitter {
 			
-	public static final String OAUTH_CONSUMER_KEY = "fKic7d6P8ZriFr1uZTzgHMFTk";
-	public static final String OAUTH_CONSUMER_SECRET = "cmdvFAfTUqFmJTMGzuxGrrkfC99lCP5trG2Pxi4kX7ygs3NlZe";
-	public static final String OAUTH_ACCESS_KEY = "3019016038-KL0Zz4TWE23Of8RTMsmpSuOkUu8v7x4tuK0ddH4";
-	public static final String OAUTH_ACCESS_SECRET = "TjAIqQwyh9GSfWVGOAJfHfZBI6xwwj8FQE53ERK6QHxYE";
+	private static final String OAUTH_CONSUMER_KEY = "fKic7d6P8ZriFr1uZTzgHMFTk";
+	private static final String OAUTH_CONSUMER_SECRET = "cmdvFAfTUqFmJTMGzuxGrrkfC99lCP5trG2Pxi4kX7ygs3NlZe";
+	private static final String OAUTH_ACCESS_KEY = "3019016038-KL0Zz4TWE23Of8RTMsmpSuOkUu8v7x4tuK0ddH4";
+	private static final String OAUTH_ACCESS_SECRET = "TjAIqQwyh9GSfWVGOAJfHfZBI6xwwj8FQE53ERK6QHxYE";
 	
 	public static final String TARGET_USERNAME = "CBSDInfo";
 	
