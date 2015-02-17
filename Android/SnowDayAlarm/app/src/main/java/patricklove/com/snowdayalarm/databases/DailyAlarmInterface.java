@@ -12,6 +12,7 @@ import java.util.List;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
 import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
+import patricklove.com.snowdayalarm.alarmTools.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -59,20 +60,18 @@ public class DailyAlarmInterface {
     }
 
     public void deleteDependents(AlarmTemplate t){
-        database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId(), null);
+        database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, SnowDayDatabase.idEquals(t.getId()), null);
     }
 
     private DailyAlarm alarmFromDb(Cursor c, AlarmTemplateInterface t){
         long id = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ID));
         int statusCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_STATUS));
         long timeMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_TIME));
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(timeMillis);
 
         long alarmId = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM));
-        AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.COLUMN_ID + "=" + alarmId).get(0);
+        AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.idEquals(alarmId)).get(0);
 
-        return new DailyAlarm(id, time, AlarmAction.getFromCode(statusCode), associatedAlarm);
+        return new DailyAlarm(id, DateUtils.calForMillis(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
     }
 
     public void add(DailyAlarm dailyAlarm) {
@@ -90,7 +89,7 @@ public class DailyAlarmInterface {
         values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
         values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());
 
-        database.update(SnowDayDatabase.TABLE_DAILY_ALARMS, values, SnowDayDatabase.COLUMN_ID + "=" + dailyAlarm.getId(), null);
+        database.update(SnowDayDatabase.TABLE_DAILY_ALARMS, values, SnowDayDatabase.idEquals(dailyAlarm.getId()), null);
     }
 
     public void clearAll(){

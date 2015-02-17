@@ -12,6 +12,7 @@ import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
+import patricklove.com.snowdayalarm.alarmTools.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -54,8 +55,6 @@ public class AlarmTemplateInterface {
         int cancelCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_ACTION_CANCEL));
         int delayCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_ACTION_DELAY));
         long timeMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_TIME));
-        Calendar time = Calendar.getInstance();
-        time.setTimeInMillis(timeMillis);
 
         boolean monday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.MONDAY)) == 1;
         boolean tuesday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.TUESDAY)) == 1;
@@ -66,7 +65,7 @@ public class AlarmTemplateInterface {
         boolean sunday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SUNDAY)) == 1;
 
 
-        return new AlarmTemplate(id, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), time,
+        return new AlarmTemplate(id, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), DateUtils.calForMillis(timeMillis),
                 monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 
@@ -92,7 +91,7 @@ public class AlarmTemplateInterface {
         dailyAlarmHelper.deleteDependents(temp);
         dailyAlarmHelper.close();
 
-        database.delete(SnowDayDatabase.TABLE_ALL_ALARMS, SnowDayDatabase.COLUMN_ID + "=" + temp.getId(), null);
+        database.delete(SnowDayDatabase.TABLE_ALL_ALARMS, SnowDayDatabase.idEquals(temp.getId()), null);
     }
 
     public List<AlarmTemplate> getAll(){

@@ -69,7 +69,7 @@ public class AlarmHandlingService extends IntentService {
 
         public boolean initialize(long alarmId) {
             dbHelper.open();
-            List<DailyAlarm> alarms = dbHelper.query(SnowDayDatabase.COLUMN_ID + "=" + alarmId);
+            List<DailyAlarm> alarms = dbHelper.query(SnowDayDatabase.idEquals(alarmId));
             dbHelper.close();
             if(alarms.size() == 0){
                 return false;

@@ -63,7 +63,7 @@ public class DailyAlarm {
     }
 
     public boolean saveIfNew(DailyAlarmInterface dbHelper) {
-        if(dbHelper.query(SnowDayDatabase.COLUMN_ID + "=" + this.id).size() == 0){
+        if(dbHelper.query(SnowDayDatabase.idEquals(this.id)).size() == 0){
             save(dbHelper);
             return true;
         }

@@ -13,10 +13,14 @@ public class DateUtils {
         return stripTime(getNow());
     }
 
+    public static Calendar calForMillis(long millis){
+        Calendar ret = Calendar.getInstance();
+        ret.setTimeInMillis(millis);
+        return ret;
+    }
+
     public static Calendar getNow(){
-        Calendar now = Calendar.getInstance();
-        now.setTimeInMillis(System.currentTimeMillis());
-        return now;
+        return calForMillis(System.currentTimeMillis());
     }
 
     public static long getTimeSinceMidnight(Calendar initial){
@@ -36,8 +40,7 @@ public class DateUtils {
 
     public static Calendar dateTime(Calendar date, Calendar time){
         long totalMillis = stripTime(date).getTimeInMillis() + getTimeSinceMidnight(time);
-        date.setTimeInMillis(totalMillis);
-        return date;
+        return calForMillis(totalMillis);
     }
 
     /**

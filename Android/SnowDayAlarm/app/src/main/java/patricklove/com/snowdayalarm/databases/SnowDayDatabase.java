@@ -70,4 +70,8 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_ALARMS);
         onCreate(db);
     }
+
+    public static String idEquals(long id){
+        return "(" + COLUMN_ID + "=" + id + ")";
+    }
 }
