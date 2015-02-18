@@ -74,13 +74,13 @@ public class DailyAlarmInterface {
         return new DailyAlarm(id, DateUtils.calForMillis(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
     }
 
-    public void add(DailyAlarm dailyAlarm) {
+    public long add(DailyAlarm dailyAlarm) {
         ContentValues values = new ContentValues();
         values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTimeInMillis());
         values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
         values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());
 
-        database.insert(SnowDayDatabase.TABLE_DAILY_ALARMS, null, values);
+        return database.insert(SnowDayDatabase.TABLE_DAILY_ALARMS, null, values);
     }
 
     public void update(DailyAlarm dailyAlarm) {

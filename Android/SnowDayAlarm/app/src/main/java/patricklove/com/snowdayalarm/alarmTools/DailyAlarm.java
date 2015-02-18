@@ -2,7 +2,10 @@ package patricklove.com.snowdayalarm.alarmTools;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.util.Log;
 
+import java.net.URI;
 import java.util.Calendar;
 
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
@@ -59,7 +62,7 @@ public class DailyAlarm {
     }
 
     public void save(DailyAlarmInterface helper){
-        helper.add(this);
+        this.id = helper.add(this);
     }
 
     public boolean saveIfNew(DailyAlarmInterface dbHelper) {
@@ -89,5 +92,9 @@ public class DailyAlarm {
         ret.setAction(AlarmScheduler.INTENT_TRIGGER_ALARM);
         ret.putExtra(AlarmScheduler.EXTRA_ALARM_ID, this.id);
         return ret;
+    }
+
+    public boolean isPast() {
+        return this.triggerTime.before(DateUtils.getNow());
     }
 }

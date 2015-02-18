@@ -109,7 +109,7 @@ public class AlarmTemplate {
     }
 
     public void save(AlarmTemplateInterface helper){
-        helper.add(this);
+        this.id = helper.add(this);
     }
 
     public Calendar getTime(){

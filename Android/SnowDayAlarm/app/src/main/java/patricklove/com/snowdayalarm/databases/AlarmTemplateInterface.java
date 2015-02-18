@@ -69,7 +69,7 @@ public class AlarmTemplateInterface {
                 monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 
-    public void add(AlarmTemplate temp){
+    public long add(AlarmTemplate temp){
         ContentValues values = new ContentValues();
         values.put(SnowDayDatabase.COLUMN_ACTION_CANCEL, temp.getActionCancel().getCode());
         values.put(SnowDayDatabase.COLUMN_ACTION_DELAY, temp.getActionDelay().getCode());
@@ -82,7 +82,7 @@ public class AlarmTemplateInterface {
         values.put(SnowDayDatabase.COLUMN_DAYS.SATURDAY, temp.isSaturday());
         values.put(SnowDayDatabase.COLUMN_DAYS.SUNDAY, temp.isSunday());
 
-        database.insert(SnowDayDatabase.TABLE_ALL_ALARMS, null, values);
+        return database.insert(SnowDayDatabase.TABLE_ALL_ALARMS, null, values);
     }
 
     public void delete(AlarmTemplate temp){
