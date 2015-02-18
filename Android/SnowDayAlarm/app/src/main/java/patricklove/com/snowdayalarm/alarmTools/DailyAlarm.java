@@ -41,11 +41,15 @@ public class DailyAlarm {
     private AlarmAction state;
     private AlarmTemplate associatedAlarm;
 
-    public DailyAlarm(long id, Calendar time, AlarmAction state, AlarmTemplate alarm){
-        this.id = id;
+    public DailyAlarm(Calendar time, AlarmAction state, AlarmTemplate alarm){
         this.state = state;
         this.triggerTime = DateUtils.createClone(time);
         this.associatedAlarm = alarm;
+    }
+
+    public DailyAlarm(long id, Calendar time, AlarmAction state, AlarmTemplate alarm){
+        this(time, state, alarm);
+        this.id = id;
     }
 
     public Calendar updateActionTime(DayState state){

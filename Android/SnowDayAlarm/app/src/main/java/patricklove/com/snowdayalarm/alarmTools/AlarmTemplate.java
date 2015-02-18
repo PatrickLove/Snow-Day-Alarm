@@ -63,9 +63,8 @@ public class AlarmTemplate {
     private boolean isSaturday;
     private boolean isSunday;
 
-    public AlarmTemplate(long id, AlarmAction cancel, AlarmAction delay, Calendar time,
+    public AlarmTemplate(AlarmAction cancel, AlarmAction delay, Calendar time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
-        this.id = id;
         this.actionCancel = cancel;
         this.actionDelay = delay;
         this.time = DateUtils.createClone(time);
@@ -76,6 +75,12 @@ public class AlarmTemplate {
         this.isFriday = friday;
         this.isSaturday = saturday;
         this.isSunday = sunday;
+    }
+
+    public AlarmTemplate(long id, AlarmAction cancel, AlarmAction delay, Calendar time,
+                         boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
+        this(cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        this.id = id;
     }
 
     public boolean isActiveForDate(Calendar cal){
@@ -105,7 +110,7 @@ public class AlarmTemplate {
             date.add(Calendar.DATE, 1);
         } while(!isActiveForDate(date));
         Calendar alarm = DateUtils.dateTime(date, time);
-        return new DailyAlarm(0L, alarm, AlarmAction.NO_CHANGE, this);
+        return new DailyAlarm(alarm, AlarmAction.NO_CHANGE, this);
     }
 
     public void save(AlarmTemplateInterface helper){
