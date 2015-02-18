@@ -43,6 +43,10 @@ public class DateUtils {
         return calForMillis(totalMillis);
     }
 
+    public static Calendar createClone(Calendar c){
+        return calForMillis(c.getTimeInMillis());
+    }
+
     /**
      * Returns the SQL WHERE clause to search a given data column for any time on the date given.
      * The string returned is in parentheses so it will not interfere with other logical operations in a longer where clause

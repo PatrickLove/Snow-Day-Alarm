@@ -68,7 +68,7 @@ public class AlarmTemplate {
         this.id = id;
         this.actionCancel = cancel;
         this.actionDelay = delay;
-        this.time = time;
+        this.time = DateUtils.createClone(time);
         this.isMonday = monday;
         this.isTuesday = tuesday;
         this.isWednesday = wednesday;

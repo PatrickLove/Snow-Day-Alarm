@@ -41,7 +41,7 @@ public class DailyAlarm {
     public DailyAlarm(long id, Calendar time, AlarmAction state, AlarmTemplate alarm){
         this.id = id;
         this.state = state;
-        this.triggerTime = time;
+        this.triggerTime = DateUtils.createClone(time);
         this.associatedAlarm = alarm;
     }
 

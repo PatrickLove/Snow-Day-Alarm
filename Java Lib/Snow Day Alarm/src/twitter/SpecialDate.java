@@ -20,7 +20,8 @@ public class SpecialDate {
 	private DayState state;
 	
 	public SpecialDate(Calendar d, DayState s){
-		this.date = d;
+		this.date = Calendar.getInstance();
+		date.setTimeInMillis(d.getTimeInMillis());
 		this.state = s;
 	}
 	
