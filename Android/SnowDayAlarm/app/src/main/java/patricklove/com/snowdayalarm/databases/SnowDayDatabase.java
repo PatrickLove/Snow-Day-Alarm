@@ -14,23 +14,24 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
 
     protected static final String TABLE_ALL_ALARMS = "All_Alarms";
     protected static final String TABLE_DAILY_ALARMS = "Daily_Alarms";
+    protected static final String TABLE_SPECIAL_DAYS = "Special_Days";
 
+    public static final String COLUMN_ID = "_id";
+    public static final String COLUMN_ALARM_TIME = "alarm_time";
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_STATUS = "status";
+    public static final String COLUMN_ASSOCIATED_ALARM = "associated_alarm";
+    public static final String COLUMN_ACTION_CANCEL = "action_cancel";
+    public static final String COLUMN_ACTION_DELAY = "action_delay";
 
-    protected static final String COLUMN_ID = "_id";
-    protected static final String COLUMN_ALARM_TIME = "alarm_time";
-    protected static final String COLUMN_STATUS = "status";
-    protected static final String COLUMN_ASSOCIATED_ALARM = "associated_alarm";
-    protected static final String COLUMN_ACTION_CANCEL = "action_cancel";
-    protected static final String COLUMN_ACTION_DELAY = "action_delay";
-
-    protected static final class COLUMN_DAYS {
-        protected static final String MONDAY = "monday";
-        protected static final String TUESDAY = "tuesday";
-        protected static final String WEDNESDAY = "wednesday";
-        protected static final String THURSDAY = "thursday";
-        protected static final String FRIDAY = "friday";
-        protected static final String SATURDAY = "saturday";
-        protected static final String SUNDAY = "sunday";
+    public static final class COLUMN_DAYS {
+        public static final String MONDAY = "monday";
+        public static final String TUESDAY = "tuesday";
+        public static final String WEDNESDAY = "wednesday";
+        public static final String THURSDAY = "thursday";
+        public static final String FRIDAY = "friday";
+        public static final String SATURDAY = "saturday";
+        public static final String SUNDAY = "sunday";
     }
 
     private static final String SQL_CREATE_ALL_ALARMS = "create table " + TABLE_ALL_ALARMS + "(" +
@@ -53,6 +54,11 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
             COLUMN_ASSOCIATED_ALARM + " integer not null, " +
             "FOREIGN KEY(" + COLUMN_ASSOCIATED_ALARM + ") REFERENCES " + TABLE_ALL_ALARMS + "(" + COLUMN_ID + ")" +
         ");";
+    private static final String SQL_CREATE_SPECIAL_DAYS = "create table " + TABLE_SPECIAL_DAYS + "(" +
+            COLUMN_ID + " integer primary key autoincrement, " +
+            COLUMN_DATE + " integer not null, " +
+            COLUMN_STATUS + " integer not null " +
+        ");";
 
     public SnowDayDatabase(Context c){
         super(c,DATABASE_NAME,null,DB_VERSION);
@@ -61,6 +67,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(SQL_CREATE_ALL_ALARMS);
         db.execSQL(SQL_CREATE_DAILY_ALARMS);
+        db.execSQL(SQL_CREATE_SPECIAL_DAYS);
     }
 
     @Override
