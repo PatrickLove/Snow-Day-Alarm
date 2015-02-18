@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.List;
@@ -19,6 +20,7 @@ import patricklove.com.snowdayalarm.databases.SnowDayDatabase;
  */
 public class AlarmScheduler {
 
+    private static String LOG_TAG = "AlarmScheduler";
     public static final String EXTRA_ALARM_ID = "alarm.id";
     public static String INTENT_TRIGGER_ALARM = "com.patricklove.snowdayalarm.triggerAlarm";
 
@@ -60,9 +62,14 @@ public class AlarmScheduler {
         }
     }
 
-    public void schedule(DailyAlarm alarm){
-        Intent broadcastIntent = alarm.getTriggerIntent(context);
-        PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTimeInMillis(), action);
+    public boolean schedule(DailyAlarm alarm){
+        if(!alarm.isCancelled() && !alarm.isPast()) {
+            Intent broadcastIntent = alarm.getTriggerIntent(context);
+            Log.d(LOG_TAG, "Scheduling alarm of id " + (int)alarm.getId() + " to trigger at " + alarm.getTriggerTime().getTime().toString());
+            PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTimeInMillis(), action);
+            return true;
+        }
+        return false;
     }
 }

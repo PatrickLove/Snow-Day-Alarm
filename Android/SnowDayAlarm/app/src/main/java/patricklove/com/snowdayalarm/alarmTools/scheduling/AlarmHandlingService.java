@@ -7,6 +7,7 @@ import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.PowerManager;
+import android.util.Log;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ import twitter.DayState;
  */
 public class AlarmHandlingService extends IntentService {
 
+    private static final String LOG_TAG = "AlarmHandler (Service or class)";
     private static final String WAKE_LOCK_TAG = "Alarm_Wake_Lock";
     private PowerManager.WakeLock wakeLock;
 
@@ -68,6 +70,7 @@ public class AlarmHandlingService extends IntentService {
         }
 
         public boolean initialize(long alarmId) {
+            Log.d(LOG_TAG, "Initializing alarm of id " + alarmId);
             dbHelper.open();
             List<DailyAlarm> alarms = dbHelper.query(SnowDayDatabase.idEquals(alarmId));
             dbHelper.close();
@@ -81,8 +84,10 @@ public class AlarmHandlingService extends IntentService {
 
         public void handleAlarm() {
             //TODO implement alarm handling
+            Log.d(LOG_TAG, "Firing alarm of id " + alarm.getId());
 
-            throw new UnsupportedOperationException("ALARM NOT YET IMPLEMENTED");
+
+            //throw new UnsupportedOperationException("ALARM NOT YET IMPLEMENTED");
             /*
             DayState currentState = DayState.NO_CHANGE;
 
@@ -92,7 +97,12 @@ public class AlarmHandlingService extends IntentService {
             }
             else{
                 alarm.updateActionTime(currentState);
-                scheduleAgain();
+                if(alarm.isCancelled()){
+                    scheduleNextAlarm();
+                }
+                else{
+                    scheduleAgain();
+                }
                 dbHelper.open();
                 alarm.updateDB(dbHelper);
                 dbHelper.close();
