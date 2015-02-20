@@ -62,7 +62,7 @@ public class AlarmScheduler {
     public boolean schedule(DailyAlarm alarm){
         if(!alarm.isCancelled() && !alarm.isPast()) {
             Intent broadcastIntent = alarm.getTriggerIntent(context);
-            Log.d(LOG_TAG, "Scheduling alarm of id " + (int)alarm.getId() + " to trigger at " + alarm.getTriggerTime().toString());
+            Log.i(LOG_TAG, "Scheduling alarm of id " + (int)alarm.getId() + " to trigger at " + alarm.getTriggerTime().toString());
             PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTime(), action);
             return true;

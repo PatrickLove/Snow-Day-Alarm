@@ -1,5 +1,7 @@
 package patricklove.com.snowdayalarm.alarmTools;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -11,6 +13,7 @@ import twitter.DayState;
  */
 public class AlarmTemplate {
 
+    private static final String LOG_TAG = "AlarmTemplate";
     private long id;
     private AlarmAction actionCancel;
     private AlarmAction actionDelay;
@@ -116,6 +119,7 @@ public class AlarmTemplate {
 
     public void save(AlarmTemplateInterface helper){
         this.id = helper.add(this);
+        Log.i(LOG_TAG, "Template of id " + this.id + " added to database");
     }
 
     public Date getTime(){

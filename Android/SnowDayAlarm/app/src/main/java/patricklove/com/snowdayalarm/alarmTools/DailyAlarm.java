@@ -2,6 +2,7 @@ package patricklove.com.snowdayalarm.alarmTools;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -17,6 +18,7 @@ import twitter.DayState;
  */
 public class DailyAlarm {
 
+    private static final String LOG_TAG = "DailyAlarm";
     private long id;
 
     public long getId() {
@@ -65,6 +67,7 @@ public class DailyAlarm {
 
     public void save(DailyAlarmInterface helper){
         this.id = helper.add(this);
+        Log.i(LOG_TAG, "Alarm of id " + this.id + " saved to database");
     }
 
     public boolean saveIfNew(DailyAlarmInterface dbHelper) {
@@ -78,6 +81,7 @@ public class DailyAlarm {
     public void updateDB(DailyAlarmInterface dbHelper) {
         if(!saveIfNew(dbHelper)){
             dbHelper.update(this);
+            Log.i(LOG_TAG, "Entry for alarm of id " + this.id + " updated");
         }
     }
 

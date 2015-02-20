@@ -84,31 +84,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-        AlarmScheduler scheduler = new AlarmScheduler(this);
-        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
-        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
-        Log.d("TEST_CODE", "Creating template new");
-        alarmInterface.open();
-        AlarmTemplate temp = new AlarmTemplate(AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, DateUtils.calForMillis(562), true, false, true, false, true, false, true);
-        temp.save(alarmInterface);
-        alarmInterface.close();
-        Log.d("TEST_CODE", "Creating alarm 1");
-        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
-        now.add(Calendar.SECOND, 15);
-        DailyAlarm testAlarm1 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
-        Log.d("TEST_CODE", "Creating alarm 2");
-        now.add(Calendar.SECOND, 15);
-        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
-        dbInterface.open();
-        testAlarm1.save(dbInterface);
-        Log.d("TEST_CODE", ""+testAlarm1.getId());
-        testAlarm2.save(dbInterface);
-        Log.d("TEST_CODE", ""+testAlarm2.getId());
-        dbInterface.close();
-        Log.d("TEST_CODE", "Scheduling 1");
-        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
-        Log.d("TEST_CODE", "Scheduling 2");
-        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
+//        AlarmScheduler scheduler = new AlarmScheduler(this);
+//        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
+//        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
+//        Log.d("TEST_CODE", "Creating template new");
+//        alarmInterface.open();
+//        AlarmTemplate temp = new AlarmTemplate(AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, DateUtils.calForMillis(562), true, false, true, false, true, false, true);
+//        temp.save(alarmInterface);
+//        alarmInterface.close();
+//        Log.d("TEST_CODE", "Creating alarm 1");
+//        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
+//        now.add(Calendar.SECOND, 15);
+//        DailyAlarm testAlarm1 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+//        Log.d("TEST_CODE", "Creating alarm 2");
+//        now.add(Calendar.SECOND, 15);
+//        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+//        dbInterface.open();
+//        testAlarm1.save(dbInterface);
+//        Log.d("TEST_CODE", ""+testAlarm1.getId());
+//        testAlarm2.save(dbInterface);
+//        Log.d("TEST_CODE", ""+testAlarm2.getId());
+//        dbInterface.close();
+//        Log.d("TEST_CODE", "Scheduling 1");
+//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
+//        Log.d("TEST_CODE", "Scheduling 2");
+//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
     }
 
 

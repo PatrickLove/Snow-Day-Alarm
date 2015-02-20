@@ -69,7 +69,7 @@ public class AlarmHandlingService extends IntentService {
         }
 
         public boolean initialize(long alarmId) {
-            Log.d(LOG_TAG, "Initializing alarm of id " + alarmId);
+            Log.d(LOG_TAG, "Initializing alarm of id for firing" + alarmId);
             dbHelper.open();
             List<DailyAlarm> alarms = dbHelper.query(SnowDayDatabase.idEquals(alarmId));
             dbHelper.close();
@@ -83,7 +83,7 @@ public class AlarmHandlingService extends IntentService {
 
         public void handleAlarm() {
             //TODO implement alarm handling
-            Log.d(LOG_TAG, "Firing alarm of id " + alarm.getId());
+            Log.i(LOG_TAG, "Firing alarm of id " + alarm.getId());
 
 
             //throw new UnsupportedOperationException("ALARM NOT YET IMPLEMENTED");

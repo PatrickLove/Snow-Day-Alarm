@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
  */
 public class DailyAlarmInterface {
 
+    private static final String LOG_TAG = "DailyAlarmDBInterface";
     private SnowDayDatabase dbHelper;
     private SQLiteDatabase database;
     private static final String[] ALL_COLUMNS = new String[] {
@@ -44,6 +46,7 @@ public class DailyAlarmInterface {
     }
 
     public List<DailyAlarm> query(String selection){
+        Log.i(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_DAILY_ALARMS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<DailyAlarm> ret = new ArrayList<>();
         AlarmTemplateInterface alarmDbHelper = new AlarmTemplateInterface(dbHelper);
@@ -96,6 +99,7 @@ public class DailyAlarmInterface {
     }
 
     public void delete(String selection) {
+        Log.w(LOG_TAG, "Clearing all daily alarms WHERE " + selection);
         database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, selection, null);
     }
 }

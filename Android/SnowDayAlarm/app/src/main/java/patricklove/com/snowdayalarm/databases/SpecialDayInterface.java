@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,7 @@ import twitter.SpecialDate;
  */
 public class SpecialDayInterface {
 
+    private static final String LOG_TAG = "SpecialDayDBInterface";
     private SnowDayDatabase dbHelper;
     private SQLiteDatabase database;
     private static final String[] ALL_COLUMNS = new String[] {
@@ -43,6 +45,7 @@ public class SpecialDayInterface {
     }
 
     public List<SpecialDateDBWrapper> query(String selection){
+        Log.i(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_SPECIAL_DAYS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<SpecialDateDBWrapper> ret = new ArrayList<>();
         c.moveToFirst();
@@ -67,6 +70,7 @@ public class SpecialDayInterface {
     }
 
     public void delete(SpecialDateDBWrapper date){
+        Log.w(LOG_TAG, "Clearing Special Date of id " + date.getId());
         database.delete(SnowDayDatabase.TABLE_SPECIAL_DAYS, SnowDayDatabase.idEquals(date.getId()), null);
     }
 
