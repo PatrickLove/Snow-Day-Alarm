@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter;
+package patricklove.com.snowdayalarm.twitter.tweetAnalysis;
 
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.database.models.SpecialDate;
+import patricklove.com.snowdayalarm.twitter.CBSDTwitter;
+import patricklove.com.snowdayalarm.twitter.DayState;
 import twitter4j.Status;
 
 /**

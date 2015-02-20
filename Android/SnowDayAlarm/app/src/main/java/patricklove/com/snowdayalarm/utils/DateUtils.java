@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools;
+package patricklove.com.snowdayalarm.utils;
 
 import java.util.Calendar;
 import java.util.Date;

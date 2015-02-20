@@ -1,11 +1,11 @@
-package patricklove.com.snowdayalarm.twitter;
+package patricklove.com.snowdayalarm.twitter.tweetAnalysis;
 
 /**
  * Highest level word matching object<br>
  * A KeywordSet is evaluated by a call to isTriggered and is the basic matching element used to detect
  * special day types from tweets.  They function by grouping other KeywordSets and performing an AND or OR
  * operation on their evaluations.  Those sets can contain other sets until all evaluations come from
- * {@link patricklove.com.snowdayalarm.twitter.Keyword Keywords} (or NotKeywords).  See {@link #MASTER_DELAY_FILTER} or {@link #MASTER_CANCEL_FILTER}
+ * {@link Keyword Keywords} (or NotKeywords).  See {@link #MASTER_DELAY_FILTER} or {@link #MASTER_CANCEL_FILTER}
  * for an example of nested KeywordSet construction
  * 
  * @author Patrick Love

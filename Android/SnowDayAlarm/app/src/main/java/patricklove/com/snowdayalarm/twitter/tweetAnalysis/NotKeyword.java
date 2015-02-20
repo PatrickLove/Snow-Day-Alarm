@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter;
+package patricklove.com.snowdayalarm.twitter.tweetAnalysis;
 
 /**
  * Same as {@link Keyword} except negated (evaluates true if the string does not contain the word)

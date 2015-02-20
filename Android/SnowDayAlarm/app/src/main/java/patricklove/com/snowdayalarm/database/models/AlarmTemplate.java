@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.DateUtils;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.twitter.DayState;
 
