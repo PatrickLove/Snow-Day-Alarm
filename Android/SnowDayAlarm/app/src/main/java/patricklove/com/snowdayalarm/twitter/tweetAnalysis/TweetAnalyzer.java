@@ -114,29 +114,4 @@ public class TweetAnalyzer {
 		analysis.setDateSource(date.getText());
 		return analysis;
 	}
-	
-	/**
-	 * Convenience method for identifying snow days
-	 * Analyzes all tweets which are more recent than the given one, or all existing tweets if it does not exist.
-	 * Returns only special days.  For more detailed analysis look at using a {@link TweetAnalyzer}.
-	 * @param tweet Text of the most recent tweet which can be ignored
-	 * @return List of all special dates which were detected in the given tweet range
-	 */
-	public static List<SpecialDate> specialDaysSince(String tweet){
-		List<Status> allTweets = CBSDTwitter.getTweetsSince(tweet);
-		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
-		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
-	}
-	
-	/**
-	 * Convenience method for identifying snow days
-	 * Analyzes the most recent n tweets for Special days, or every tweet if there are less than n tweets total
-	 * @param num Number of recent tweets to analyze
-	 * @return List of all special dates which were detected in the given tweet range
-	 */
-	public static List<SpecialDate> analyzeRecent(int num){
-		List<Status> allTweets = CBSDTwitter.getRecent(num);
-		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
-		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
-	}
 }

@@ -62,39 +62,4 @@ public class CBSDTwitter {
 		} while (tweetCount == 200);
 		return allTweets;
 	}
-	
-	public static List<Status> getRecent(int num){
-		Twitter twit = new TwitterFactory(CONFIG).getInstance();
-		List<Status> allTweets = new ArrayList<>();
-		Paging page;
-		int pages = (num/200) + 1;
-		int remainderTweets = num%200;
-		if(remainderTweets == 0){
-			pages--;
-			remainderTweets = 201;
-		}
-		int tweetCount;
-		for(int i = 1; i <= pages; i++){
-			page = new Paging(i, 200);
-			try{
-				List<Status> pageTweets = twit.getUserTimeline(TARGET_USERNAME, page);
-				tweetCount = pageTweets.size();
-				if(i == pages){
-					tweetCount = (tweetCount < remainderTweets) ? tweetCount : remainderTweets;
-				}
-				for(int j = 0; j < tweetCount; j++){
-					allTweets.add(pageTweets.get(j));
-				}
-				if(i < pages && tweetCount < 200){ 	//Stop paging if there wasn't the max on this page and it isn't the last
-					break;							//The next pages will just be empty and not worth retrieving
-				}
-			}
-			catch(TwitterException e){
-				e.printStackTrace();
-				break;
-			}
-		}
-		return allTweets;
-	}
-	
 }
