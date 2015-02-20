@@ -1,8 +1,8 @@
 package patricklove.com.snowdayalarm.alarmTools.scheduling;
 
 import android.app.IntentService;
-import android.content.Intent;
 import android.content.Context;
+import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -15,7 +15,6 @@ import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
 import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
 import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.databases.SnowDayDatabase;
-import twitter.DayState;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

@@ -4,15 +4,13 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
-import patricklove.com.snowdayalarm.alarmTools.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -65,7 +63,7 @@ public class AlarmTemplateInterface {
         boolean sunday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SUNDAY)) == 1;
 
 
-        return new AlarmTemplate(id, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), DateUtils.calForMillis(timeMillis),
+        return new AlarmTemplate(id, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), new Date(timeMillis),
                 monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 
@@ -73,7 +71,7 @@ public class AlarmTemplateInterface {
         ContentValues values = new ContentValues();
         values.put(SnowDayDatabase.COLUMN_ACTION_CANCEL, temp.getActionCancel().getCode());
         values.put(SnowDayDatabase.COLUMN_ACTION_DELAY, temp.getActionDelay().getCode());
-        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, temp.getTime().getTimeInMillis());
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, temp.getTime().getTime());
         values.put(SnowDayDatabase.COLUMN_DAYS.MONDAY, temp.isMonday());
         values.put(SnowDayDatabase.COLUMN_DAYS.TUESDAY, temp.isTuesday());
         values.put(SnowDayDatabase.COLUMN_DAYS.WEDNESDAY, temp.isWednesday());

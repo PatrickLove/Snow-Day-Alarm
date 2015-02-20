@@ -2,11 +2,9 @@ package patricklove.com.snowdayalarm.alarmTools;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.util.Log;
 
-import java.net.URI;
 import java.util.Calendar;
+import java.util.Date;
 
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
@@ -25,7 +23,7 @@ public class DailyAlarm {
         return id;
     }
 
-    public Calendar getTriggerTime() {
+    public Date getTriggerTime() {
         return triggerTime;
     }
 
@@ -37,32 +35,32 @@ public class DailyAlarm {
         return associatedAlarm;
     }
 
-    private Calendar triggerTime;
+    private Date triggerTime;
     private AlarmAction state;
     private AlarmTemplate associatedAlarm;
 
-    public DailyAlarm(Calendar time, AlarmAction state, AlarmTemplate alarm){
+    public DailyAlarm(Date time, AlarmAction state, AlarmTemplate alarm){
         this.state = state;
-        this.triggerTime = DateUtils.createClone(time);
+        this.triggerTime = time;
         this.associatedAlarm = alarm;
     }
 
-    public DailyAlarm(long id, Calendar time, AlarmAction state, AlarmTemplate alarm){
+    public DailyAlarm(long id, Date time, AlarmAction state, AlarmTemplate alarm){
         this(time, state, alarm);
         this.id = id;
     }
 
-    public Calendar updateActionTime(DayState state){
+    public void updateActionTime(DayState state){
         AlarmAction action = associatedAlarm.getAction(state);
         if(action == AlarmAction.DISABLE){
-            return null;
+            this.triggerTime = null;
         }
         if(action == AlarmAction.DELAY_2_HR){
-            Calendar ret = associatedAlarm.getTime();
+            Calendar ret = DateUtils.dateToCal(associatedAlarm.getTime());
             ret.add(Calendar.HOUR, 2);
-            return ret;
+            this.triggerTime = ret.getTime();
         }
-        return associatedAlarm.getTime();
+        this.state = action;
     }
 
     public void save(DailyAlarmInterface helper){

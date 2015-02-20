@@ -6,13 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
 import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
-import patricklove.com.snowdayalarm.alarmTools.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -71,12 +70,12 @@ public class DailyAlarmInterface {
         long alarmId = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM));
         AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.idEquals(alarmId)).get(0);
 
-        return new DailyAlarm(id, DateUtils.calForMillis(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
+        return new DailyAlarm(id, new Date(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
     }
 
     public long add(DailyAlarm dailyAlarm) {
         ContentValues values = new ContentValues();
-        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTimeInMillis());
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTime());
         values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
         values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());
 
@@ -85,7 +84,7 @@ public class DailyAlarmInterface {
 
     public void update(DailyAlarm dailyAlarm) {
         ContentValues values = new ContentValues();
-        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTimeInMillis());
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTime());
         values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
         values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());
 

@@ -1,32 +1,28 @@
 package patricklove.com.snowdayalarm.activities;
 
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import java.util.Calendar;
+import java.util.Locale;
 
 import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
 import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
 import patricklove.com.snowdayalarm.alarmTools.DateUtils;
-import patricklove.com.snowdayalarm.alarmTools.receivers.BootReceiver;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.databases.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
@@ -88,31 +84,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-//        AlarmScheduler scheduler = new AlarmScheduler(this);
-//        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
-//        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
-//        Log.d("TEST_CODE", "Creating template new");
-//        alarmInterface.open();
-//        AlarmTemplate temp = new AlarmTemplate(AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, DateUtils.calForMillis(562), true, false, true, false, true, false, true);
-//        temp.save(alarmInterface);
-//        alarmInterface.close();
-//        Log.d("TEST_CODE", "Creating alarm 1");
-//        Calendar now = DateUtils.getNow();
-//        now.add(Calendar.SECOND, 15);
-//        DailyAlarm testAlarm1 = new DailyAlarm(now, AlarmAction.NO_CHANGE, temp);
-//        Log.d("TEST_CODE", "Creating alarm 2");
-//        now.add(Calendar.SECOND, 15);
-//        DailyAlarm testAlarm2 = new DailyAlarm(now, AlarmAction.NO_CHANGE, temp);
-//        dbInterface.open();
-//        testAlarm1.save(dbInterface);
-//        Log.d("TEST_CODE", ""+testAlarm1.getId());
-//        testAlarm2.save(dbInterface);
-//        Log.d("TEST_CODE", ""+testAlarm2.getId());
-//        dbInterface.close();
-//        Log.d("TEST_CODE", "Scheduling 1");
-//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
-//        Log.d("TEST_CODE", "Scheduling 2");
-//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
+        AlarmScheduler scheduler = new AlarmScheduler(this);
+        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
+        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
+        Log.d("TEST_CODE", "Creating template new");
+        alarmInterface.open();
+        AlarmTemplate temp = new AlarmTemplate(AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, DateUtils.calForMillis(562), true, false, true, false, true, false, true);
+        temp.save(alarmInterface);
+        alarmInterface.close();
+        Log.d("TEST_CODE", "Creating alarm 1");
+        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
+        now.add(Calendar.SECOND, 15);
+        DailyAlarm testAlarm1 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+        Log.d("TEST_CODE", "Creating alarm 2");
+        now.add(Calendar.SECOND, 15);
+        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+        dbInterface.open();
+        testAlarm1.save(dbInterface);
+        Log.d("TEST_CODE", ""+testAlarm1.getId());
+        testAlarm2.save(dbInterface);
+        Log.d("TEST_CODE", ""+testAlarm2.getId());
+        dbInterface.close();
+        Log.d("TEST_CODE", "Scheduling 1");
+        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
+        Log.d("TEST_CODE", "Scheduling 2");
+        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
     }
 
 

@@ -1,6 +1,5 @@
 package patricklove.com.snowdayalarm.databases;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import twitter.DayState;
@@ -18,7 +17,7 @@ public class SpecialDateDBWrapper extends SpecialDate  {
     }
 
 
-    public SpecialDateDBWrapper(long id, Calendar date, DayState state){
+    public SpecialDateDBWrapper(long id, Date date, DayState state){
         super(date, state);
         this.id = id;
     }

@@ -1,6 +1,7 @@
 package patricklove.com.snowdayalarm.alarmTools;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import patricklove.com.snowdayalarm.databases.AlarmTemplateInterface;
 import twitter.DayState;
@@ -13,7 +14,7 @@ public class AlarmTemplate {
     private long id;
     private AlarmAction actionCancel;
     private AlarmAction actionDelay;
-    private Calendar time;
+    private Date time;
     private boolean isMonday;
 
     public long getId() {
@@ -63,11 +64,11 @@ public class AlarmTemplate {
     private boolean isSaturday;
     private boolean isSunday;
 
-    public AlarmTemplate(AlarmAction cancel, AlarmAction delay, Calendar time,
+    public AlarmTemplate(AlarmAction cancel, AlarmAction delay, Date time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
         this.actionCancel = cancel;
         this.actionDelay = delay;
-        this.time = DateUtils.createClone(time);
+        this.time = time;
         this.isMonday = monday;
         this.isTuesday = tuesday;
         this.isWednesday = wednesday;
@@ -77,7 +78,7 @@ public class AlarmTemplate {
         this.isSunday = sunday;
     }
 
-    public AlarmTemplate(long id, AlarmAction cancel, AlarmAction delay, Calendar time,
+    public AlarmTemplate(long id, AlarmAction cancel, AlarmAction delay, Date time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
         this(cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
         this.id = id;
@@ -105,11 +106,11 @@ public class AlarmTemplate {
     }
 
     public DailyAlarm generateNextAlarm(){
-        Calendar date = DateUtils.getToday();
+        Calendar date = DateUtils.dateToCal(DateUtils.getNow());
         do{
             date.add(Calendar.DATE, 1);
         } while(!isActiveForDate(date));
-        Calendar alarm = DateUtils.dateTime(date, time);
+        Date alarm = DateUtils.dateTime(date.getTime(), time);
         return new DailyAlarm(alarm, AlarmAction.NO_CHANGE, this);
     }
 
@@ -117,7 +118,7 @@ public class AlarmTemplate {
         this.id = helper.add(this);
     }
 
-    public Calendar getTime(){
+    public Date getTime(){
         return time;
     }
 

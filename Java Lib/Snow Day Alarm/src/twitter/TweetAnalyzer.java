@@ -1,7 +1,6 @@
 package twitter;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import twitter4j.Status;
@@ -108,9 +107,7 @@ public class TweetAnalyzer {
 			return null;
 		}
 		DateGroup date = groups.get(0);
-		Calendar calDate = Calendar.getInstance();
-		calDate.setTime(date.getDates().get(0));
-		analysis.setDate(calDate);
+		analysis.setDate(date.getDates().get(0));
 		analysis.setDateSource(date.getText());
 		return analysis;
 	}

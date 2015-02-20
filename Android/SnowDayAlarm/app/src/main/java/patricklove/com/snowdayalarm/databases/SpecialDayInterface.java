@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.DateUtils;
@@ -54,13 +54,13 @@ public class SpecialDayInterface {
         return ret;
     }
 
-    public List<SpecialDateDBWrapper> getForDay(Calendar date){
+    public List<SpecialDateDBWrapper> getForDay(Date date){
         return query(DateUtils.getSearchStringForDay(date, SnowDayDatabase.COLUMN_DATE));
     }
 
     public long add(SpecialDate date){
         ContentValues values = new ContentValues();
-        values.put(SnowDayDatabase.COLUMN_DATE, date.getDate().getTimeInMillis());
+        values.put(SnowDayDatabase.COLUMN_DATE, date.getDate().getTime());
         values.put(SnowDayDatabase.COLUMN_STATUS, date.getState().code);
 
         return database.insert(SnowDayDatabase.TABLE_SPECIAL_DAYS, null, values);
@@ -75,6 +75,6 @@ public class SpecialDayInterface {
         int stateCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_STATUS));
         long dateMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_DATE));
 
-        return new SpecialDateDBWrapper(id, DateUtils.calForMillis(dateMillis), DayState.getFromCode(stateCode));
+        return new SpecialDateDBWrapper(id, new Date(dateMillis), DayState.getFromCode(stateCode));
     }
 }
