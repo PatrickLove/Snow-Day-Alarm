@@ -1,4 +1,4 @@
-package twitter;
+package patricklove.com.snowdayalarm.twitter;
 
 /**
  * Same as {@link KeywordSet} except negated (evaluates true if the associated KeywordSet would not match)

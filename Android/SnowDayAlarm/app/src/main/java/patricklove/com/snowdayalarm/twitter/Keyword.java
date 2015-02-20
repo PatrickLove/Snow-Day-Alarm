@@ -1,4 +1,4 @@
-package twitter;
+package patricklove.com.snowdayalarm.twitter;
 
 /**
  * Lowest level KeywordSet child<br>
@@ -10,7 +10,7 @@ package twitter;
  * @see NotKeywordSet
  * @see NotKeyword
  */
-public class Keyword extends KeywordSet{
+public class Keyword extends KeywordSet {
 
 	/**
 	 * Word matched by this Keyword

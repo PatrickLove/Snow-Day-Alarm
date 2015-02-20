@@ -2,13 +2,13 @@ package patricklove.com.snowdayalarm.databases;
 
 import java.util.Date;
 
-import twitter.DayState;
-import twitter.SpecialDate;
+import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.twitter.SpecialDate;
 
 /**
  * Created by Patrick Love on 2/17/2015.
  */
-public class SpecialDateDBWrapper extends SpecialDate  {
+public class SpecialDateDBWrapper extends SpecialDate {
 
     private long id;
 

@@ -1,8 +1,9 @@
-package twitter;
+package patricklove.com.snowdayalarm.twitter;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 
 public class TweetAnalysis {
 

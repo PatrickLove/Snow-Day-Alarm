@@ -11,7 +11,7 @@ import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.databases.SnowDayDatabase;
-import twitter.DayState;
+import patricklove.com.snowdayalarm.twitter.DayState;
 
 /**
  * Created by Patrick Love on 2/14/2015.

@@ -1,12 +1,12 @@
-package twitter;
+package patricklove.com.snowdayalarm.twitter;
+
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import twitter4j.Status;
-
-import com.joestelmach.natty.DateGroup;
-import com.joestelmach.natty.Parser;
 
 /**
  * Tool which takes a set of tweets and will analyze them to determine snow days, 2hr delays, etc.

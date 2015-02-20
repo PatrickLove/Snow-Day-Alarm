@@ -8,24 +8,15 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.Calendar;
 import java.util.Locale;
 
 import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
-import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
-import patricklove.com.snowdayalarm.alarmTools.DateUtils;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.databases.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {

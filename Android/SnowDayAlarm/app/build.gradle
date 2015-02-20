@@ -20,5 +20,6 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
-    provided files('libs/TwitterLib.jar')
+    compile 'com.joestelmach:natty:0.10'
+    compile 'org.twitter4j:twitter4j-core:4.0.2'
 }

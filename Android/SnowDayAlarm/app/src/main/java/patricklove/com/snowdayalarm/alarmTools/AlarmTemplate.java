@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.databases.AlarmTemplateInterface;
-import twitter.DayState;
+import patricklove.com.snowdayalarm.twitter.DayState;
 
 /**
  * Created by Patrick Love on 2/14/2015.
