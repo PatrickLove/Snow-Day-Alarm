@@ -16,7 +16,7 @@ import twitter4j.conf.ConfigurationBuilder;
  * @author Patrick Love
  *
  */
-public class SnowDayTwitter {
+public class CBSDTwitter {
 			
 	private static final String OAUTH_CONSUMER_KEY = "fKic7d6P8ZriFr1uZTzgHMFTk";
 	private static final String OAUTH_CONSUMER_SECRET = "cmdvFAfTUqFmJTMGzuxGrrkfC99lCP5trG2Pxi4kX7ygs3NlZe";

@@ -8,9 +8,9 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
-import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.databases.SnowDayDatabase;
+import patricklove.com.snowdayalarm.database.models.DailyAlarm;
+import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
+import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 
 /**
  * Created by Patrick Love on 2/17/2015.
@@ -62,7 +62,7 @@ public class AlarmScheduler {
     public boolean schedule(DailyAlarm alarm){
         if(!alarm.isCancelled() && !alarm.isPast()) {
             Intent broadcastIntent = alarm.getTriggerIntent(context);
-            Log.i(LOG_TAG, "Scheduling alarm of id " + (int)alarm.getId() + " to trigger at " + alarm.getTriggerTime().toString());
+            Log.i(LOG_TAG, "Scheduling alarm of id " + (int) alarm.getId() + " to trigger at " + alarm.getTriggerTime().toString());
             PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTime(), action);
             return true;

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import patricklove.com.snowdayalarm.database.models.SpecialDate;
+
 
 public class TweetAnalysis {
 

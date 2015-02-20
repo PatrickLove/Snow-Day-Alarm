@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.databases;
+package patricklove.com.snowdayalarm.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.DateUtils;
-import twitter.DayState;
-import twitter.SpecialDate;
+import patricklove.com.snowdayalarm.database.models.SpecialDate;
+import patricklove.com.snowdayalarm.twitter.DayState;
 
 /**
  * Created by Patrick Love on 2/17/2015.
@@ -44,10 +44,10 @@ public class SpecialDayInterface {
         dbHelper.close();
     }
 
-    public List<SpecialDateDBWrapper> query(String selection){
+    public List<SpecialDate> query(String selection){
         Log.i(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_SPECIAL_DAYS, ALL_COLUMNS, selection, null, null, null, null);
-        ArrayList<SpecialDateDBWrapper> ret = new ArrayList<>();
+        ArrayList<SpecialDate> ret = new ArrayList<>();
         c.moveToFirst();
         while(!c.isAfterLast()){
             ret.add(specialDateFromCursor(c));
@@ -57,7 +57,7 @@ public class SpecialDayInterface {
         return ret;
     }
 
-    public List<SpecialDateDBWrapper> getForDay(Date date){
+    public List<SpecialDate> getForDay(Date date){
         return query(DateUtils.getSearchStringForDay(date, SnowDayDatabase.COLUMN_DATE));
     }
 
@@ -69,16 +69,16 @@ public class SpecialDayInterface {
         return database.insert(SnowDayDatabase.TABLE_SPECIAL_DAYS, null, values);
     }
 
-    public void delete(SpecialDateDBWrapper date){
+    public void delete(SpecialDate date){
         Log.w(LOG_TAG, "Clearing Special Date of id " + date.getId());
         database.delete(SnowDayDatabase.TABLE_SPECIAL_DAYS, SnowDayDatabase.idEquals(date.getId()), null);
     }
 
-    private SpecialDateDBWrapper specialDateFromCursor(Cursor c) {
+    private SpecialDate specialDateFromCursor(Cursor c) {
         long id = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ID));
         int stateCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_STATUS));
         long dateMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_DATE));
 
-        return new SpecialDateDBWrapper(id, new Date(dateMillis), DayState.getFromCode(stateCode));
+        return new SpecialDate(id, new Date(dateMillis), DayState.getFromCode(stateCode));
     }
 }

@@ -6,6 +6,7 @@ import com.joestelmach.natty.Parser;
 import java.util.ArrayList;
 import java.util.List;
 
+import patricklove.com.snowdayalarm.database.models.SpecialDate;
 import twitter4j.Status;
 
 /**
@@ -120,7 +121,7 @@ public class TweetAnalyzer {
 	 * @return List of all special dates which were detected in the given tweet range
 	 */
 	public static List<SpecialDate> specialDaysSince(String tweet){
-		List<Status> allTweets = SnowDayTwitter.getTweetsSince(tweet);
+		List<Status> allTweets = CBSDTwitter.getTweetsSince(tweet);
 		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
 		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
 	}
@@ -132,7 +133,7 @@ public class TweetAnalyzer {
 	 * @return List of all special dates which were detected in the given tweet range
 	 */
 	public static List<SpecialDate> analyzeRecent(int num){
-		List<Status> allTweets = SnowDayTwitter.getRecent(num);
+		List<Status> allTweets = CBSDTwitter.getRecent(num);
 		TweetAnalyzer analyzer = TweetAnalyzer.getDefault();
 		return TweetAnalysis.daysFromAnalysis(analyzer.analyzeTweetGroup(allTweets));
 	}

@@ -11,10 +11,10 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.alarmTools.AlarmTemplate;
-import patricklove.com.snowdayalarm.alarmTools.DailyAlarm;
-import patricklove.com.snowdayalarm.databases.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.databases.SnowDayDatabase;
+import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
+import patricklove.com.snowdayalarm.database.models.DailyAlarm;
+import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
+import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

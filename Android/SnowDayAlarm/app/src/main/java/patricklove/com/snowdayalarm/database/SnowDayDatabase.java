@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.databases;
+package patricklove.com.snowdayalarm.database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
