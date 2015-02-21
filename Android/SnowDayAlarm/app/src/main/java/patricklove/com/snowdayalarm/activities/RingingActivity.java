@@ -35,6 +35,7 @@ public class RingingActivity extends ActionBarActivity {
         ringer.play();
 
         String stateText = getString(R.string.no_state_text);
+        String name = getString(R.string.no_name);
         Bundle extras = getIntent().getExtras();
         if(extras != null) {
             if (extras.containsKey(AlarmHandlingService.EXTRA_WARNING_DATE)) {
@@ -43,8 +44,12 @@ public class RingingActivity extends ActionBarActivity {
             if (extras.containsKey(AlarmHandlingService.EXTRA_DAY_STATE)){
                 stateText = getTextForState(DayState.getFromCode(extras.getInt(AlarmHandlingService.EXTRA_DAY_STATE)));
             }
+            if (extras.containsKey(AlarmHandlingService.EXTRA_ALARM_NAME)){
+                name = extras.getString(AlarmHandlingService.EXTRA_ALARM_NAME);
+            }
         }
         ((TextView) findViewById(R.id.status_view)).setText(stateText);
+        ((TextView) findViewById(R.id.alarm_name)).setText(name);
 
         if(warnDate != null){
             TextView warningText = (TextView) findViewById(R.id.warning_view);

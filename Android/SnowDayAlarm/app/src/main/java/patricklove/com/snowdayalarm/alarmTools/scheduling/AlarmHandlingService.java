@@ -33,6 +33,7 @@ public class AlarmHandlingService extends IntentService {
     private static final String WAKE_LOCK_TAG = "Alarm_Wake_Lock";
     public static final String EXTRA_WARNING_DATE = "warning.date";
     public static final String EXTRA_DAY_STATE = "day.state";
+    public static final String EXTRA_ALARM_NAME = "alarm_name";
     private PowerManager.WakeLock wakeLock;
 
     public AlarmHandlingService() {
@@ -147,6 +148,7 @@ public class AlarmHandlingService extends IntentService {
                 dialogIntent.putExtra(EXTRA_WARNING_DATE, warnLastUpdate.getTime());
             }
             dialogIntent.putExtra(EXTRA_DAY_STATE, currentState.code);
+            dialogIntent.putExtra(EXTRA_ALARM_NAME, alarm.getName());
             getApplication().startActivity(dialogIntent);
         }
 

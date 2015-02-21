@@ -13,5 +13,6 @@
     <string name="message_normal">Sorry, looks like school\'s on time today</string>
     <string name="active_on">Active on:</string>
     <string name="action_add_alarm">Add new alarm</string>
+    <string name="no_name">Unknown Alarm</string>
 
 </resources>
