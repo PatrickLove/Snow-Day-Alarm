@@ -2,10 +2,14 @@
 <resources>
 
     <string name="app_name">Snow Day Alarm</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
-    <string name="hello_world">Hello world!</string>
+    <string name="title_section1">Today\'s Alarms</string>
+    <string name="title_section2">All Alarms</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_ringing">Snow Day Alarm</string>
+    <string name="done">DONE</string>
+    <string name="warning_message">Snow day determination could be inaccurate since the device is not connected to the internet\\nLast updated:</string>
+    <string name="no_state_text">Unknown state</string>
+    <string name="message_delay">Sorry, no cancellation, but you did get a delay</string>
+    <string name="message_normal">Sorry, looks like school\'s on time today</string>
 
 </resources>

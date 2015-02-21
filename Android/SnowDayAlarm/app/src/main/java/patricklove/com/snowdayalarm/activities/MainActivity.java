@@ -8,15 +8,26 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import patricklove.com.snowdayalarm.R;
+import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
+import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
+import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
+import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
+import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
+import patricklove.com.snowdayalarm.database.models.DailyAlarm;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -75,29 +86,31 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setTabListener(this));
         }
 
-//        AlarmScheduler scheduler = new AlarmScheduler(this);
-//        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
-//        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
-//        Log.d("TEST_CODE", "Creating template new");
-//        alarmInterface.open();
-//        AlarmTemplate temp = new AlarmTemplate(AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, DateUtils.calForMillis(562), true, false, true, false, true, false, true);
-//        temp.save(alarmInterface);
-//        alarmInterface.close();
-//        Log.d("TEST_CODE", "Creating alarm 1");
-//        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
-//        now.add(Calendar.SECOND, 15);
-//        DailyAlarm testAlarm1 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+        AlarmScheduler scheduler = new AlarmScheduler(this);
+        scheduler.open();
+        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
+        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
+        Log.d("TEST_CODE", "Creating template");
+        alarmInterface.open();
+        AlarmTemplate temp = new AlarmTemplate("Test template", AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, new Date(512), true, false, true, false, true, false, true);
+        temp.save(alarmInterface);
+        alarmInterface.close();
+        Log.d("TEST_CODE", "Creating alarm 1");
+        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
+        now.add(Calendar.SECOND, 15);
+        DailyAlarm testAlarm1 = new DailyAlarm("The alarm", now.getTime(), AlarmAction.NO_CHANGE, temp);
 //        Log.d("TEST_CODE", "Creating alarm 2");
 //        now.add(Calendar.SECOND, 15);
 //        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
-//        dbInterface.open();
-//        testAlarm1.save(dbInterface);
-//        Log.d("TEST_CODE", ""+testAlarm1.getId());
+        dbInterface.open();
+        testAlarm1.save(dbInterface);
+        Log.d("TEST_CODE", "" + testAlarm1.getId());
 //        testAlarm2.save(dbInterface);
 //        Log.d("TEST_CODE", ""+testAlarm2.getId());
-//        dbInterface.close();
-//        Log.d("TEST_CODE", "Scheduling 1");
-//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
+        dbInterface.close();
+        scheduler.close();
+        Log.d("TEST_CODE", "Scheduling 1");
+        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
 //        Log.d("TEST_CODE", "Scheduling 2");
 //        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
     }
@@ -152,15 +165,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
+            if(position == 0){
+                return DaysAlarmsFragment.newInstance();
+            }
             return PlaceholderFragment.newInstance(position + 1);
         }
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
@@ -171,8 +184,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
                     return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
-                    return getString(R.string.title_section3).toUpperCase(l);
             }
             return null;
         }

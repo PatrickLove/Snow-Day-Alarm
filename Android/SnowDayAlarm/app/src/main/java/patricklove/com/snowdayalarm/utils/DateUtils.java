@@ -1,5 +1,8 @@
 package patricklove.com.snowdayalarm.utils;
 
+import android.util.Log;
+
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,7 +11,9 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    public static long MILLIS_PER_DAY = 1000*60*60*24;
+    public static long MILLIS_PER_MINUTE = 1000*60;
+    public static long MILLIS_PER_HOUR = MILLIS_PER_MINUTE * 60;
+    public static long MILLIS_PER_DAY = MILLIS_PER_HOUR * 24;
 
     public static Calendar dateToCal(Date d){
         Calendar ret = Calendar.getInstance();
@@ -24,13 +29,18 @@ public class DateUtils {
         return new Date(System.currentTimeMillis());
     }
 
+    private static long getOffset(){
+        return Calendar.getInstance().getTimeZone().getRawOffset();
+    }
+
     public static long getTimeSinceMidnight(Date initial){
-        return initial.getTime() % MILLIS_PER_DAY;
+        long millisSinceLocalEpoch = initial.getTime()+getOffset(); //Milliseconds since Jan 1, 1970 in the local time zone (UTC to local conversion)
+        return  (millisSinceLocalEpoch%MILLIS_PER_DAY+MILLIS_PER_DAY)%MILLIS_PER_DAY; //deals with negative modulus millisSinceEpoch < MILLIS_PER_DAY
     }
 
     public static Date stripTime(Date initial){
         long currentMillis = initial.getTime();
-        long extraMillis = currentMillis % MILLIS_PER_DAY;
+        long extraMillis = getTimeSinceMidnight(initial);
         initial.setTime(currentMillis - extraMillis);
         return initial;
     }

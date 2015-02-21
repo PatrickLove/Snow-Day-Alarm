@@ -2,6 +2,7 @@ package patricklove.com.snowdayalarm.database.models;
 
 import java.util.Date;
 
+import patricklove.com.snowdayalarm.database.SpecialDayInterface;
 import patricklove.com.snowdayalarm.twitter.DayState;
 
 /**
@@ -41,4 +42,8 @@ public class SpecialDate {
 	public boolean isDelay(){
 		return state == DayState.DELAY_2_HR;
 	}
+
+    public void save(SpecialDayInterface dbInterface) {
+        this.id = dbInterface.add(this);
+    }
 }

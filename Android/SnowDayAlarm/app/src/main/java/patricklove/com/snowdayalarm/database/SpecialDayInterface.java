@@ -20,6 +20,7 @@ import patricklove.com.snowdayalarm.twitter.DayState;
 public class SpecialDayInterface {
 
     private static final String LOG_TAG = "SpecialDayDBInterface";
+    private Context c;
     private SnowDayDatabase dbHelper;
     private SQLiteDatabase database;
     private static final String[] ALL_COLUMNS = new String[] {
@@ -29,23 +30,21 @@ public class SpecialDayInterface {
     };
 
     public SpecialDayInterface(Context c){
-        dbHelper = new SnowDayDatabase(c);
-    }
-
-    public SpecialDayInterface(SnowDayDatabase d){
-        dbHelper = d;
+        this.c = c;
     }
 
     public void open(){
+        dbHelper = new SnowDayDatabase(c);
         database = dbHelper.getWritableDatabase();
     }
 
     public void close(){
         dbHelper.close();
+        dbHelper = null;
     }
 
     public List<SpecialDate> query(String selection){
-        Log.i(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
+        Log.i(LOG_TAG, "Request processing for Special Days WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_SPECIAL_DAYS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<SpecialDate> ret = new ArrayList<>();
         c.moveToFirst();
@@ -59,6 +58,23 @@ public class SpecialDayInterface {
 
     public List<SpecialDate> getForDay(Date date){
         return query(DateUtils.getSearchStringForDay(date, SnowDayDatabase.COLUMN_DATE));
+    }
+
+    public DayState getStateForDay(Date date){
+        List<SpecialDate> entries = getForDay(date);
+        if(entries == null || entries.size()==0){
+            return DayState.NO_CHANGE;
+        }
+        DayState ret = entries.get(0).getState();
+        for(SpecialDate day : entries){
+            if(!ret.atOrBefore(day.getState())){ //If any one is before the latest, use it
+                ret = day.getState();
+            }
+            if(ret == DayState.NO_CHANGE){ //might as well stop if we've reached the earliest option
+                return DayState.NO_CHANGE;
+            }
+        }
+        return ret;
     }
 
     public long add(SpecialDate date){

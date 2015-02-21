@@ -9,12 +9,19 @@ import android.net.Uri;
 import android.os.PowerManager;
 import android.util.Log;
 
+import java.util.Date;
 import java.util.List;
 
+import patricklove.com.snowdayalarm.activities.RingingActivity;
+import patricklove.com.snowdayalarm.database.SpecialDayInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.database.SnowDayDatabase;
+import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.twitter.TwitterAnalysisBridge;
+import patricklove.com.snowdayalarm.utils.DateUtils;
+import patricklove.com.snowdayalarm.utils.FileUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -27,6 +34,8 @@ public class AlarmHandlingService extends IntentService {
 
     private static final String LOG_TAG = "AlarmHandler (Service or class)";
     private static final String WAKE_LOCK_TAG = "Alarm_Wake_Lock";
+    public static final String EXTRA_WARNING_DATE = "warning.date";
+    public static final String EXTRA_DAY_STATE = "day.state";
     private PowerManager.WakeLock wakeLock;
 
     public AlarmHandlingService() {
@@ -61,15 +70,18 @@ public class AlarmHandlingService extends IntentService {
         private AlarmTemplate template;
         private DailyAlarm alarm;
         private DailyAlarmInterface dbHelper;
+        private AlarmScheduler scheduler;
         private Context context;
+        private Date warnLastUpdate = null;
 
         public AlarmHandler(Context c){
             context = c;
             dbHelper = new DailyAlarmInterface(c);
+            scheduler = new AlarmScheduler(c);
         }
 
         public boolean initialize(long alarmId) {
-            Log.d(LOG_TAG, "Initializing alarm of id for firing" + alarmId);
+            Log.d(LOG_TAG, "Initializing alarm of id " + alarmId + " for firing");
             dbHelper.open();
             List<DailyAlarm> alarms = dbHelper.query(SnowDayDatabase.idEquals(alarmId));
             dbHelper.close();
@@ -85,13 +97,11 @@ public class AlarmHandlingService extends IntentService {
             //TODO implement alarm handling
             Log.i(LOG_TAG, "Firing alarm of id " + alarm.getId());
 
+            DayState currentState = retrieveCurrentDayState();
 
-            //throw new UnsupportedOperationException("ALARM NOT YET IMPLEMENTED");
-            /*
-            DayState currentState = DayState.NO_CHANGE;
 
             if(alarm.shouldTrigger(currentState)){
-                soundAlarm();
+                startAlarmActivity(currentState);
                 scheduleNextAlarm();
             }
             else{
@@ -103,33 +113,45 @@ public class AlarmHandlingService extends IntentService {
                     scheduleAgain();
                 }
                 dbHelper.open();
-                alarm.updateDB(dbHelper);
+                    alarm.updateDB(dbHelper);
                 dbHelper.close();
             }
-            */
+        }
+
+        private DayState retrieveCurrentDayState(){
+            Log.d(LOG_TAG, "Retrieving tweets");
+            TwitterAnalysisBridge twitterComp = new TwitterAnalysisBridge(context);
+            if(!twitterComp.updateSpecialDays()){
+                warnLastUpdate = new FileUtils(context).readLastUpdate();
+            }
+            SpecialDayInterface helper = new SpecialDayInterface(context);
+            helper.open();
+            DayState ret =  helper.getStateForDay(DateUtils.getNow());
+            helper.close();
+            return ret;
         }
 
         private void scheduleAgain(){
-            AlarmScheduler scheduler = new AlarmScheduler(context);
+            scheduler.open();
             scheduler.schedule(alarm);
+            scheduler.close();
         }
 
         private void scheduleNextAlarm() {
-            AlarmScheduler scheduler = new AlarmScheduler(context);
+            scheduler.open();
             scheduler.scheduleNextAlarm(alarm);
+            scheduler.close();
         }
 
-        private void sendAlarmText(String text){
-            //TODO Create launched activity (with recent tweets, etc)
-        }
-
-        private void soundAlarm(){
-            Uri alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
-            if (alarmUri == null) {
-                alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        private void startAlarmActivity(DayState currentState){
+            Intent dialogIntent = new Intent(getBaseContext(), RingingActivity.class);
+            dialogIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            if(warnLastUpdate != null){
+                dialogIntent.putExtra(EXTRA_WARNING_DATE, warnLastUpdate.getTime());
             }
-            Ringtone ringtone = RingtoneManager.getRingtone(context, alarmUri);
-            ringtone.play();
+            dialogIntent.putExtra(EXTRA_DAY_STATE, currentState.code);
+            getApplication().startActivity(dialogIntent);
         }
+
     }
 }

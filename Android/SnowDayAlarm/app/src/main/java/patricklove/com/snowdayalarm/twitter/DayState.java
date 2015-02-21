@@ -35,4 +35,8 @@ public enum DayState {
 		}
 		return NO_CHANGE;
 	}
+
+    public boolean atOrBefore(DayState d){
+        return this.code <= d.code;
+    }
 }

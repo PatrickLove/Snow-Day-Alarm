@@ -33,8 +33,15 @@ public class AlarmScheduler {
         this.manager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
     }
 
-    public void updatePast(){
+    public void open(){
         dbHelper.open();
+    }
+
+    public void close(){
+        dbHelper.close();
+    }
+
+    public void updatePast(){
         List<DailyAlarm> toUpdate = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + "<=" + createTime);
         for(DailyAlarm alarm : toUpdate){
             scheduleNextAlarm(alarm);
@@ -43,17 +50,13 @@ public class AlarmScheduler {
 
     public void scheduleNextAlarm(DailyAlarm now){
         DailyAlarm next = now.getAssociatedAlarm().generateNextAlarm();
-        new AlarmScheduler(context).schedule(next); //schedule intent
+        schedule(next); //schedule intent
 
-        dbHelper.open(); //save to database (for ui display and
         next.saveIfNew(dbHelper);
-        dbHelper.close();
     }
 
     public void scheduleAllFuture(){
-        dbHelper.open();
         List<DailyAlarm> toSchedule = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + ">=" + createTime);
-        dbHelper.close();
         for(DailyAlarm alarm : toSchedule){
             scheduleNextAlarm(alarm);
         }

@@ -2,11 +2,13 @@ package patricklove.com.snowdayalarm.database.models;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
@@ -22,6 +24,11 @@ public class DailyAlarm {
 
     private static final String LOG_TAG = "DailyAlarm";
     private long id;
+
+    private String name;
+    private Date triggerTime;
+    private AlarmAction state;
+    private AlarmTemplate associatedAlarm;
 
     public long getId() {
         return id;
@@ -39,18 +46,19 @@ public class DailyAlarm {
         return associatedAlarm;
     }
 
-    private Date triggerTime;
-    private AlarmAction state;
-    private AlarmTemplate associatedAlarm;
+    public String getName() {
+        return name;
+    }
 
-    public DailyAlarm(Date time, AlarmAction state, AlarmTemplate alarm){
+    public DailyAlarm(String name, Date time, AlarmAction state, AlarmTemplate alarm){
+        this.name = name;
         this.state = state;
         this.triggerTime = time;
         this.associatedAlarm = alarm;
     }
 
-    public DailyAlarm(long id, Date time, AlarmAction state, AlarmTemplate alarm){
-        this(time, state, alarm);
+    public DailyAlarm(long id, String name, Date time, AlarmAction state, AlarmTemplate alarm){
+        this(name, time, state, alarm);
         this.id = id;
     }
 
@@ -104,5 +112,18 @@ public class DailyAlarm {
 
     public boolean isPast() {
         return this.triggerTime.before(DateUtils.getNow());
+    }
+
+    public int getStatusColorID() {
+        if(state == AlarmAction.NO_CHANGE){
+            return R.color.state_on_time;
+        }
+        if(state == AlarmAction.DELAY_2_HR){
+            return R.color.state_delay;
+        }
+        if(state == AlarmAction.DISABLE){
+            return R.color.state_cancel;
+        }
+        return Color.WHITE;
     }
 }

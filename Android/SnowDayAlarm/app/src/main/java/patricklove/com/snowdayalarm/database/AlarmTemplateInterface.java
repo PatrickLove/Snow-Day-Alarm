@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import net.fortuna.ical4j.model.parameter.CnFactory;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -19,10 +21,12 @@ import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 public class AlarmTemplateInterface {
 
     private static final String LOG_TAG = "AlarmTemplateDBInterface";
+    private Context c;
     private SnowDayDatabase dbHelper;
     private SQLiteDatabase database;
     private static final String[] ALL_COLUMNS = new String[] {
             SnowDayDatabase.COLUMN_ID,
+            SnowDayDatabase.COLUMN_NAME,
             SnowDayDatabase.COLUMN_ACTION_DELAY,
             SnowDayDatabase.COLUMN_ACTION_CANCEL,
             SnowDayDatabase.COLUMN_ALARM_TIME,
@@ -36,22 +40,22 @@ public class AlarmTemplateInterface {
     };
 
     public AlarmTemplateInterface(Context c){
-        dbHelper = new SnowDayDatabase(c);
-    }
-
-    public AlarmTemplateInterface(SnowDayDatabase d){
-        dbHelper = d;
+        this.c = c;
     }
 
     public void open(){
+        dbHelper = new SnowDayDatabase(c);
         database = dbHelper.getWritableDatabase();
     }
+
     public void close(){
         dbHelper.close();
+        dbHelper = null;
     }
 
     private AlarmTemplate templateFromCursor(Cursor c){
         long id = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ID));
+        String name = c.getString(c.getColumnIndex(SnowDayDatabase.COLUMN_NAME));
         int cancelCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_ACTION_CANCEL));
         int delayCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_ACTION_DELAY));
         long timeMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_TIME));
@@ -65,12 +69,18 @@ public class AlarmTemplateInterface {
         boolean sunday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SUNDAY)) == 1;
 
 
-        return new AlarmTemplate(id, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), new Date(timeMillis),
+        return new AlarmTemplate(id, name, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), new Date(timeMillis),
                 monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 
     public long add(AlarmTemplate temp){
+        ContentValues values = encodeToValues(temp);
+        return database.insert(SnowDayDatabase.TABLE_ALL_ALARMS, null, values);
+    }
+
+    private ContentValues encodeToValues(AlarmTemplate temp){
         ContentValues values = new ContentValues();
+        values.put(SnowDayDatabase.COLUMN_NAME, temp.getName());
         values.put(SnowDayDatabase.COLUMN_ACTION_CANCEL, temp.getActionCancel().getCode());
         values.put(SnowDayDatabase.COLUMN_ACTION_DELAY, temp.getActionDelay().getCode());
         values.put(SnowDayDatabase.COLUMN_ALARM_TIME, temp.getTime().getTime());
@@ -81,13 +91,12 @@ public class AlarmTemplateInterface {
         values.put(SnowDayDatabase.COLUMN_DAYS.FRIDAY, temp.isFriday());
         values.put(SnowDayDatabase.COLUMN_DAYS.SATURDAY, temp.isSaturday());
         values.put(SnowDayDatabase.COLUMN_DAYS.SUNDAY, temp.isSunday());
-
-        return database.insert(SnowDayDatabase.TABLE_ALL_ALARMS, null, values);
+        return values;
     }
 
     public void delete(AlarmTemplate temp){
         Log.w(LOG_TAG, "Deleting template of id " + temp.getId() + " and dependent alarms");
-        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(dbHelper);
+        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
         dailyAlarmHelper.open();
         dailyAlarmHelper.deleteDependents(temp);
         dailyAlarmHelper.close();

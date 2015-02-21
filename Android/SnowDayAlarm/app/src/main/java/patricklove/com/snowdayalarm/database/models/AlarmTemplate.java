@@ -21,6 +21,11 @@ public class AlarmTemplate {
     private AlarmAction actionDelay;
     private Date time;
     private boolean isMonday;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
 
     public long getId() {
         return id;
@@ -69,8 +74,9 @@ public class AlarmTemplate {
     private boolean isSaturday;
     private boolean isSunday;
 
-    public AlarmTemplate(AlarmAction cancel, AlarmAction delay, Date time,
+    public AlarmTemplate(String name, AlarmAction cancel, AlarmAction delay, Date time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
+        this.name = name;
         this.actionCancel = cancel;
         this.actionDelay = delay;
         this.time = time;
@@ -83,9 +89,9 @@ public class AlarmTemplate {
         this.isSunday = sunday;
     }
 
-    public AlarmTemplate(long id, AlarmAction cancel, AlarmAction delay, Date time,
+    public AlarmTemplate(long id, String name, AlarmAction cancel, AlarmAction delay, Date time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
-        this(cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        this(name, cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
         this.id = id;
     }
 
@@ -116,7 +122,7 @@ public class AlarmTemplate {
             date.add(Calendar.DATE, 1);
         } while(!isActiveForDate(date));
         Date alarm = DateUtils.dateTime(date.getTime(), time);
-        return new DailyAlarm(alarm, AlarmAction.NO_CHANGE, this);
+        return new DailyAlarm(name, alarm, AlarmAction.NO_CHANGE, this);
     }
 
     public void save(AlarmTemplateInterface helper){
