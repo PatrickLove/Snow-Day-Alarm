@@ -2,17 +2,12 @@ package patricklove.com.snowdayalarm.utils;
 
 import android.content.Context;
 
-import net.fortuna.ical4j.model.Content;
-
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.Date;
 
 /**

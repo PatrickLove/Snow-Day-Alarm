@@ -2,7 +2,6 @@ package patricklove.com.snowdayalarm.twitter;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.wifi.WifiConfiguration;
 import android.util.Log;
 
 import java.util.List;

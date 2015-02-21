@@ -5,7 +5,7 @@
     <dimen name="stop_alarm_button_height">200dp</dimen>
     <dimen name="stop_button_text_size">50sp</dimen>
     <dimen name="status_text_size">30sp</dimen>
-    <dimen name="daily_alarm_element_height">100dp</dimen>
-    <dimen name="daily_alarm_element_padding">10dp</dimen>
-    <dimen name="daily_alarm_title_size">30sp</dimen>
+    <dimen name="list_element_height">100dp</dimen>
+    <dimen name="list_element_padding">10dp</dimen>
+    <dimen name="list_title_size">30sp</dimen>
 </resources>

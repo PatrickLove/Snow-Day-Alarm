@@ -8,9 +8,9 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.database.SnowDayDatabase;
+import patricklove.com.snowdayalarm.database.models.DailyAlarm;
 
 /**
  * Created by Patrick Love on 2/17/2015.

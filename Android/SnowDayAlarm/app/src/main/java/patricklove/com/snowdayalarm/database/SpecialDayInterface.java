@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import patricklove.com.snowdayalarm.utils.DateUtils;
 import patricklove.com.snowdayalarm.database.models.SpecialDate;
 import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/17/2015.

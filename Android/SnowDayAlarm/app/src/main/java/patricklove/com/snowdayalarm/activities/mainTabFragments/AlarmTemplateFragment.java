@@ -7,10 +7,9 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.alarmTools.DailyAlarmListAdapter;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
+import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
+import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 
 /**
  * A fragment representing a list of Items.
@@ -18,13 +17,13 @@ import patricklove.com.snowdayalarm.utils.DateUtils;
  * <p/>
  * interface.
  */
-public class DaysAlarmsFragment extends ListFragment implements Refreshable{
+public class AlarmTemplateFragment extends ListFragment implements Refreshable{
 
 
-    private DailyAlarmListAdapter adapter;
+    private AlarmTemplateListAdapter adapter;
 
-    public static DaysAlarmsFragment newInstance() {
-        DaysAlarmsFragment fragment = new DaysAlarmsFragment();
+    public static AlarmTemplateFragment newInstance() {
+        AlarmTemplateFragment fragment = new AlarmTemplateFragment();
         return fragment;
     }
 
@@ -32,21 +31,21 @@ public class DaysAlarmsFragment extends ListFragment implements Refreshable{
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public DaysAlarmsFragment() {
+    public AlarmTemplateFragment() {
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new DailyAlarmListAdapter(getActivity(), getAlarmList());
+        adapter = new AlarmTemplateListAdapter(getActivity(), getAlarmList());
         this.setListAdapter(adapter);
     }
 
-    private List<DailyAlarm> getAlarmList(){
-        DailyAlarmInterface dbHelp = new DailyAlarmInterface(getActivity().getApplicationContext());
+    private List<AlarmTemplate> getAlarmList(){
+        AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(getActivity().getApplicationContext());
         dbHelp.open();
-        List<DailyAlarm> allAlarms = dbHelp.getForDay(DateUtils.getNow());
+        List<AlarmTemplate> allAlarms = dbHelp.getAll();
         dbHelp.close();
         return allAlarms;
     }

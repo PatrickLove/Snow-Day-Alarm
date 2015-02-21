@@ -10,12 +10,12 @@ import java.util.Date;
 
 import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.utils.DateUtils;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.

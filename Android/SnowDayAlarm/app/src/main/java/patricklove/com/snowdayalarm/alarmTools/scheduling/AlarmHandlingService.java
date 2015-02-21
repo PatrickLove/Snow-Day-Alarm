@@ -3,9 +3,6 @@ package patricklove.com.snowdayalarm.alarmTools.scheduling;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.PowerManager;
 import android.util.Log;
 
@@ -13,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.activities.RingingActivity;
+import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
+import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.database.SpecialDayInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.twitter.DayState;
 import patricklove.com.snowdayalarm.twitter.TwitterAnalysisBridge;
 import patricklove.com.snowdayalarm.utils.DateUtils;

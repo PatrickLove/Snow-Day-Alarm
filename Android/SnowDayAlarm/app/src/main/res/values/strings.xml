@@ -11,5 +11,7 @@
     <string name="no_state_text">Unknown state</string>
     <string name="message_delay">Sorry, no cancellation, but you did get a delay</string>
     <string name="message_normal">Sorry, looks like school\'s on time today</string>
+    <string name="active_on">Active on:</string>
+    <string name="action_add_alarm">Add new alarm</string>
 
 </resources>

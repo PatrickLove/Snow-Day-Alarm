@@ -11,22 +11,22 @@ import java.text.DateFormat;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
+import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 
 /**
  * Created by Patrick Love on 2/21/2015.
  */
-public class DailyAlarmListAdapter extends BaseAdapter {
+public class AlarmTemplateListAdapter extends BaseAdapter {
 
-    private List<DailyAlarm> alarms;
+    private List<AlarmTemplate> alarms;
     private Context context;
 
-    public DailyAlarmListAdapter(Context context, List<DailyAlarm> alarms){
+    public AlarmTemplateListAdapter(Context context, List<AlarmTemplate> alarms){
         this.alarms = alarms;
         this.context = context;
     }
 
-    public void updateList(List<DailyAlarm> list){
+    public void updateList(List<AlarmTemplate> list){
         alarms = list;
     }
 
@@ -47,19 +47,19 @@ public class DailyAlarmListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        DailyAlarm alarm = alarms.get(position);
+        AlarmTemplate alarm = alarms.get(position);
         View view = convertView;
         if(view == null){
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = layoutInflater.inflate(R.layout.daily_alarm_list_element, null);
+            view = layoutInflater.inflate(R.layout.alarm_template_list_element, null);
         }
-        View background = view.findViewById(R.id.backgroud_container);
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView time = (TextView) view.findViewById(R.id.time);
-        background.setBackgroundColor(context.getResources().getColor(alarm.getStatusColorID()));
+        TextView days = (TextView) view.findViewById(R.id.activeDays);
         title.setText(alarm.getName());
-        String timeStr = DateFormat.getTimeInstance(DateFormat.SHORT).format(alarm.getTriggerTime());
+        String timeStr = DateFormat.getTimeInstance(DateFormat.SHORT).format(alarm.getTime());
         time.setText(timeStr);
+        days.setText(alarm.getActiveDayStr());
         return view;
     }
 }

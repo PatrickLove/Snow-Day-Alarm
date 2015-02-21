@@ -13,7 +13,6 @@ import java.util.List;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.database.models.SpecialDate;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**

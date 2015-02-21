@@ -1,8 +1,5 @@
 package patricklove.com.snowdayalarm.utils;
 
-import android.util.Log;
-
-import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
 

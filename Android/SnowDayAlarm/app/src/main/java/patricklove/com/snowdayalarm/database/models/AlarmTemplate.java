@@ -6,9 +6,9 @@ import java.util.Calendar;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.utils.DateUtils;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.
@@ -142,6 +142,35 @@ public class AlarmTemplate {
             return actionDelay;
         }
         return AlarmAction.NO_CHANGE;
+    }
+
+    public String getActiveDayStr(){
+        String ret = "";
+        if(isMonday){
+            ret += "Mon, ";
+        }
+        if(isTuesday){
+            ret += "Tue, ";
+        }
+        if(isMonday){
+            ret += "Wed, ";
+        }
+        if(isMonday){
+            ret += "Thu, ";
+        }
+        if(isMonday){
+            ret += "Fri, ";
+        }
+        if(isMonday){
+            ret += "Sat, ";
+        }
+        if(isMonday){
+            ret += "Sun, ";
+        }
+        if(ret.length() == 0){
+            ret = "Never  ";
+        }
+        return ret.substring(0, ret.length()-2);
     }
 
 }

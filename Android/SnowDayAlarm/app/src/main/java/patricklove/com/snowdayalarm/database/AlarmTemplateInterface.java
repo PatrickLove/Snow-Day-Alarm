@@ -6,8 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import net.fortuna.ical4j.model.parameter.CnFactory;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

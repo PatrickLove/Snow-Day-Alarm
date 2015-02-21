@@ -9,18 +9,18 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import patricklove.com.snowdayalarm.R;
+import patricklove.com.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
+import patricklove.com.snowdayalarm.activities.mainTabFragments.Refreshable;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
@@ -85,34 +85,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-
-        AlarmScheduler scheduler = new AlarmScheduler(this);
-        scheduler.open();
-        DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
-        AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
-        Log.d("TEST_CODE", "Creating template");
-        alarmInterface.open();
-        AlarmTemplate temp = new AlarmTemplate("Test template", AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, new Date(512), true, false, true, false, true, false, true);
-        temp.save(alarmInterface);
-        alarmInterface.close();
-        Log.d("TEST_CODE", "Creating alarm 1");
-        Calendar now = DateUtils.dateToCal(DateUtils.getNow());
-        now.add(Calendar.SECOND, 15);
-        DailyAlarm testAlarm1 = new DailyAlarm("The alarm", now.getTime(), AlarmAction.NO_CHANGE, temp);
-//        Log.d("TEST_CODE", "Creating alarm 2");
-//        now.add(Calendar.SECOND, 15);
-//        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
-        dbInterface.open();
-        testAlarm1.save(dbInterface);
-        Log.d("TEST_CODE", "" + testAlarm1.getId());
-//        testAlarm2.save(dbInterface);
-//        Log.d("TEST_CODE", ""+testAlarm2.getId());
-        dbInterface.close();
-        scheduler.close();
-        Log.d("TEST_CODE", "Scheduling 1");
-        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
-//        Log.d("TEST_CODE", "Scheduling 2");
-//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
     }
 
 
@@ -134,8 +106,47 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_settings) {
             return true;
         }
+        if (id == R.id.action_add_alarm){
+            AlarmScheduler scheduler = new AlarmScheduler(this);
+            scheduler.open();
+            DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
+            AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
+            Log.d("TEST_CODE", "Creating template");
+            alarmInterface.open();
+            AlarmTemplate temp = new AlarmTemplate("Test Template", AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, new Date(512), true, false, true, false, true, false, true);
+            temp.save(alarmInterface);
+            alarmInterface.close();
+            Log.d("TEST_CODE", "Creating alarm 1");
+            Calendar now = DateUtils.dateToCal(DateUtils.getNow());
+            now.add(Calendar.SECOND, 15);
+            DailyAlarm testAlarm1 = new DailyAlarm("Test Alarm", now.getTime(), AlarmAction.NO_CHANGE, temp);
+//        Log.d("TEST_CODE", "Creating alarm 2");
+//        now.add(Calendar.SECOND, 15);
+//        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
+            dbInterface.open();
+            testAlarm1.save(dbInterface);
+            Log.d("TEST_CODE", "" + testAlarm1.getId());
+//        testAlarm2.save(dbInterface);
+//        Log.d("TEST_CODE", ""+testAlarm2.getId());
+            dbInterface.close();
+            scheduler.close();
+            Log.d("TEST_CODE", "Scheduling 1");
+            Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
+//        Log.d("TEST_CODE", "Scheduling 2");
+//        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
+            refreshAllLists();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void refreshAllLists(){
+        List<Fragment> frags = getSupportFragmentManager().getFragments();
+        for(Fragment frag : frags){
+            if(frag instanceof Refreshable){
+                ((Refreshable) frag).refresh();
+            }
+        }
     }
 
     @Override
@@ -165,10 +176,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         @Override
         public Fragment getItem(int position) {
-            if(position == 0){
-                return DaysAlarmsFragment.newInstance();
+            switch (position){
+                case 0:
+                    return DaysAlarmsFragment.newInstance();
+                case 1:
+                    return AlarmTemplateFragment.newInstance();
             }
-            return PlaceholderFragment.newInstance(position + 1);
+            return null;
         }
 
         @Override
@@ -188,38 +202,4 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-    }
-
 }
