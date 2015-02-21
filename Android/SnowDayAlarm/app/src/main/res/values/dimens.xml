@@ -8,4 +8,5 @@
     <dimen name="list_element_height">100dp</dimen>
     <dimen name="list_element_padding">10dp</dimen>
     <dimen name="list_title_size">30sp</dimen>
+    <dimen name="time_padding">5dp</dimen>
 </resources>

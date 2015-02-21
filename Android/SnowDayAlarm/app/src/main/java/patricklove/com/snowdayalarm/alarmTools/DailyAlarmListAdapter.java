@@ -53,10 +53,9 @@ public class DailyAlarmListAdapter extends BaseAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = layoutInflater.inflate(R.layout.daily_alarm_list_element, null);
         }
-        View background = view.findViewById(R.id.backgroud_container);
         TextView title = (TextView) view.findViewById(R.id.title);
         TextView time = (TextView) view.findViewById(R.id.time);
-        background.setBackgroundColor(context.getResources().getColor(alarm.getStatusColorID()));
+        time.setBackgroundColor(context.getResources().getColor(alarm.getStatusColorID()));
         title.setText(alarm.getName());
         String timeStr = DateFormat.getTimeInstance(DateFormat.SHORT).format(alarm.getTriggerTime());
         time.setText(timeStr);
