@@ -14,5 +14,18 @@
     <string name="active_on">Active on:</string>
     <string name="action_add_alarm">Add new alarm</string>
     <string name="no_name">Unknown Alarm</string>
+    <string name="title_activity_edit_alarm">Add/Edit Alarm</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="name_label">Name:</string>
+    <string name="trigger_time_label">Trigger Time:</string>
+    <string name="monday">Monday</string>
+    <string name="tuesday">Tuesday</string>
+    <string name="wednesday">Wednesday</string>
+    <string name="thursday">Thursday</string>
+    <string name="friday">Friday</string>
+    <string name="saturday">Saturday</string>
+    <string name="sunday">Sunday</string>
+    <string name="days_to_ring_label">Days to Ring:</string>
+    <string name="change_button">Change</string>
 
 </resources>

@@ -40,6 +40,14 @@
             android:name=".activities.RingingActivity"
             android:label="@string/title_activity_ringing" >
         </activity>
+        <activity
+            android:name=".activities.EditAlarm"
+            android:label="@string/title_activity_edit_alarm"
+            android:parentActivityName=".activities.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="patricklove.com.snowdayalarm.activities.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
