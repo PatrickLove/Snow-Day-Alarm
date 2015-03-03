@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.R;
@@ -23,7 +22,7 @@ import patricklove.com.snowdayalarm.utils.DateUtils;
 public class DailyAlarm {
 
     private static final String LOG_TAG = "DailyAlarm";
-    private long id;
+    private long id = -1;
 
     private String name;
     private Date triggerTime;
@@ -68,16 +67,14 @@ public class DailyAlarm {
             this.triggerTime = null;
         }
         if(action == AlarmAction.DELAY_2_HR){
-            Calendar ret = DateUtils.dateToCal(associatedAlarm.getTime());
-            ret.add(Calendar.HOUR, 2);
-            this.triggerTime = ret.getTime();
+            this.triggerTime = DateUtils.dateTime(this.triggerTime, associatedAlarm.getTime() + 2 * DateUtils.MILLIS_PER_HOUR);
         }
         this.state = action;
     }
 
     public void save(DailyAlarmInterface helper){
         this.id = helper.add(this);
-        Log.i(LOG_TAG, "Alarm of id " + this.id + " saved to database");
+        Log.i(LOG_TAG, this.name +  " saved to database");
     }
 
     public boolean saveIfNew(DailyAlarmInterface dbHelper) {
@@ -91,8 +88,14 @@ public class DailyAlarm {
     public void updateDB(DailyAlarmInterface dbHelper) {
         if(!saveIfNew(dbHelper)){
             dbHelper.update(this);
-            Log.i(LOG_TAG, "Entry for alarm of id " + this.id + " updated");
+            Log.i(LOG_TAG, "Entry for " + this.name + " updated");
         }
+    }
+
+    public void updateParent(AlarmTemplate t, DayState state){
+        associatedAlarm = t;
+        triggerTime = DateUtils.dateTime(triggerTime, associatedAlarm.getTime());
+        updateActionTime(state);
     }
 
     public boolean shouldTrigger(DayState state){

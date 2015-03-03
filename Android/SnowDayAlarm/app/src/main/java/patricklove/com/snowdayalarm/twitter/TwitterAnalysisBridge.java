@@ -27,12 +27,12 @@ public class TwitterAnalysisBridge {
         this.c = c;
     }
 
-    public boolean updateSpecialDays(){
+    public int updateSpecialDays(){
         ConnectivityManager connectivityManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
         if(connectivityManager.getActiveNetworkInfo().isConnected()) {
             List<SpecialDate> dates = getAnalysis();
             if(dates == null){
-                return false;
+                return -1;
             }
             if(dates.size() != 0) {
                 SpecialDayInterface dbInterface = new SpecialDayInterface(c);
@@ -42,11 +42,11 @@ public class TwitterAnalysisBridge {
                 }
                 dbInterface.close();
             }
-            return true;
+            return dates.size();
         }
         else{
-            Log.w(LOG_TAG, "Device not connected to the internet, tweets for this alarm are not up to date");
-            return false;
+            Log.w(LOG_TAG, "Device not connected to the internet, tweets are not up to date");
+            return -1;
         }
     }
 

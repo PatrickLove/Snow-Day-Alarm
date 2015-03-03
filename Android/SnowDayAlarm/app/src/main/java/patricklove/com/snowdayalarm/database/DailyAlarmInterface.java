@@ -13,6 +13,8 @@ import java.util.List;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
+import patricklove.com.snowdayalarm.twitter.DayState;
+import patricklove.com.snowdayalarm.twitter.TwitterAnalysisBridge;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
@@ -47,7 +49,7 @@ public class DailyAlarmInterface {
     }
 
     public List<DailyAlarm> query(String selection){
-        Log.i(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
+        Log.d(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_DAILY_ALARMS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<DailyAlarm> ret = new ArrayList<>();
         AlarmTemplateInterface alarmDbHelper = new AlarmTemplateInterface(this.c);
@@ -70,6 +72,25 @@ public class DailyAlarmInterface {
         database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, SnowDayDatabase.idEquals(t.getId()), null);
     }
 
+    public void updateDependents(AlarmTemplate t) {
+        List<DailyAlarm> alarms = query(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId());
+        for (DailyAlarm alarm : alarms) {
+            this.close();
+            //Update Special days and states so that if an alarm should be scheduled after now due to a delay that wouldn't otherwise, it will
+            Log.d(LOG_TAG, "Retrieving tweets");
+            TwitterAnalysisBridge twitterComp = new TwitterAnalysisBridge(this.c);
+            twitterComp.updateSpecialDays();
+            SpecialDayInterface helper = new SpecialDayInterface(this.c);
+            helper.open();
+            DayState state = helper.getStateForDay(DateUtils.getNow());
+            helper.close();
+
+            this.open();
+            alarm.updateParent(t, state);
+            update(alarm);
+        }
+    }
+
     private DailyAlarm alarmFromDb(Cursor c, AlarmTemplateInterface t){
         long id = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ID));
         String name = c.getString(c.getColumnIndex(SnowDayDatabase.COLUMN_NAME));
@@ -77,7 +98,7 @@ public class DailyAlarmInterface {
         long timeMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_TIME));
 
         long alarmId = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM));
-        AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.idEquals(alarmId)).get(0);
+        AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.idEquals(alarmId)).get(0);//TODO handle missing associated alarm
 
         return new DailyAlarm(id, name, new Date(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
     }

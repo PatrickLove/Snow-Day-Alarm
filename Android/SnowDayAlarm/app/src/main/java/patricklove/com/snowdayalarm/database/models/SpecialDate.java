@@ -12,7 +12,7 @@ import patricklove.com.snowdayalarm.twitter.DayState;
  */
 public class SpecialDate {
 	private Date date;
-    private long id;
+    private long id = -1;
 
     public long getId() {
         return id;

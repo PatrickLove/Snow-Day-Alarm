@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
@@ -18,7 +17,7 @@ import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
  */
 public class AlarmTemplateInterface {
 
-    private static final String LOG_TAG = "AlarmTemplateDBInterface";
+    private static final String LOG_TAG = "AlarmTemplateInterface";
     private Context c;
     private SnowDayDatabase dbHelper;
     private SQLiteDatabase database;
@@ -67,7 +66,7 @@ public class AlarmTemplateInterface {
         boolean sunday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SUNDAY)) == 1;
 
 
-        return new AlarmTemplate(id, name, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), new Date(timeMillis),
+        return new AlarmTemplate(id, name, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), timeMillis,
                 monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 
@@ -81,7 +80,7 @@ public class AlarmTemplateInterface {
         values.put(SnowDayDatabase.COLUMN_NAME, temp.getName());
         values.put(SnowDayDatabase.COLUMN_ACTION_CANCEL, temp.getActionCancel().getCode());
         values.put(SnowDayDatabase.COLUMN_ACTION_DELAY, temp.getActionDelay().getCode());
-        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, temp.getTime().getTime());
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, temp.getTime());
         values.put(SnowDayDatabase.COLUMN_DAYS.MONDAY, temp.isMonday());
         values.put(SnowDayDatabase.COLUMN_DAYS.TUESDAY, temp.isTuesday());
         values.put(SnowDayDatabase.COLUMN_DAYS.WEDNESDAY, temp.isWednesday());
@@ -92,12 +91,26 @@ public class AlarmTemplateInterface {
         return values;
     }
 
+    public void update(AlarmTemplate alarm) {
+        Log.i(LOG_TAG, "Updating " + alarm.getName());
+        ContentValues values = encodeToValues(alarm);
+        database.update(SnowDayDatabase.TABLE_ALL_ALARMS, values, SnowDayDatabase.idEquals(alarm.getId()), null);
+        this.close();
+        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
+        dailyAlarmHelper.open();
+        dailyAlarmHelper.updateDependents(alarm);
+        dailyAlarmHelper.close();
+        this.open();
+    }
+
     public void delete(AlarmTemplate temp){
-        Log.w(LOG_TAG, "Deleting template of id " + temp.getId() + " and dependent alarms");
+        Log.w(LOG_TAG, "Deleting " + temp.getName() + " and dependent alarms");
+        this.close();
         DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
         dailyAlarmHelper.open();
         dailyAlarmHelper.deleteDependents(temp);
         dailyAlarmHelper.close();
+        this.open();
 
         database.delete(SnowDayDatabase.TABLE_ALL_ALARMS, SnowDayDatabase.idEquals(temp.getId()), null);
     }
@@ -107,7 +120,7 @@ public class AlarmTemplateInterface {
     }
 
     public List<AlarmTemplate> query(String selection){
-        Log.i(LOG_TAG, "Request processing for Alarm Templates WHERE " + selection);
+        Log.d(LOG_TAG, "Request processing for Alarm Templates WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_ALL_ALARMS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<AlarmTemplate> ret = new ArrayList<>();
         c.moveToFirst();

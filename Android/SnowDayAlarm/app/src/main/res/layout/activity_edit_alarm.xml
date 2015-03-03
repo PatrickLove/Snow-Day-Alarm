@@ -25,12 +25,13 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/nameText"
-        android:inputType="text"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_toRightOf="@+id/textView2"
-        android:layout_toEndOf="@+id/textView2" />
+        android:layout_toEndOf="@+id/textView2"
+        android:capitalize="words"
+        android:inputType="textCapWords" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,7 +43,7 @@
         android:layout_below="@+id/textView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/button"
+        android:layout_alignBottom="@+id/changeButton"
         android:gravity="center_vertical" />
 
     <TextView
@@ -52,36 +53,37 @@
         android:text="@string/days_to_ring_label"
         android:id="@+id/textView4"
         android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/textView6"
-        android:layout_alignEnd="@+id/textView6"
+        android:layout_alignRight="@+id/time"
+        android:layout_alignEnd="@+id/time"
         android:gravity="center_vertical" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:id="@+id/textView6"
+        android:id="@+id/time"
         android:layout_alignTop="@+id/textView3"
         android:layout_toRightOf="@+id/textView3"
         android:layout_above="@+id/textView4"
-        android:layout_toLeftOf="@+id/button"
-        android:layout_toStartOf="@+id/button"
+        android:layout_toLeftOf="@+id/changeButton"
+        android:layout_toStartOf="@+id/changeButton"
         android:gravity="center_vertical"
         android:layout_marginStart="@dimen/time_tab"
-        android:maxLines="1" />
+        android:maxLines="1"
+        android:capitalize="words" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/change_button"
-        android:id="@+id/button"
+        android:id="@+id/changeButton"
         android:layout_below="@+id/nameText"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="onChangeTimePress" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TableLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -89,51 +91,98 @@
         android:layout_below="@+id/textView4"
         android:layout_marginLeft="@dimen/checkbox_tab"
         android:id="@+id/dateContainer"
-        android:layout_alignParentRight="true">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="false"
+        android:layout_alignWithParentIfMissing="false">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/monday"
-            android:id="@+id/mondayBox" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tuesday"
-            android:id="@+id/tuesdayBox" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/monday"
+                android:id="@+id/mondayBox" />
+        </TableRow>
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/wednesday"
-            android:id="@+id/wednesdayBox" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/thursday"
-            android:id="@+id/thursdayBox" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/tuesday"
+                android:id="@+id/tuesdayBox" />
+        </TableRow>
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/friday"
-            android:id="@+id/fridayBox" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/saturday"
-            android:id="@+id/saturdayBox" />
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/wednesday"
+                android:id="@+id/wednesdayBox" />
+        </TableRow>
 
-        <CheckBox
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/sunday"
-            android:id="@+id/sundayBox"
-            android:layout_marginLeft="261dp"
-            android:layout_marginTop="565dp" />
-    </LinearLayout>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/thursday"
+                android:id="@+id/thursdayBox" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/friday"
+                android:id="@+id/fridayBox" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/saturday"
+                android:id="@+id/saturdayBox" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <CheckBox
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sunday"
+                android:id="@+id/sundayBox" />
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/done"
+        android:id="@+id/doneButton"
+        android:layout_below="@+id/dateContainer"
+        android:layout_alignStart="@+id/dateContainer"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:onClick="saveAndFinish" />
 
 </RelativeLayout>

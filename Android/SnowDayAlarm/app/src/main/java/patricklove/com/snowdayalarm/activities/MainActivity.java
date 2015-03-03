@@ -9,12 +9,9 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -22,13 +19,6 @@ import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.Refreshable;
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.utils.DateUtils;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -48,10 +38,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
      */
     ViewPager mViewPager;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        new RefreshStatesTask(this).execute();
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
@@ -88,6 +82,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+    @Override
+    protected void onStart() {
+        refreshAllLists();
+        super.onStart();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -139,15 +138,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 ////        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
 //            refreshAllLists();
         }
+        if(id == R.id.action_refresh_states){
+            new RefreshStatesTask(this).execute();
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
-    private void refreshAllLists(){
+    protected void refreshAllLists(){
         List<Fragment> frags = getSupportFragmentManager().getFragments();
-        for(Fragment frag : frags){
-            if(frag instanceof Refreshable){
-                ((Refreshable) frag).refresh();
+        if(frags != null) {
+            for (Fragment frag : frags) {
+                if (frag instanceof Refreshable) {
+                    ((Refreshable) frag).refresh();
+                }
             }
         }
     }

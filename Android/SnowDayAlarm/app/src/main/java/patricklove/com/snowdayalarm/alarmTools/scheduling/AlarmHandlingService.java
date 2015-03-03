@@ -29,7 +29,7 @@ import patricklove.com.snowdayalarm.utils.FileUtils;
  */
 public class AlarmHandlingService extends IntentService {
 
-    private static final String LOG_TAG = "AlarmHandler (Service or class)";
+    private static final String LOG_TAG = "AlarmHandler";
     private static final String WAKE_LOCK_TAG = "Alarm_Wake_Lock";
     public static final String EXTRA_WARNING_DATE = "warning.date";
     public static final String EXTRA_DAY_STATE = "day.state";
@@ -93,33 +93,23 @@ public class AlarmHandlingService extends IntentService {
 
         public void handleAlarm() {
             //TODO implement alarm handling
-            Log.i(LOG_TAG, "Firing alarm of id " + alarm.getId());
+            Log.i(LOG_TAG, "Firing " + alarm.getName());
 
             DayState currentState = retrieveCurrentDayState();
-
 
             if(alarm.shouldTrigger(currentState)){
                 startAlarmActivity(currentState);
                 scheduleNextAlarm();
             }
-            else{
-                alarm.updateActionTime(currentState);
-                if(alarm.isCancelled()){
-                    scheduleNextAlarm();
-                }
-                else{
-                    scheduleAgain();
-                }
-                dbHelper.open();
-                    alarm.updateDB(dbHelper);
-                dbHelper.close();
-            }
+            scheduler.open();
+            scheduler.updateTodaysAlarms(currentState);
+            scheduler.close();
         }
 
         private DayState retrieveCurrentDayState(){
             Log.d(LOG_TAG, "Retrieving tweets");
             TwitterAnalysisBridge twitterComp = new TwitterAnalysisBridge(context);
-            if(!twitterComp.updateSpecialDays()){
+            if(twitterComp.updateSpecialDays() == -1){
                 warnLastUpdate = new FileUtils(context).readLastUpdate();
             }
             SpecialDayInterface helper = new SpecialDayInterface(context);
@@ -137,7 +127,7 @@ public class AlarmHandlingService extends IntentService {
 
         private void scheduleNextAlarm() {
             scheduler.open();
-            scheduler.scheduleNextAlarm(alarm);
+            scheduler.scheduleNextAlarm(alarm.getAssociatedAlarm());
             scheduler.close();
         }
 

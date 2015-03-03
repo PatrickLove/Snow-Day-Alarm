@@ -31,6 +31,6 @@ public enum AlarmAction {
     }
 
     public boolean atOrBefore(AlarmAction action) {
-        return action.code <= code;
+        return this.code <= action.code;
     }
 }

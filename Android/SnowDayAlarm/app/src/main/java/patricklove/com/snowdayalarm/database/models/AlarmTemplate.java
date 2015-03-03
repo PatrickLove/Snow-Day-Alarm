@@ -16,10 +16,10 @@ import patricklove.com.snowdayalarm.utils.DateUtils;
 public class AlarmTemplate {
 
     private static final String LOG_TAG = "AlarmTemplate";
-    private long id;
+    private long id = -1;
     private AlarmAction actionCancel;
     private AlarmAction actionDelay;
-    private Date time;
+    private long time;
     private boolean isMonday;
     private String name;
 
@@ -74,7 +74,7 @@ public class AlarmTemplate {
     private boolean isSaturday;
     private boolean isSunday;
 
-    public AlarmTemplate(String name, AlarmAction cancel, AlarmAction delay, Date time,
+    public AlarmTemplate(String name, AlarmAction cancel, AlarmAction delay, long time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
         this.name = name;
         this.actionCancel = cancel;
@@ -89,7 +89,7 @@ public class AlarmTemplate {
         this.isSunday = sunday;
     }
 
-    public AlarmTemplate(long id, String name, AlarmAction cancel, AlarmAction delay, Date time,
+    public AlarmTemplate(long id, String name, AlarmAction cancel, AlarmAction delay, long time,
                          boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
         this(name, cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
         this.id = id;
@@ -125,12 +125,16 @@ public class AlarmTemplate {
         return new DailyAlarm(name, alarm, AlarmAction.NO_CHANGE, this);
     }
 
-    public void save(AlarmTemplateInterface helper){
-        this.id = helper.add(this);
-        Log.i(LOG_TAG, "Template of id " + this.id + " added to database");
+    public DailyAlarm generateFirstAlarm() {
+        Calendar date = DateUtils.dateToCal(DateUtils.getNow());
+        while(!isActiveForDate(date)) {
+            date.add(Calendar.DATE, 1);
+        }
+        Date alarm = DateUtils.dateTime(date.getTime(), time);
+        return new DailyAlarm(name, alarm, AlarmAction.NO_CHANGE, this);
     }
 
-    public Date getTime(){
+    public long getTime(){
         return time;
     }
 
@@ -173,4 +177,8 @@ public class AlarmTemplate {
         return ret.substring(0, ret.length()-2);
     }
 
+    public void save(AlarmTemplateInterface dbHelp) {
+        this.id = dbHelp.add(this);
+        Log.i(LOG_TAG, "Added " + name + " to database");
+    }
 }

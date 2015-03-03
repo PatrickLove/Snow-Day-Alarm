@@ -1,7 +1,9 @@
 package patricklove.com.snowdayalarm.utils;
 
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by Patrick Love on 2/16/2015.
@@ -42,8 +44,8 @@ public class DateUtils {
         return initial;
     }
 
-    public static Date dateTime(Date date, Date time){
-        long totalMillis = stripTime(date).getTime() + getTimeSinceMidnight(time);
+    public static Date dateTime(Date date, long time){
+        long totalMillis = stripTime(date).getTime() + time;
         return new Date(totalMillis);
     }
 
@@ -58,5 +60,11 @@ public class DateUtils {
         long lowerBound = stripTime(day).getTime();
         long upperBound = lowerBound + MILLIS_PER_DAY;
         return "(" + columnName + ">=" + lowerBound + " AND " + columnName + "<" + upperBound + ")";
+    }
+
+    public static String formatMilliTime(long d){
+        DateFormat formatter = DateFormat.getTimeInstance(DateFormat.SHORT);
+        formatter.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return formatter.format(new Date(d));
     }
 }

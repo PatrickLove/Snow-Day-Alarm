@@ -44,7 +44,7 @@ public class SpecialDayInterface {
     }
 
     public List<SpecialDate> query(String selection){
-        Log.i(LOG_TAG, "Request processing for Special Days WHERE " + selection);
+        Log.d(LOG_TAG, "Request processing for Special Days WHERE " + selection);
         Cursor c = database.query(SnowDayDatabase.TABLE_SPECIAL_DAYS, ALL_COLUMNS, selection, null, null, null, null);
         ArrayList<SpecialDate> ret = new ArrayList<>();
         c.moveToFirst();

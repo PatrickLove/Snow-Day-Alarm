@@ -7,11 +7,11 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
+import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/21/2015.
@@ -57,7 +57,7 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
         TextView time = (TextView) view.findViewById(R.id.time);
         TextView days = (TextView) view.findViewById(R.id.activeDays);
         title.setText(alarm.getName());
-        String timeStr = DateFormat.getTimeInstance(DateFormat.SHORT).format(alarm.getTime());
+        String timeStr = DateUtils.formatMilliTime(alarm.getTime());
         time.setText(timeStr);
         days.setText(alarm.getActiveDayStr());
         return view;
