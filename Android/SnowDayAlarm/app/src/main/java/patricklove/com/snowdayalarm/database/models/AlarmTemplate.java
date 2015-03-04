@@ -156,19 +156,19 @@ public class AlarmTemplate {
         if(isTuesday){
             ret += "Tue, ";
         }
-        if(isMonday){
+        if(isWednesday){
             ret += "Wed, ";
         }
-        if(isMonday){
+        if(isThursday){
             ret += "Thu, ";
         }
-        if(isMonday){
+        if(isFriday){
             ret += "Fri, ";
         }
-        if(isMonday){
+        if(isSaturday){
             ret += "Sat, ";
         }
-        if(isMonday){
+        if(isSunday){
             ret += "Sun, ";
         }
         if(ret.length() == 0){

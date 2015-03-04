@@ -1,7 +1,9 @@
 package patricklove.com.snowdayalarm.activities;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -9,6 +11,7 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -29,6 +32,10 @@ public class EditAlarm extends ActionBarActivity {
     public static final String EXTRA_ALARM_ID = "alarm.id";
     public static final long NO_PREVIOUS_ALARM = -1;
 
+    private static final int NO_ERROR = 0;
+    private static final int MISSING_NAME = 1;
+    private static final int MISSING_DAY_OF_WEEK = 2;
+
     private long alarmId = NO_PREVIOUS_ALARM;
     private long timeMillis = 12*DateUtils.MILLIS_PER_HOUR; //default to noon
     private EditText nameEntry;
@@ -40,6 +47,8 @@ public class EditAlarm extends ActionBarActivity {
     private CheckBox saturdayBox;
     private CheckBox sundayBox;
     private TextView timeText;
+    private Spinner cancelAction;
+    private Spinner delayAction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,12 @@ public class EditAlarm extends ActionBarActivity {
         saturdayBox = (CheckBox) findViewById(R.id.saturdayBox);
         sundayBox = (CheckBox) findViewById(R.id.sundayBox);
         timeText = (TextView) findViewById(R.id.time);
+        delayAction = (Spinner) findViewById(R.id.delaySpinner);
+        cancelAction = (Spinner) findViewById(R.id.cancelSpinner);
+        delayAction.setAdapter(AlarmAction.getSpinnerAdapter(this));
+        cancelAction.setAdapter(AlarmAction.getSpinnerAdapter(this));
+        cancelAction.setSelection(AlarmAction.DISABLE.getCode());
+        delayAction.setSelection(AlarmAction.DELAY_2_HR.getCode());
 
         if(alarmId != NO_PREVIOUS_ALARM){
             AlarmTemplate priorTemp = getPriorAlarm();
@@ -72,6 +87,8 @@ public class EditAlarm extends ActionBarActivity {
                 fridayBox.setChecked(priorTemp.isFriday());
                 saturdayBox.setChecked(priorTemp.isSaturday());
                 sundayBox.setChecked(priorTemp.isSunday());
+                delayAction.setSelection(priorTemp.getActionDelay().getCode());
+                cancelAction.setSelection(priorTemp.getActionCancel().getCode());
             }
             else{
                 alarmId = NO_PREVIOUS_ALARM;
@@ -91,10 +108,10 @@ public class EditAlarm extends ActionBarActivity {
     }
 
     private int getHour(){
-        return (int) (timeMillis%DateUtils.MILLIS_PER_HOUR);
+        return (int) (timeMillis/DateUtils.MILLIS_PER_HOUR);
     }
     private int getMinute(){
-        return (int) (timeMillis%DateUtils.MILLIS_PER_MINUTE&60);
+        return (int) (timeMillis/DateUtils.MILLIS_PER_MINUTE%60);
     }
 
     public void onChangeTimePress(View v){
@@ -110,18 +127,46 @@ public class EditAlarm extends ActionBarActivity {
     }
 
     public void saveAndFinish(View v){
-        saveAlarm();
-        this.finish();
+        int resultCode = saveAlarm(false);
+        if(resultCode == NO_ERROR) this.finish();
+        else if(resultCode == MISSING_NAME){
+            new AlertDialog.Builder(this)
+                    .setTitle(R.string.missing_value_title)
+                    .setMessage(R.string.missing_name_message)
+                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            nameEntry.requestFocus();
+                        }
+                    })
+                    .show();
+        }
+        else if(resultCode == MISSING_DAY_OF_WEEK){
+            new AlertDialog.Builder(this)
+                .setTitle(R.string.missing_value_title)
+                .setMessage(R.string.missing_date_message)
+                .setNegativeButton(R.string.cancel, null)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        saveAlarm(true);
+                        finish();
+                    }
+                })
+                .show();
+        }
     }
 
-    private void saveAlarm() {
+    private int saveAlarm(boolean overrideNoDays) {
+        AlarmTemplate temp = getTemplate();
+        if(temp.getName().equals("")) return MISSING_NAME;
+        if(!overrideNoDays && temp.getActiveDayStr().equals("Never")) return MISSING_DAY_OF_WEEK;
         SpecialDayInterface dayLookupHelp = new SpecialDayInterface(this.getApplicationContext());
         dayLookupHelp.open();
         DayState state = dayLookupHelp.getStateForDay(DateUtils.getNow());
         dayLookupHelp.close();
         AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(this.getApplicationContext());
         AlarmScheduler scheduler = new AlarmScheduler(this.getApplicationContext());
-        AlarmTemplate temp = getTemplate();
         dbHelp.open();
         if(alarmId == NO_PREVIOUS_ALARM){
             temp.save(dbHelp);
@@ -135,8 +180,9 @@ public class EditAlarm extends ActionBarActivity {
             scheduler.open();
             scheduler.scheduleDependents(temp);
         }
-        scheduler.updateTodaysAlarms(state); //Properly delay new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
+        scheduler.updateTodaysAlarms(state); //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
         scheduler.close();
+        return NO_ERROR;
     }
 
     private AlarmTemplate getTemplate(){
@@ -149,8 +195,8 @@ public class EditAlarm extends ActionBarActivity {
         boolean saturday = saturdayBox.isChecked();
         boolean sunday = sundayBox.isChecked();
         //TODO Add custom alarm actions
-        AlarmAction delay = AlarmAction.DELAY_2_HR;
-        AlarmAction cancel = AlarmAction.DISABLE;
+        AlarmAction delay = (AlarmAction) delayAction.getSelectedItem();
+        AlarmAction cancel = (AlarmAction) cancelAction.getSelectedItem();
         return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
     }
 

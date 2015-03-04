@@ -11,4 +11,5 @@
     <dimen name="time_padding">5dp</dimen>
     <dimen name="checkbox_tab">40dp</dimen>
     <dimen name="time_tab">10dp</dimen>
+    <dimen name="alarm_action_padding">5dp</dimen>
 </resources>

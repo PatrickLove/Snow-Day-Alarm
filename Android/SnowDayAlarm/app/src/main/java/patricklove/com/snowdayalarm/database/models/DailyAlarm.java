@@ -92,10 +92,9 @@ public class DailyAlarm {
         }
     }
 
-    public void updateParent(AlarmTemplate t, DayState state){
+    public void updateParent(AlarmTemplate t){
         associatedAlarm = t;
         triggerTime = DateUtils.dateTime(triggerTime, associatedAlarm.getTime());
-        updateActionTime(state);
     }
 
     public boolean shouldTrigger(DayState state){

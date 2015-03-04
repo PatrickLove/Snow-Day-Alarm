@@ -42,7 +42,7 @@ public class DailyAlarmListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return alarms.get(position).getId();
     }
 
     @Override

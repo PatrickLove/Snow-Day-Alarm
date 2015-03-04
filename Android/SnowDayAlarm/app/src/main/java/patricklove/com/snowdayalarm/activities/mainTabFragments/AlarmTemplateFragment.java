@@ -1,5 +1,6 @@
 package patricklove.com.snowdayalarm.activities.mainTabFragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -7,6 +8,8 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import patricklove.com.snowdayalarm.activities.EditAlarm;
+import patricklove.com.snowdayalarm.activities.MainActivity;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
@@ -57,6 +60,9 @@ public class AlarmTemplateFragment extends ListFragment implements Refreshable{
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(this.getActivity(), EditAlarm.class);
+        intent.putExtra(EditAlarm.EXTRA_ALARM_ID, id);
+        this.startActivity(intent);
         super.onListItemClick(l, v, position, id);
     }
 }

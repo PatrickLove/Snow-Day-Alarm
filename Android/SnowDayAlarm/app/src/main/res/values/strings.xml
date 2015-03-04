@@ -27,5 +27,14 @@
     <string name="sunday">Sunday</string>
     <string name="days_to_ring_label">Days to Ring:</string>
     <string name="change_button">Change</string>
+    <string name="missing_value_title">Missing Values</string>
+    <string name="missing_name_message">A name must be specified</string>
+    <string name="ok">OK</string>
+    <string name="proceed_anyway">Proceed Anyway</string>
+    <string name="missing_date_message">You have not set this alarm to be active on any day of the week; continue anyway?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_action">Cancel Action:</string>
+    <string name="delay_action">Delay Action:</string>
 
 </resources>

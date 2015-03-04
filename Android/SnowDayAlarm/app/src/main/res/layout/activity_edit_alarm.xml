@@ -179,10 +179,62 @@
         android:layout_height="wrap_content"
         android:text="@string/done"
         android:id="@+id/doneButton"
-        android:layout_below="@+id/dateContainer"
-        android:layout_alignStart="@+id/dateContainer"
+        android:onClick="saveAndFinish"
+        android:layout_below="@+id/delaySpinner"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:onClick="saveAndFinish" />
+        android:layout_alignParentStart="true" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cancelSpinner"
+        android:spinnerMode="dropdown"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textView5"
+        android:layout_toEndOf="@+id/textView5"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/textView5"
+        android:layout_alignTop="@+id/textView5" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/delaySpinner"
+        android:spinnerMode="dropdown"
+        android:layout_alignStart="@+id/cancelSpinner"
+        android:layout_alignParentRight="true"
+        android:gravity="center_vertical"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_toRightOf="@+id/textView6"
+        android:layout_alignBottom="@+id/textView6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/cancel_action"
+        android:id="@+id/textView5"
+        android:layout_alignParentLeft="true"
+        android:gravity="center_vertical"
+        android:layout_below="@+id/dateContainer"
+        android:paddingTop="@dimen/alarm_action_padding"
+        android:paddingBottom="@dimen/alarm_action_padding" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/delay_action"
+        android:id="@+id/textView6"
+        android:gravity="center_vertical"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/cancelSpinner"
+        android:layout_toStartOf="@+id/cancelSpinner"
+        android:layout_below="@+id/textView5"
+        android:paddingTop="@dimen/alarm_action_padding"
+        android:paddingBottom="@dimen/alarm_action_padding" />
 
 </RelativeLayout>

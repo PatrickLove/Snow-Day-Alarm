@@ -20,6 +20,7 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
 
     private List<AlarmTemplate> alarms;
     private Context context;
+    private int position;
 
     public AlarmTemplateListAdapter(Context context, List<AlarmTemplate> alarms){
         this.alarms = alarms;
@@ -42,7 +43,7 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return alarms.get(position).getId();
     }
 
     @Override
@@ -62,4 +63,6 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
         days.setText(alarm.getActiveDayStr());
         return view;
     }
+
+
 }

@@ -1,17 +1,26 @@
 package patricklove.com.snowdayalarm.alarmTools;
 
+import android.content.Context;
+import android.database.DataSetObserver;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.SpinnerAdapter;
+
 /**
  * Created by Patrick Love on 2/14/2015.
  */
 public enum AlarmAction {
 
-    NO_CHANGE(0),
-    DELAY_2_HR(1),
-    DISABLE(2);
+    NO_CHANGE(0, "Ring on time"),
+    DELAY_2_HR(1, "Delay 2 hours"),
+    DISABLE(2, "Cancel for the day");
 
     private final int code;
-    AlarmAction(int code){
+    private final String name;
+    AlarmAction(int code, String name){
         this.code = code;
+        this.name = name;
     }
 
     public int getCode(){
@@ -30,7 +39,18 @@ public enum AlarmAction {
         return null;
     }
 
+
+
     public boolean atOrBefore(AlarmAction action) {
         return this.code <= action.code;
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+    public static SpinnerAdapter getSpinnerAdapter(Context c){
+        return new ArrayAdapter<AlarmAction>(c, android.R.layout.simple_spinner_dropdown_item, values());
     }
 }

@@ -75,18 +75,7 @@ public class DailyAlarmInterface {
     public void updateDependents(AlarmTemplate t) {
         List<DailyAlarm> alarms = query(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId());
         for (DailyAlarm alarm : alarms) {
-            this.close();
-            //Update Special days and states so that if an alarm should be scheduled after now due to a delay that wouldn't otherwise, it will
-            Log.d(LOG_TAG, "Retrieving tweets");
-            TwitterAnalysisBridge twitterComp = new TwitterAnalysisBridge(this.c);
-            twitterComp.updateSpecialDays();
-            SpecialDayInterface helper = new SpecialDayInterface(this.c);
-            helper.open();
-            DayState state = helper.getStateForDay(DateUtils.getNow());
-            helper.close();
-
-            this.open();
-            alarm.updateParent(t, state);
+            alarm.updateParent(t);
             update(alarm);
         }
     }
