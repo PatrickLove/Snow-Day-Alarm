@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.R;

@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.text.DateFormat;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.R;

@@ -9,7 +9,6 @@ import android.util.Log;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
 import patricklove.com.snowdayalarm.twitter.DayState;
