@@ -94,6 +94,7 @@ public class EditAlarm extends ActionBarActivity {
             else{
                 alarmId = NO_PREVIOUS_ALARM;
             }
+            findViewById(R.id.deleteButton).setVisibility(View.VISIBLE);
         }
 
         updateTimeText();
@@ -149,6 +150,28 @@ public class EditAlarm extends ActionBarActivity {
                     .setPositiveButton(R.string.ok, null)
                     .show();
         }
+    }
+
+    public void deleteAndFinish(View v){
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.title_are_you_sure)
+                .setMessage(R.string.message_are_you_sure)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteAlarm();
+                        finish();
+                    }
+                })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void deleteAlarm(){
+        AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(this.getApplicationContext());
+        dbHelp.open();
+        dbHelp.delete(dbHelp.query(SnowDayDatabase.idEquals(alarmId)).get(0));
+        dbHelp.close();
     }
 
     private int saveAlarm() {

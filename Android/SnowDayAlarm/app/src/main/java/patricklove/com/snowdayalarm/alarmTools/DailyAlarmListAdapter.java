@@ -61,4 +61,9 @@ public class DailyAlarmListAdapter extends BaseAdapter {
         time.setText(timeStr);
         return view;
     }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
+    }
 }

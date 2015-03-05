@@ -121,8 +121,7 @@ public class AlarmTemplate {
         do{
             date.add(Calendar.DATE, 1);
         } while(!isActiveForDate(date));
-        Date alarm = DateUtils.dateTime(date.getTime(), time);
-        return new DailyAlarm(name, alarm, AlarmAction.NO_CHANGE, this);
+        return new DailyAlarm(name, date.getTime(), this.time, AlarmAction.NO_CHANGE, this);
     }
 
 
@@ -130,8 +129,7 @@ public class AlarmTemplate {
     public DailyAlarm generateTodayAlarm() {
         Date now = DateUtils.getNow();
         if(this.isActiveForDate(DateUtils.dateToCal(now))){
-            Date alarm = DateUtils.dateTime(now, time);
-            return new DailyAlarm(name, alarm, AlarmAction.NO_CHANGE, this);
+            return new DailyAlarm(name, now, this.time, AlarmAction.NO_CHANGE, this);
         }
         return null;
     }

@@ -25,12 +25,10 @@ public class AlarmScheduler {
     public static String INTENT_TRIGGER_ALARM = "com.patricklove.snowdayalarm.triggerAlarm";
 
     private Context context;
-    private long createTime;
     private DailyAlarmInterface dbHelper;
     private AlarmManager manager;
 
     public AlarmScheduler(Context c){
-        this.createTime = System.currentTimeMillis();
         this.context = c;
         this.dbHelper = new DailyAlarmInterface(c);
         this.manager = (AlarmManager) c.getSystemService(Context.ALARM_SERVICE);
@@ -76,10 +74,10 @@ public class AlarmScheduler {
 
     public boolean schedule(DailyAlarm alarm){
         if(!alarm.isCancelled() && !alarm.isPast()) {
+            Log.i(LOG_TAG, "Scheduling " + alarm.getName() + " to trigger at " + alarm.getCombinedTime());
             Intent broadcastIntent = alarm.getTriggerIntent(context);
-            Log.i(LOG_TAG, "Scheduling " + alarm.getName() + " to trigger at " + alarm.getTriggerTime().toString());
             PendingIntent action = PendingIntent.getService(context, (int) alarm.getId(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-            manager.set(AlarmManager.RTC_WAKEUP, alarm.getTriggerTime().getTime(), action);
+            manager.set(AlarmManager.RTC_WAKEUP, alarm.getCombinedTime().getTime(), action);
             return true;
         }
         return false;

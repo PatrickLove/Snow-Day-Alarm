@@ -28,28 +28,26 @@ public class RefreshStatesTask extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object[] params) {
-        return execConcurrent();
+        execConcurrent();
+        return null;
     }
 
-    public boolean execConcurrent() {
+    public void execConcurrent() {
         TwitterAnalysisBridge twitterBridge = new TwitterAnalysisBridge(context);
-        if(twitterBridge.updateSpecialDays() > 0) { //if there are new special days since the last new date was found
-            SpecialDayInterface dbLookup = new SpecialDayInterface(context);
-            dbLookup.open();
-            DayState state = dbLookup.getStateForDay(DateUtils.getNow());
-            dbLookup.close();
-            AlarmScheduler scheduler = new AlarmScheduler(context);
-            scheduler.open();
-            scheduler.updateTodaysAlarms(state);
-            scheduler.close();
-            return true;
-        }
-        return false;
+        twitterBridge.updateSpecialDays();
+        SpecialDayInterface dbLookup = new SpecialDayInterface(context);
+        dbLookup.open();
+        DayState state = dbLookup.getStateForDay(DateUtils.getNow());
+        dbLookup.close();
+        AlarmScheduler scheduler = new AlarmScheduler(context);
+        scheduler.open();
+        scheduler.updateTodaysAlarms(state);
+        scheduler.close();
     }
 
     @Override
     protected void onPostExecute(Boolean result) {
-        if(result.booleanValue() && parentAct != null){
+        if(parentAct != null){
             parentAct.refreshAllLists();
         }
     }

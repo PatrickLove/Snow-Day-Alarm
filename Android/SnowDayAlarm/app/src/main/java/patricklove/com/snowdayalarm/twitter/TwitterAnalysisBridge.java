@@ -29,7 +29,7 @@ public class TwitterAnalysisBridge {
 
     public int updateSpecialDays(){
         ConnectivityManager connectivityManager = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
-        if(connectivityManager.getActiveNetworkInfo().isConnected()) {
+        if(connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected()) {
             List<SpecialDate> dates = getAnalysis();
             if(dates == null){
                 return -1;

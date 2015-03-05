@@ -19,6 +19,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
     public static final String COLUMN_ALARM_TIME = "alarm_time";
+    public static final String COLUMN_ALARM_DATE = "alarm_date";
     public static final String COLUMN_DATE = "date";
     public static final String COLUMN_STATUS = "status";
     public static final String COLUMN_ASSOCIATED_ALARM = "associated_alarm";
@@ -52,6 +53,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
     private static final String SQL_CREATE_DAILY_ALARMS = "create table " + TABLE_DAILY_ALARMS + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
             COLUMN_NAME + " text not null, " +
+            COLUMN_ALARM_DATE + " integer not null, " +
             COLUMN_ALARM_TIME + " integer not null, " +
             COLUMN_STATUS + " integer not null, " +
             COLUMN_ASSOCIATED_ALARM + " integer not null, " +

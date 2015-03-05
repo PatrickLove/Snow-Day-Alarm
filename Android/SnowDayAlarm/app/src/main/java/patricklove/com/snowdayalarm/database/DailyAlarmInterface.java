@@ -31,7 +31,8 @@ public class DailyAlarmInterface {
             SnowDayDatabase.COLUMN_ALARM_TIME,
             SnowDayDatabase.COLUMN_STATUS,
             SnowDayDatabase.COLUMN_ASSOCIATED_ALARM,
-            SnowDayDatabase.COLUMN_NAME
+            SnowDayDatabase.COLUMN_NAME,
+            SnowDayDatabase.COLUMN_ALARM_DATE
     };
 
     public DailyAlarmInterface(Context c){
@@ -65,7 +66,7 @@ public class DailyAlarmInterface {
     }
 
     public List<DailyAlarm> getForDay(Date date){
-        return query(DateUtils.getSearchStringForDay(date, SnowDayDatabase.COLUMN_ALARM_TIME));
+        return query(SnowDayDatabase.COLUMN_ALARM_DATE + "=" + DateUtils.stripTime(date).getTime());
     }
 
     public void deleteDependents(AlarmTemplate t){
@@ -76,12 +77,13 @@ public class DailyAlarmInterface {
         long id = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ID));
         String name = c.getString(c.getColumnIndex(SnowDayDatabase.COLUMN_NAME));
         int statusCode = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_STATUS));
+        long dateMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_DATE));
         long timeMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ALARM_TIME));
 
         long alarmId = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM));
         AlarmTemplate associatedAlarm = t.query(SnowDayDatabase.idEquals(alarmId)).get(0);//TODO handle missing associated alarm
 
-        return new DailyAlarm(id, name, new Date(timeMillis), AlarmAction.getFromCode(statusCode), associatedAlarm);
+        return new DailyAlarm(id, name, new Date(dateMillis), timeMillis, AlarmAction.getFromCode(statusCode), associatedAlarm);
     }
 
     public long add(DailyAlarm dailyAlarm) {
@@ -96,7 +98,8 @@ public class DailyAlarmInterface {
 
     private ContentValues encodeToValues(DailyAlarm dailyAlarm){
         ContentValues values = new ContentValues();
-        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime().getTime());
+        values.put(SnowDayDatabase.COLUMN_ALARM_TIME, dailyAlarm.getTriggerTime());
+        values.put(SnowDayDatabase.COLUMN_ALARM_DATE, dailyAlarm.getTriggerDate().getTime());
         values.put(SnowDayDatabase.COLUMN_NAME, dailyAlarm.getName());
         values.put(SnowDayDatabase.COLUMN_STATUS, dailyAlarm.getState().getCode());
         values.put(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM, dailyAlarm.getAssociatedAlarm().getId());

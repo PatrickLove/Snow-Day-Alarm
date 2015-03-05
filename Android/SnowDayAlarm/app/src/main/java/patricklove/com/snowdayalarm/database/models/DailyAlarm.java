@@ -20,11 +20,12 @@ import patricklove.com.snowdayalarm.utils.DateUtils;
 public class DailyAlarm {
 
     private static final String LOG_TAG = "DailyAlarm";
-    public static final Date CANCEL_TIME = new Date(0);
+    public static final long CANCEL_TIME = -1;
     private long id = -1;
 
     private String name;
-    private Date triggerTime;
+    private Date triggerDate;
+    private long triggerTime;
     private AlarmAction state;
     private AlarmTemplate associatedAlarm;
 
@@ -32,8 +33,16 @@ public class DailyAlarm {
         return id;
     }
 
-    public Date getTriggerTime() {
+    public Date getTriggerDate() {
+        return triggerDate;
+    }
+
+    public long getTriggerTime() {
         return triggerTime;
+    }
+
+    public Date getCombinedTime(){
+        return new Date(triggerDate.getTime() + triggerTime);
     }
 
     public AlarmAction getState() {
@@ -48,15 +57,16 @@ public class DailyAlarm {
         return name;
     }
 
-    public DailyAlarm(String name, Date time, AlarmAction state, AlarmTemplate alarm){
+    public DailyAlarm(String name, Date date, long time, AlarmAction state, AlarmTemplate alarm){
         this.name = name;
         this.state = state;
+        this.triggerDate = DateUtils.stripTime(date);
         this.triggerTime = time;
         this.associatedAlarm = alarm;
     }
 
-    public DailyAlarm(long id, String name, Date time, AlarmAction state, AlarmTemplate alarm){
-        this(name, time, state, alarm);
+    public DailyAlarm(long id, String name, Date date, long time, AlarmAction state, AlarmTemplate alarm){
+        this(name, date, time, state, alarm);
         this.id = id;
     }
 
@@ -66,7 +76,7 @@ public class DailyAlarm {
             this.triggerTime = CANCEL_TIME;
         }
         if(action == AlarmAction.DELAY_2_HR){
-            this.triggerTime = DateUtils.dateTime(this.triggerTime, associatedAlarm.getTime() + 2 * DateUtils.MILLIS_PER_HOUR);
+            this.triggerTime = associatedAlarm.getTime() + 2 * DateUtils.MILLIS_PER_HOUR;
         }
         this.state = action;
     }
@@ -91,11 +101,6 @@ public class DailyAlarm {
         }
     }
 
-    public void updateParent(AlarmTemplate t){
-        associatedAlarm = t;
-        triggerTime = DateUtils.dateTime(triggerTime, associatedAlarm.getTime());
-    }
-
     public boolean shouldTrigger(DayState state){
         return associatedAlarm.getAction(state).atOrBefore(this.state);
     }
@@ -112,7 +117,7 @@ public class DailyAlarm {
     }
 
     public boolean isPast() {
-        return this.triggerTime.before(DateUtils.getNow());
+        return this.getCombinedTime().before(DateUtils.getNow());
     }
 
     public int getStatusColorID() {
@@ -130,7 +135,7 @@ public class DailyAlarm {
 
     public String getTimeString() {
         if(!isCancelled()) {
-            return DateFormat.getTimeInstance(DateFormat.SHORT).format(triggerTime);
+            return DateUtils.formatMilliTime(triggerTime);
         }
         return "--:-- NA";
     }

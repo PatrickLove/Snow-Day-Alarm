@@ -237,4 +237,17 @@
         android:paddingTop="@dimen/alarm_action_padding"
         android:paddingBottom="@dimen/alarm_action_padding" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/delete"
+        android:id="@+id/deleteButton"
+        android:onClick="deleteAndFinish"
+        android:layout_below="@+id/doneButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/nameText"
+        android:layout_alignEnd="@+id/nameText"
+        android:visibility="gone" />
+
 </RelativeLayout>
