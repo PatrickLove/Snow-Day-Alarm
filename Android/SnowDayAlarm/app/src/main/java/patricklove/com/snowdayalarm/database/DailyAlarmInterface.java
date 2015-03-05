@@ -69,15 +69,7 @@ public class DailyAlarmInterface {
     }
 
     public void deleteDependents(AlarmTemplate t){
-        database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, SnowDayDatabase.idEquals(t.getId()), null);
-    }
-
-    public void updateDependents(AlarmTemplate t) {
-        List<DailyAlarm> alarms = query(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId());
-        for (DailyAlarm alarm : alarms) {
-            alarm.updateParent(t);
-            update(alarm);
-        }
+        database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId(), null);
     }
 
     private DailyAlarm alarmFromDb(Cursor c, AlarmTemplateInterface t){

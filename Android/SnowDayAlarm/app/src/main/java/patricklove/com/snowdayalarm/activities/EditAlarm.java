@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -127,7 +128,7 @@ public class EditAlarm extends ActionBarActivity {
     }
 
     public void saveAndFinish(View v){
-        int resultCode = saveAlarm(false);
+        int resultCode = saveAlarm();
         if(resultCode == NO_ERROR) this.finish();
         else if(resultCode == MISSING_NAME){
             new AlertDialog.Builder(this)
@@ -143,24 +144,17 @@ public class EditAlarm extends ActionBarActivity {
         }
         else if(resultCode == MISSING_DAY_OF_WEEK){
             new AlertDialog.Builder(this)
-                .setTitle(R.string.missing_value_title)
-                .setMessage(R.string.missing_date_message)
-                .setNegativeButton(R.string.cancel, null)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        saveAlarm(true);
-                        finish();
-                    }
-                })
-                .show();
+                    .setTitle(R.string.missing_value_title)
+                    .setMessage(R.string.missing_date_message)
+                    .setPositiveButton(R.string.ok, null)
+                    .show();
         }
     }
 
-    private int saveAlarm(boolean overrideNoDays) {
+    private int saveAlarm() {
         AlarmTemplate temp = getTemplate();
         if(temp.getName().equals("")) return MISSING_NAME;
-        if(!overrideNoDays && temp.getActiveDayStr().equals("Never")) return MISSING_DAY_OF_WEEK;
+        if(temp.getActiveDayStr().equals("Never")) return MISSING_DAY_OF_WEEK;
         SpecialDayInterface dayLookupHelp = new SpecialDayInterface(this.getApplicationContext());
         dayLookupHelp.open();
         DayState state = dayLookupHelp.getStateForDay(DateUtils.getNow());
@@ -172,13 +166,14 @@ public class EditAlarm extends ActionBarActivity {
             temp.save(dbHelp);
             dbHelp.close();
             scheduler.open();
-            scheduler.scheduleFirstAlarm(temp);
+            scheduler.scheduleAsNew(temp);
         }
         else{
             dbHelp.update(temp);
+            dbHelp.clearDependants(temp);
             dbHelp.close();
             scheduler.open();
-            scheduler.scheduleDependents(temp);
+            scheduler.scheduleAsNew(temp);
         }
         scheduler.updateTodaysAlarms(state); //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
         scheduler.close();
@@ -194,7 +189,6 @@ public class EditAlarm extends ActionBarActivity {
         boolean friday = fridayBox.isChecked();
         boolean saturday = saturdayBox.isChecked();
         boolean sunday = sundayBox.isChecked();
-        //TODO Add custom alarm actions
         AlarmAction delay = (AlarmAction) delayAction.getSelectedItem();
         AlarmAction cancel = (AlarmAction) cancelAction.getSelectedItem();
         return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday);

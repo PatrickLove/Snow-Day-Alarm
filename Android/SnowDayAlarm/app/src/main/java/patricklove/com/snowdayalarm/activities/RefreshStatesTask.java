@@ -28,6 +28,10 @@ public class RefreshStatesTask extends AsyncTask<Object, Object, Boolean> {
 
     @Override
     protected Boolean doInBackground(Object[] params) {
+        return execConcurrent();
+    }
+
+    public boolean execConcurrent() {
         TwitterAnalysisBridge twitterBridge = new TwitterAnalysisBridge(context);
         if(twitterBridge.updateSpecialDays() > 0) { //if there are new special days since the last new date was found
             SpecialDayInterface dbLookup = new SpecialDayInterface(context);

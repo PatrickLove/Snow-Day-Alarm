@@ -57,7 +57,7 @@ public class DailyAlarmListAdapter extends BaseAdapter {
         TextView time = (TextView) view.findViewById(R.id.time);
         time.setBackgroundColor(context.getResources().getColor(alarm.getStatusColorID()));
         title.setText(alarm.getName());
-        String timeStr = DateFormat.getTimeInstance(DateFormat.SHORT).format(alarm.getTriggerTime());
+        String timeStr = alarm.getTimeString();
         time.setText(timeStr);
         return view;
     }

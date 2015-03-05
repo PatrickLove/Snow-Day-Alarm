@@ -39,4 +39,18 @@ public enum DayState {
     public boolean atOrBefore(DayState d){
         return this.code <= d.code;
     }
+
+
+    @Override
+    public String toString() {
+        switch (code){
+            case 2:
+                return "Cancellation";
+            case 1:
+                return "Delay";
+            case 0:
+                return "Normal";
+        }
+        return "Unknown";
+    }
 }

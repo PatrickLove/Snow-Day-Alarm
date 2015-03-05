@@ -95,23 +95,11 @@ public class AlarmTemplateInterface {
         Log.i(LOG_TAG, "Updating " + alarm.getName());
         ContentValues values = encodeToValues(alarm);
         database.update(SnowDayDatabase.TABLE_ALL_ALARMS, values, SnowDayDatabase.idEquals(alarm.getId()), null);
-        this.close();
-        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
-        dailyAlarmHelper.open();
-        dailyAlarmHelper.updateDependents(alarm);
-        dailyAlarmHelper.close();
-        this.open();
     }
 
     public void delete(AlarmTemplate temp){
         Log.w(LOG_TAG, "Deleting " + temp.getName() + " and dependent alarms");
-        this.close();
-        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
-        dailyAlarmHelper.open();
-        dailyAlarmHelper.deleteDependents(temp);
-        dailyAlarmHelper.close();
-        this.open();
-
+        clearDependants(temp);
         database.delete(SnowDayDatabase.TABLE_ALL_ALARMS, SnowDayDatabase.idEquals(temp.getId()), null);
     }
 
@@ -130,5 +118,15 @@ public class AlarmTemplateInterface {
         }
         c.close();
         return ret;
+    }
+
+    public void clearDependants(AlarmTemplate temp) {
+        Log.w(LOG_TAG, "Deleting dependents for " + temp.getName());
+        this.close();
+        DailyAlarmInterface dailyAlarmHelper = new DailyAlarmInterface(this.c);
+        dailyAlarmHelper.open();
+        dailyAlarmHelper.deleteDependents(temp);
+        dailyAlarmHelper.close();
+        this.open();
     }
 }

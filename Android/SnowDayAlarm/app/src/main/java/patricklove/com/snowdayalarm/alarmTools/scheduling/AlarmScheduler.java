@@ -44,24 +44,25 @@ public class AlarmScheduler {
         dbHelper.close();
     }
 
-    public void updatePast(){
-        List<DailyAlarm> toUpdate = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + "<=" + createTime);
-        for(DailyAlarm alarm : toUpdate){
-            scheduleNextAlarm(alarm.getAssociatedAlarm());
+    public void scheduleAsNew(AlarmTemplate t){
+        if(!scheduleTodayAlarm(t)){
+            scheduleNextAlarm(t);
         }
     }
 
     public void scheduleNextAlarm(AlarmTemplate t){
         DailyAlarm next = t.generateNextAlarm();
-        next.saveIfNew(dbHelper);
+        next.save(dbHelper);
         schedule(next); //schedule intent
     }
 
-    public void scheduleFirstAlarm(AlarmTemplate t) {
-        DailyAlarm next = t.generateFirstAlarm();
-        next.saveIfNew(dbHelper);
-        schedule(next); //schedule intent
-
+    public boolean scheduleTodayAlarm(AlarmTemplate t) {
+        DailyAlarm next = t.generateTodayAlarm();
+        if(next != null){
+            next.save(dbHelper);
+            return schedule(next);
+        }
+        return false;
     }
 
     public void updateTodaysAlarms(DayState state){
@@ -69,20 +70,6 @@ public class AlarmScheduler {
         for(DailyAlarm alarm : alarms){
             alarm.updateActionTime(state);
             alarm.updateDB(dbHelper);
-            schedule(alarm);
-        }
-    }
-
-    public void scheduleAllFuture(){
-        List<DailyAlarm> toSchedule = dbHelper.query(SnowDayDatabase.COLUMN_ALARM_TIME + ">=" + createTime);
-        for(DailyAlarm alarm : toSchedule){
-            scheduleNextAlarm(alarm.getAssociatedAlarm());
-        }
-    }
-
-    public void scheduleDependents(AlarmTemplate t){
-        List<DailyAlarm> toSchedule = dbHelper.query(SnowDayDatabase.COLUMN_ASSOCIATED_ALARM + "=" + t.getId());
-        for(DailyAlarm alarm : toSchedule){
             schedule(alarm);
         }
     }

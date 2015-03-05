@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
+import java.text.DateFormat;
 import java.util.Date;
 
 import patricklove.com.snowdayalarm.R;
@@ -16,12 +17,10 @@ import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.twitter.DayState;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
-/**
- * Created by Patrick Love on 2/14/2015.
- */
 public class DailyAlarm {
 
     private static final String LOG_TAG = "DailyAlarm";
+    public static final Date CANCEL_TIME = new Date(0);
     private long id = -1;
 
     private String name;
@@ -64,7 +63,7 @@ public class DailyAlarm {
     public void updateActionTime(DayState state){
         AlarmAction action = associatedAlarm.getAction(state);
         if(action == AlarmAction.DISABLE){
-            this.triggerTime = null;
+            this.triggerTime = CANCEL_TIME;
         }
         if(action == AlarmAction.DELAY_2_HR){
             this.triggerTime = DateUtils.dateTime(this.triggerTime, associatedAlarm.getTime() + 2 * DateUtils.MILLIS_PER_HOUR);
@@ -102,7 +101,7 @@ public class DailyAlarm {
     }
 
     public boolean isCancelled(){
-        return triggerTime == null;
+        return state == AlarmAction.DISABLE;
     }
 
     public Intent getTriggerIntent(Context c){
@@ -127,5 +126,12 @@ public class DailyAlarm {
             return R.color.state_cancel;
         }
         return Color.WHITE;
+    }
+
+    public String getTimeString() {
+        if(!isCancelled()) {
+            return DateFormat.getTimeInstance(DateFormat.SHORT).format(triggerTime);
+        }
+        return "--:-- NA";
     }
 }

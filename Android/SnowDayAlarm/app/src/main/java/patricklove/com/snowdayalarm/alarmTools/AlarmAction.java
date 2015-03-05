@@ -34,7 +34,7 @@ public enum AlarmAction {
             case 1:
                 return DELAY_2_HR;
             case 2:
-                return NO_CHANGE;
+                return DISABLE;
         }
         return null;
     }
@@ -51,6 +51,7 @@ public enum AlarmAction {
     }
 
     public static SpinnerAdapter getSpinnerAdapter(Context c){
-        return new ArrayAdapter<AlarmAction>(c, android.R.layout.simple_spinner_dropdown_item, values());
+        return new ArrayAdapter<AlarmAction>(c, android.R.layout.simple_spinner_dropdown_item,
+                new AlarmAction[] {NO_CHANGE, DELAY_2_HR, DISABLE});
     }
 }
