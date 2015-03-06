@@ -102,6 +102,7 @@ public class TweetAnalyzer {
 		Parser dateParser = new Parser();
 		for(String word : removeWords){
 			text = text.replaceAll(word, "");
+            text = text.replaceAll("\\.(\\S)", ". $1"); //Ensure sentences are separated (a missing space caused natty to fail to read the proper date
 		}
 		List<DateGroup> groups = dateParser.parse(text);
 		if(groups.size() == 0){
