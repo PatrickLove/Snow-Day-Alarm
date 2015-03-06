@@ -112,4 +112,8 @@ public class DailyAlarmInterface {
         Log.w(LOG_TAG, "Clearing all daily alarms WHERE " + selection);
         database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, selection, null);
     }
+
+    public void cleanUp() {
+        delete(SnowDayDatabase.COLUMN_ALARM_DATE + "<" + DateUtils.stripTime(DateUtils.getNow()).getTime());
+    }
 }
