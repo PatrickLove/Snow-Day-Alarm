@@ -3,7 +3,8 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="@dimen/list_element_height"
     android:padding="@dimen/list_element_padding"
-    android:id="@+id/RelativeLayout">
+    android:id="@+id/RelativeLayout"
+    android:descendantFocusability="blocksDescendants">
 
     <TextView
         android:layout_width="wrap_content"
@@ -38,9 +39,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/time"
-        android:layout_alignEnd="@+id/time"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_toStartOf="@+id/enableToggle"
+        android:layout_alignRight="@+id/enableToggle"
+        android:layout_alignEnd="@+id/enableToggle" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -51,4 +53,31 @@
         android:layout_below="@+id/title"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enableToggle"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:textOn="@string/on"
+        android:textOff="@string/off"
+        android:thumb="@drawable/abc_switch_thumb_material"
+        android:layout_alignTop="@+id/textView"
+        android:layout_above="@+id/activeDays"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Enabled:"
+        android:id="@+id/textView8"
+        android:gravity="right"
+        android:paddingRight="@dimen/time_tab"
+        android:layout_below="@+id/title"
+        android:layout_toLeftOf="@+id/enableToggle"
+        android:layout_toStartOf="@+id/enableToggle"
+        android:layout_above="@+id/activeDays" />
 </RelativeLayout>

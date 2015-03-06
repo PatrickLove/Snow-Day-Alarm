@@ -19,9 +19,10 @@ import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.Refreshable;
+import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 
 
-public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
+public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, AlarmTemplateListAdapter.OnEnableChangeListener {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -164,6 +165,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
+    }
+
+    @Override
+    public void onEnabledStateChanged() {
+        refreshAllLists();
     }
 
     /**

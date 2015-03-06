@@ -180,7 +180,7 @@
         android:text="@string/done"
         android:id="@+id/doneButton"
         android:onClick="saveAndFinish"
-        android:layout_below="@+id/delaySpinner"
+        android:layout_below="@+id/textView7"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
@@ -249,5 +249,32 @@
         android:layout_alignRight="@+id/nameText"
         android:layout_alignEnd="@+id/nameText"
         android:visibility="gone" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/enabled_label"
+        android:id="@+id/textView7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:paddingTop="@dimen/alarm_action_padding"
+        android:paddingBottom="@dimen/alarm_action_padding"
+        android:layout_toLeftOf="@+id/delaySpinner"
+        android:layout_toStartOf="@+id/delaySpinner" />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/enableToggle"
+        android:layout_below="@+id/delaySpinner"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignBottom="@+id/textView7"
+        android:layout_alignLeft="@+id/changeButton"
+        android:textOn="@string/yes"
+        android:textOff="@string/no"
+        android:checked="true" />
 
 </RelativeLayout>

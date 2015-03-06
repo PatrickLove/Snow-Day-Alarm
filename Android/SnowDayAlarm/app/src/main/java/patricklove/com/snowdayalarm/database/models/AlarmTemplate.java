@@ -1,11 +1,14 @@
 package patricklove.com.snowdayalarm.database.models;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.Calendar;
 import java.util.Date;
 
+import patricklove.com.snowdayalarm.activities.RefreshStatesTask;
 import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
+import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.twitter.DayState;
 import patricklove.com.snowdayalarm.utils.DateUtils;
@@ -190,5 +193,20 @@ public class AlarmTemplate {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public void updateDBEnabled(Context context) {
+        AlarmTemplateInterface dbInt = new AlarmTemplateInterface(context);
+        dbInt.open();
+        dbInt.update(this);
+        dbInt.clearDependants(this);
+        dbInt.close();
+        if(enabled) {
+            AlarmScheduler scheduler = new AlarmScheduler(context);
+            scheduler.open();
+            scheduler.scheduleAsNew(this);
+            scheduler.close();
+            new RefreshStatesTask(context).execWithoutTwitter();
+        }
     }
 }

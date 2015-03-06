@@ -19,7 +19,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         if(oldVersion == 1){ //Add enabled column for templates defaulted to true
-            db.execSQL("ALTER TABLE " + TABLE_ALL_ALARMS + " ADD COLUMN " + COLUMN_ENABLED + " integer not null DEFAULT true;");
+            db.execSQL("ALTER TABLE " + TABLE_ALL_ALARMS + " ADD COLUMN " + COLUMN_ENABLED + " integer not null DEFAULT 1;");
         }
         else {
             db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAILY_ALARMS);

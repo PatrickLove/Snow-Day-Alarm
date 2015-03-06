@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.ToggleButton;
 
 import java.util.List;
 
@@ -49,6 +50,7 @@ public class EditAlarm extends ActionBarActivity {
     private TextView timeText;
     private Spinner cancelAction;
     private Spinner delayAction;
+    private ToggleButton enabledButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +72,9 @@ public class EditAlarm extends ActionBarActivity {
         timeText = (TextView) findViewById(R.id.time);
         delayAction = (Spinner) findViewById(R.id.delaySpinner);
         cancelAction = (Spinner) findViewById(R.id.cancelSpinner);
+        enabledButton = (ToggleButton) findViewById(R.id.enableToggle);
+
+
         delayAction.setAdapter(AlarmAction.getSpinnerAdapter(this));
         cancelAction.setAdapter(AlarmAction.getSpinnerAdapter(this));
         cancelAction.setSelection(AlarmAction.DISABLE.getCode());
@@ -89,6 +94,7 @@ public class EditAlarm extends ActionBarActivity {
                 sundayBox.setChecked(priorTemp.isSunday());
                 delayAction.setSelection(priorTemp.getActionDelay().getCode());
                 cancelAction.setSelection(priorTemp.getActionCancel().getCode());
+                enabledButton.setChecked(priorTemp.isEnabled());
             }
             else{
                 alarmId = NO_PREVIOUS_ALARM;
@@ -177,10 +183,6 @@ public class EditAlarm extends ActionBarActivity {
         AlarmTemplate temp = getTemplate();
         if(temp.getName().equals("")) return MISSING_NAME;
         if(temp.getActiveDayStr().equals("Never")) return MISSING_DAY_OF_WEEK;
-        SpecialDayInterface dayLookupHelp = new SpecialDayInterface(this.getApplicationContext());
-        dayLookupHelp.open();
-        DayState state = dayLookupHelp.getStateForDay(DateUtils.getNow());
-        dayLookupHelp.close();
         AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(this.getApplicationContext());
         AlarmScheduler scheduler = new AlarmScheduler(this.getApplicationContext());
         dbHelp.open();
@@ -190,15 +192,15 @@ public class EditAlarm extends ActionBarActivity {
             scheduler.open();
             scheduler.scheduleAsNew(temp);
         }
-        else{
+        else {
             dbHelp.update(temp);
             dbHelp.clearDependants(temp);
             dbHelp.close();
             scheduler.open();
-            scheduler.scheduleAsNew(temp);
-        }
-        scheduler.updateTodaysAlarms(state); //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
+            if (temp.isEnabled()) scheduler.scheduleAsNew(temp);
+        } //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
         scheduler.close();
+        new RefreshStatesTask(this.getApplicationContext()).execWithoutTwitter();
         return NO_ERROR;
     }
 
@@ -213,7 +215,7 @@ public class EditAlarm extends ActionBarActivity {
         boolean sunday = sundayBox.isChecked();
         AlarmAction delay = (AlarmAction) delayAction.getSelectedItem();
         AlarmAction cancel = (AlarmAction) cancelAction.getSelectedItem();
-        boolean enabled = true;
+        boolean enabled = enabledButton.isChecked();
         return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday, enabled);
     }
 
