@@ -10,6 +10,7 @@ import java.util.List;
 import patricklove.com.snowdayalarm.activities.RefreshStatesTask;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
+import patricklove.com.snowdayalarm.database.CleanupJob;
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 
@@ -32,6 +33,7 @@ public class BootReceiver extends WakefulBroadcastReceiver {
             scheduler.scheduleAsNew(t);
         }
         scheduler.close();
+        CleanupJob.schedule(context);
         new RefreshStatesTask(context).execConcurrent();
     }
 }

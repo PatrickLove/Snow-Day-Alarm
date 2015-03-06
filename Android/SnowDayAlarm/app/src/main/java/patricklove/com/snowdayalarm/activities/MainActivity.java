@@ -1,5 +1,11 @@
 package patricklove.com.snowdayalarm.activities;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.job.JobInfo;
+import android.app.job.JobScheduler;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +15,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -19,6 +26,10 @@ import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
 import patricklove.com.snowdayalarm.activities.mainTabFragments.Refreshable;
+import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
+import patricklove.com.snowdayalarm.database.CleanupJob;
+import patricklove.com.snowdayalarm.utils.DateUtils;
+import patricklove.com.snowdayalarm.utils.FileUtils;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener {
@@ -46,6 +57,13 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         setContentView(R.layout.activity_main);
 
         new RefreshStatesTask(this).execute();
+
+        FileUtils fileReader = new FileUtils(this);
+        if(!fileReader.getHasRun()){
+            Log.i("FirstLaunch", "Performing first launch setup");
+            CleanupJob.schedule(this.getApplicationContext());
+            fileReader.setHasRun(true);
+        }
 
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
