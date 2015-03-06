@@ -22,7 +22,6 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
 
     private List<AlarmTemplate> alarms;
     private Context context;
-    private int position;
     private OnEnableChangeListener enableChangeListener;
 
     public interface OnEnableChangeListener {
