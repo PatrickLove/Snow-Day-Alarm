@@ -12,9 +12,6 @@ import android.widget.TextView;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
@@ -75,6 +72,7 @@ public class AlarmTemplateListAdapter extends BaseAdapter {
 
         Switch enabledSwitch = (Switch) view.findViewById(R.id.enableToggle);
         enabledSwitch.setChecked(alarm.isEnabled());
+
         enabledSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

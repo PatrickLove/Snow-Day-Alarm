@@ -23,9 +23,7 @@ import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
 import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.database.SnowDayDatabase;
-import patricklove.com.snowdayalarm.database.SpecialDayInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.twitter.DayState;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
 public class EditAlarm extends ActionBarActivity {

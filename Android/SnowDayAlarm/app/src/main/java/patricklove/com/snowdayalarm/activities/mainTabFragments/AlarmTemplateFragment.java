@@ -20,7 +20,7 @@ import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
  * <p/>
  * interface.
  */
-public class AlarmTemplateFragment extends ListFragment {
+public class AlarmTemplateFragment extends ListFragment implements Refreshable{
 
 
     private AlarmTemplateListAdapter adapter;
