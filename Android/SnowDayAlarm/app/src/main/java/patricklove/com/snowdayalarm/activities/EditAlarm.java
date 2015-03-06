@@ -213,7 +213,8 @@ public class EditAlarm extends ActionBarActivity {
         boolean sunday = sundayBox.isChecked();
         AlarmAction delay = (AlarmAction) delayAction.getSelectedItem();
         AlarmAction cancel = (AlarmAction) cancelAction.getSelectedItem();
-        return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+        boolean enabled = true;
+        return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday, enabled);
     }
 
 

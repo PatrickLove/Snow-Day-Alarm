@@ -22,6 +22,11 @@ public class AlarmTemplate {
     private long time;
     private boolean isMonday;
     private String name;
+    private boolean enabled;
+
+    public boolean isEnabled() {
+        return enabled;
+    }
 
     public String getName() {
         return name;
@@ -75,7 +80,7 @@ public class AlarmTemplate {
     private boolean isSunday;
 
     public AlarmTemplate(String name, AlarmAction cancel, AlarmAction delay, long time,
-                         boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
+                         boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, boolean enabled){
         this.name = name;
         this.actionCancel = cancel;
         this.actionDelay = delay;
@@ -87,11 +92,12 @@ public class AlarmTemplate {
         this.isFriday = friday;
         this.isSaturday = saturday;
         this.isSunday = sunday;
+        this.enabled = enabled;
     }
 
     public AlarmTemplate(long id, String name, AlarmAction cancel, AlarmAction delay, long time,
-                         boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday){
-        this(name, cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+                         boolean monday, boolean tuesday, boolean wednesday, boolean thursday, boolean friday, boolean saturday, boolean sunday, boolean enabled){
+        this(name, cancel, delay, time, monday, tuesday, wednesday, thursday, friday, saturday, sunday, enabled);
         this.id = id;
     }
 
@@ -180,5 +186,9 @@ public class AlarmTemplate {
     public void save(AlarmTemplateInterface dbHelp) {
         this.id = dbHelp.add(this);
         Log.i(LOG_TAG, "Added " + name + " to database");
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }
