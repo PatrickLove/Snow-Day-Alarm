@@ -33,7 +33,8 @@ public class AlarmTemplateInterface {
             SnowDayDatabase.COLUMN_DAYS.THURSDAY,
             SnowDayDatabase.COLUMN_DAYS.FRIDAY,
             SnowDayDatabase.COLUMN_DAYS.SATURDAY,
-            SnowDayDatabase.COLUMN_DAYS.SUNDAY
+            SnowDayDatabase.COLUMN_DAYS.SUNDAY,
+            SnowDayDatabase.COLUMN_ENABLED
     };
 
     public AlarmTemplateInterface(Context c){
@@ -64,10 +65,11 @@ public class AlarmTemplateInterface {
         boolean friday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.FRIDAY)) == 1;
         boolean saturday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SATURDAY)) == 1;
         boolean sunday = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_DAYS.SUNDAY)) == 1;
+        boolean enabled = c.getInt(c.getColumnIndex(SnowDayDatabase.COLUMN_ENABLED)) == 1;
 
 
         return new AlarmTemplate(id, name, AlarmAction.getFromCode(cancelCode), AlarmAction.getFromCode(delayCode), timeMillis,
-                monday, tuesday, wednesday, thursday, friday, saturday, sunday);
+                monday, tuesday, wednesday, thursday, friday, saturday, sunday, enabled);
     }
 
     public long add(AlarmTemplate temp){
@@ -88,6 +90,7 @@ public class AlarmTemplateInterface {
         values.put(SnowDayDatabase.COLUMN_DAYS.FRIDAY, temp.isFriday());
         values.put(SnowDayDatabase.COLUMN_DAYS.SATURDAY, temp.isSaturday());
         values.put(SnowDayDatabase.COLUMN_DAYS.SUNDAY, temp.isSunday());
+        values.put(SnowDayDatabase.COLUMN_ENABLED, temp.isEnabled());
         return values;
     }
 

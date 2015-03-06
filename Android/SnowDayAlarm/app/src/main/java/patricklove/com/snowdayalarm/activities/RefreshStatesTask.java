@@ -35,6 +35,10 @@ public class RefreshStatesTask extends AsyncTask<Object, Object, Boolean> {
     public void execConcurrent() {
         TwitterAnalysisBridge twitterBridge = new TwitterAnalysisBridge(context);
         twitterBridge.updateSpecialDays();
+        execWithoutTwitter();
+    }
+
+    public void execWithoutTwitter(){
         SpecialDayInterface dbLookup = new SpecialDayInterface(context);
         dbLookup.open();
         DayState state = dbLookup.getStateForDay(DateUtils.getNow());
