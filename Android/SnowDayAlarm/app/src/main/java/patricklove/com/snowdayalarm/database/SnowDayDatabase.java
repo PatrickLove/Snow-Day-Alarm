@@ -10,7 +10,23 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class SnowDayDatabase extends SQLiteOpenHelper{
 
     private static final String DATABASE_NAME = "snow_day_alarm.db";
-    private static final int DB_VERSION = 1;
+    private static final int DB_VERSION = 2;
+    /*
+    Database versions:
+        1   Original database structure
+        2   Added enabled column to Alarm Templates
+     */
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        if(oldVersion == 1){ //Add enabled column for templates defaulted to true
+            db.execSQL("ALTER TABLE " + TABLE_ALL_ALARMS + " ADD COLUMN " + COLUMN_ENABLED + " integer not null DEFAULT 1;");
+        }
+        else {
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAILY_ALARMS);
+            db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_ALARMS);
+            onCreate(db);
+        }
+    }
 
     protected static final String TABLE_ALL_ALARMS = "All_Alarms";
     protected static final String TABLE_DAILY_ALARMS = "Daily_Alarms";
@@ -25,6 +41,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
     public static final String COLUMN_ASSOCIATED_ALARM = "associated_alarm";
     public static final String COLUMN_ACTION_CANCEL = "action_cancel";
     public static final String COLUMN_ACTION_DELAY = "action_delay";
+    public static final String COLUMN_ENABLED = "is_enabled";
 
     public static final class COLUMN_DAYS {
         public static final String MONDAY = "monday";
@@ -48,7 +65,8 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
             COLUMN_DAYS.THURSDAY + " integer not null, " +
             COLUMN_DAYS.FRIDAY + " integer not null, " +
             COLUMN_DAYS.SATURDAY + " integer not null, " +
-            COLUMN_DAYS.SUNDAY+ " integer not null " +
+            COLUMN_DAYS.SUNDAY + " integer not null, " +
+            COLUMN_ENABLED + " integer not null " +
         ");";
     private static final String SQL_CREATE_DAILY_ALARMS = "create table " + TABLE_DAILY_ALARMS + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +
@@ -73,14 +91,6 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
         db.execSQL(SQL_CREATE_ALL_ALARMS);
         db.execSQL(SQL_CREATE_DAILY_ALARMS);
         db.execSQL(SQL_CREATE_SPECIAL_DAYS);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //TODO Implement better update mechanism
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_DAILY_ALARMS);
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_ALL_ALARMS);
-        onCreate(db);
     }
 
     public static String idEquals(long id){

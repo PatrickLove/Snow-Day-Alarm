@@ -16,11 +16,21 @@ import java.util.Date;
 public class FileUtils {
     public static final String LAST_UPDATE_FILE = "lastUpdate";
     public static final String LAST_TWEET_FILE = "lastTweet";
+    public static final String HAS_RUN_FILE = "hasRun";
 
     private Context c;
 
     public FileUtils(Context c){
         this.c = c;
+    }
+
+    public boolean setHasRun(boolean b){
+        return writeFile(HAS_RUN_FILE, b ? "true":"");
+    }
+
+    public boolean getHasRun(){
+        String fileTxt = readFile(HAS_RUN_FILE);
+        return fileTxt != null && fileTxt.equals("true");
     }
 
     public boolean setLastTweet(String tweet){

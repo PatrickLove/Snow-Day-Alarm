@@ -85,9 +85,13 @@ public class SpecialDayInterface {
         return database.insert(SnowDayDatabase.TABLE_SPECIAL_DAYS, null, values);
     }
 
+    public void delete(String where){
+        Log.w(LOG_TAG, "Clearing Special Dates WHERE " + where);
+        database.delete(SnowDayDatabase.TABLE_SPECIAL_DAYS, where, null);
+    }
+
     public void delete(SpecialDate date){
-        Log.w(LOG_TAG, "Clearing Special Date of id " + date.getId());
-        database.delete(SnowDayDatabase.TABLE_SPECIAL_DAYS, SnowDayDatabase.idEquals(date.getId()), null);
+        delete(SnowDayDatabase.idEquals(date.getId()));
     }
 
     private SpecialDate specialDateFromCursor(Cursor c) {
@@ -96,5 +100,9 @@ public class SpecialDayInterface {
         long dateMillis = c.getLong(c.getColumnIndex(SnowDayDatabase.COLUMN_DATE));
 
         return new SpecialDate(id, new Date(dateMillis), DayState.getFromCode(stateCode));
+    }
+
+    public void cleanUp() {
+        delete(SnowDayDatabase.COLUMN_DATE + "<" + DateUtils.stripTime(DateUtils.getNow()).getTime());
     }
 }

@@ -1,9 +1,12 @@
 package patricklove.com.snowdayalarm.activities;
 
+import android.annotation.TargetApi;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
+import android.os.*;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
@@ -31,6 +34,7 @@ public class RingingActivity extends ActionBarActivity {
             alarmUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         }
         ringer = RingtoneManager.getRingtone(this, alarmUri);
+        ringer.setStreamType(AudioManager.STREAM_ALARM);
         ringer.play();
 
         String stateText = getString(R.string.no_state_text);

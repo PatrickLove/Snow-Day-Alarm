@@ -25,9 +25,11 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/time"
-        android:layout_centerVertical="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:padding="@dimen/time_padding"
-        android:text="te:st PM" />
+        android:text="te:st PM"
+        android:gravity="center_vertical"
+        android:layout_alignBottom="@+id/title"
+        android:layout_alignTop="@+id/title" />
 </RelativeLayout>

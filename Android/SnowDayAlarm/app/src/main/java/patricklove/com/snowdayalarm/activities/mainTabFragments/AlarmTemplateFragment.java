@@ -9,6 +9,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.activities.EditAlarm;
+import patricklove.com.snowdayalarm.activities.MainActivity;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
@@ -40,7 +41,7 @@ public class AlarmTemplateFragment extends ListFragment implements Refreshable{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        adapter = new AlarmTemplateListAdapter(getActivity(), getAlarmList());
+        adapter = new AlarmTemplateListAdapter(getActivity(), getAlarmList(), (MainActivity) getActivity());
         this.setListAdapter(adapter);
     }
 

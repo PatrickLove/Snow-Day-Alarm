@@ -31,6 +31,15 @@
             </intent-filter>
         </receiver>
 
+        <receiver
+            android:name=".database.CleanupJob"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.patricklove.database.CleanupJob.ACTION_CLEAN_DATABASE" />
+            </intent-filter>
+        </receiver>
+
         <service
             android:name=".alarmTools.scheduling.AlarmHandlingService"
             android:exported="false" >
@@ -38,7 +47,8 @@
 
         <activity
             android:name=".activities.RingingActivity"
-            android:label="@string/title_activity_ringing" >
+            android:label="@string/title_activity_ringing"
+            android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name=".activities.EditAlarm"

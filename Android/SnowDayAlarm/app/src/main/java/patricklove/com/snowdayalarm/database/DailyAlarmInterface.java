@@ -49,7 +49,7 @@ public class DailyAlarmInterface {
 
     public List<DailyAlarm> query(String selection){
         Log.d(LOG_TAG, "Request processing for Daily Alarms WHERE " + selection);
-        Cursor c = database.query(SnowDayDatabase.TABLE_DAILY_ALARMS, ALL_COLUMNS, selection, null, null, null, null);
+        Cursor c = database.query(SnowDayDatabase.TABLE_DAILY_ALARMS, ALL_COLUMNS, selection, null, null, null, SnowDayDatabase.COLUMN_ALARM_TIME);
         ArrayList<DailyAlarm> ret = new ArrayList<>();
         AlarmTemplateInterface alarmDbHelper = new AlarmTemplateInterface(this.c);
         alarmDbHelper.open();
@@ -111,5 +111,9 @@ public class DailyAlarmInterface {
     public void delete(String selection) {
         Log.w(LOG_TAG, "Clearing all daily alarms WHERE " + selection);
         database.delete(SnowDayDatabase.TABLE_DAILY_ALARMS, selection, null);
+    }
+
+    public void cleanUp() {
+        delete(SnowDayDatabase.COLUMN_ALARM_DATE + "<" + DateUtils.stripTime(DateUtils.getNow()).getTime());
     }
 }
