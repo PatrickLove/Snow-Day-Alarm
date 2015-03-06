@@ -66,7 +66,7 @@ public class SnowDayDatabase extends SQLiteOpenHelper{
             COLUMN_DAYS.FRIDAY + " integer not null, " +
             COLUMN_DAYS.SATURDAY + " integer not null, " +
             COLUMN_DAYS.SUNDAY + " integer not null, " +
-            COLUMN_ENABLED + " integer not null, " +
+            COLUMN_ENABLED + " integer not null " +
         ");";
     private static final String SQL_CREATE_DAILY_ALARMS = "create table " + TABLE_DAILY_ALARMS + "(" +
             COLUMN_ID + " integer primary key autoincrement, " +

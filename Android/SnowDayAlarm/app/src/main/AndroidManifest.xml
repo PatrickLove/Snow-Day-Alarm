@@ -47,7 +47,8 @@
 
         <activity
             android:name=".activities.RingingActivity"
-            android:label="@string/title_activity_ringing" >
+            android:label="@string/title_activity_ringing"
+            android:excludeFromRecents="true" >
         </activity>
         <activity
             android:name=".activities.EditAlarm"
