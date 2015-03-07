@@ -9,7 +9,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="@dimen/stop_alarm_button_height"
-        android:text="@string/done"
+        android:text="@string/done_caps"
         android:id="@+id/stop_button"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

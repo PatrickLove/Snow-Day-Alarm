@@ -157,7 +157,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onOptionsItemSelected(item);
     }
 
-    protected void refreshAllLists(){
+    public void refreshAllLists(){
         List<Fragment> frags = getSupportFragmentManager().getFragments();
         if(frags != null) {
             for (Fragment frag : frags) {
