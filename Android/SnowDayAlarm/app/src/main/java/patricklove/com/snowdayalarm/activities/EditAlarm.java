@@ -2,8 +2,10 @@ package patricklove.com.snowdayalarm.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.ActionBarActivity;
@@ -49,6 +51,7 @@ public class EditAlarm extends ActionBarActivity {
     private Spinner cancelAction;
     private Spinner delayAction;
     private ToggleButton enabledButton;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,9 +134,23 @@ public class EditAlarm extends ActionBarActivity {
         return alarms.size() > 0 ? alarms.get(0) : null;
     }
 
+    private void showProgress(int message){
+        if(progressDialog!=null) progressDialog.dismiss();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage(getString(message));
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
+        progressDialog.show();
+    }
+
     public void saveAndFinish(View v){
-        int resultCode = saveAlarm();
-        if(resultCode == NO_ERROR) this.finish();
+        AlarmTemplate temp = getTemplate();
+        int resultCode = canSaveAlarm(temp);
+        if(resultCode == NO_ERROR){
+            showProgress(R.string.saving);
+            new SaveAlarmTask().execute(temp);
+        }
         else if(resultCode == MISSING_NAME){
             new AlertDialog.Builder(this)
                     .setTitle(R.string.missing_value_title)
@@ -162,46 +179,70 @@ public class EditAlarm extends ActionBarActivity {
                 .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteAlarm();
-                        finish();
+                        deleteAlarmAndFinish();
                     }
                 })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
-    private void deleteAlarm(){
-        AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(this.getApplicationContext());
-        dbHelp.open();
-        dbHelp.delete(dbHelp.query(SnowDayDatabase.idEquals(alarmId)).get(0));
-        dbHelp.close();
+    private void deleteAlarmAndFinish(){
+        showProgress(R.string.deleting);
+        new DeleteAlarmTask().execute();
     }
 
-    private int saveAlarm() {
-        AlarmTemplate temp = getTemplate();
+    private int canSaveAlarm(AlarmTemplate temp) {
         if(temp.getName().equals("")) return MISSING_NAME;
         if(temp.getActiveDayStr().equals("Never")) return MISSING_DAY_OF_WEEK;
-        AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(this.getApplicationContext());
-        AlarmScheduler scheduler = new AlarmScheduler(this.getApplicationContext());
-        dbHelp.open();
-        if(alarmId == NO_PREVIOUS_ALARM){
-            temp.save(dbHelp);
-            dbHelp.close();
-            scheduler.open();
-            scheduler.scheduleAsNew(temp);
-        }
-        else {
-            dbHelp.update(temp);
-            dbHelp.clearDependants(temp);
-            dbHelp.close();
-            scheduler.open();
-            if (temp.isEnabled()) scheduler.scheduleAsNew(temp);
-        } //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
-        scheduler.close();
-        new RefreshStatesTask(this.getApplicationContext()).execWithoutTwitter();
         return NO_ERROR;
     }
 
+    private class DeleteAlarmTask extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(getApplicationContext());
+            dbHelp.open();
+            dbHelp.delete(dbHelp.query(SnowDayDatabase.idEquals(alarmId)).get(0));
+            dbHelp.close();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            finish();
+        }
+    }
+
+    private class SaveAlarmTask extends AsyncTask<AlarmTemplate, Object, Object> {
+        @Override
+        protected Object doInBackground(AlarmTemplate... params) {
+            AlarmTemplate temp = params[0];
+            AlarmTemplateInterface dbHelp = new AlarmTemplateInterface(getApplicationContext());
+            AlarmScheduler scheduler = new AlarmScheduler(getApplicationContext());
+            dbHelp.open();
+            if(alarmId == NO_PREVIOUS_ALARM){
+                temp.save(dbHelp);
+                dbHelp.close();
+                scheduler.open();
+                scheduler.scheduleAsNew(temp);
+            }
+            else {
+                dbHelp.update(temp);
+                dbHelp.clearDependants(temp);
+                dbHelp.close();
+                scheduler.open();
+                if (temp.isEnabled()) scheduler.scheduleAsNew(temp);
+            } //Properly delay/schedule new alarms.  No twitter refresh as MainActivity probably launched recently and performed one
+            scheduler.close();
+            new RefreshStatesTask(getApplicationContext()).execWithoutTwitter();
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            finish();
+        }
+    }
     private AlarmTemplate getTemplate(){
         String name = String.valueOf(nameEntry.getText());
         boolean monday = mondayBox.isChecked();
@@ -217,8 +258,13 @@ public class EditAlarm extends ActionBarActivity {
         return new AlarmTemplate(alarmId, name, cancel, delay, timeMillis, monday, tuesday, wednesday, thursday, friday, saturday, sunday, enabled);
     }
 
+    @Override
+    protected void onDestroy() {
+        if(progressDialog != null) progressDialog.dismiss();
+        super.onDestroy();
+    }
 
-//    @Override
+    //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
 //        // Inflate the menu; this adds items to the action bar if it is present.
 //        getMenuInflater().inflate(R.menu.menu_edit_alarm, menu);
