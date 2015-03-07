@@ -44,7 +44,7 @@
     <string name="no">No</string>
     <string name="off">Off</string>
     <string name="on">On</string>
-    <string name="saving">Saving...</string>
-    <string name="deleting">Deleting...</string>
+    <string name="saving">Saving…</string>
+    <string name="deleting">Deleting…</string>
 
 </resources>
