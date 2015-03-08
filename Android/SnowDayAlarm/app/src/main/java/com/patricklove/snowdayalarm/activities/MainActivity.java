@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.activities;
+package com.patricklove.snowdayalarm.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,13 +16,13 @@ import android.view.MenuItem;
 import java.util.List;
 import java.util.Locale;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
-import patricklove.com.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
-import patricklove.com.snowdayalarm.activities.mainTabFragments.Refreshable;
-import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
-import patricklove.com.snowdayalarm.database.CleanupJob;
-import patricklove.com.snowdayalarm.utils.FileUtils;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
+import com.patricklove.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
+import com.patricklove.snowdayalarm.activities.mainTabFragments.Refreshable;
+import com.patricklove.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
+import com.patricklove.snowdayalarm.database.CleanupJob;
+import com.patricklove.snowdayalarm.utils.FileUtils;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, AlarmTemplateListAdapter.OnEnableChangeListener {

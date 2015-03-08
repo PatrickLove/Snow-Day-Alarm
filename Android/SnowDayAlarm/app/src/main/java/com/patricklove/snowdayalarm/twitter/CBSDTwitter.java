@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter;
+package com.patricklove.snowdayalarm.twitter;
 
 import java.util.ArrayList;
 import java.util.List;

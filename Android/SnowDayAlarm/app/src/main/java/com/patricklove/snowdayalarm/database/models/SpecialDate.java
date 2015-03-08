@@ -1,12 +1,12 @@
-package patricklove.com.snowdayalarm.database.models;
+package com.patricklove.snowdayalarm.database.models;
 
 import java.util.Date;
 
-import patricklove.com.snowdayalarm.database.SpecialDayInterface;
-import patricklove.com.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.database.SpecialDayInterface;
+import com.patricklove.snowdayalarm.twitter.DayState;
 
 /**
- * Stores a Java Date object and a {@link patricklove.com.snowdayalarm.twitter.DayState} to represent a closing or cancellation
+ * Stores a Java Date object and a {@link com.patricklove.snowdayalarm.twitter.DayState} to represent a closing or cancellation
  * @author Patrick Love
  *
  */

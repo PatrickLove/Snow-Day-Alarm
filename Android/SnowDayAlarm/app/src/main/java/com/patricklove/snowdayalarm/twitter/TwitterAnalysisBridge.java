@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter;
+package com.patricklove.snowdayalarm.twitter;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -6,12 +6,12 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.database.SpecialDayInterface;
-import patricklove.com.snowdayalarm.database.models.SpecialDate;
-import patricklove.com.snowdayalarm.twitter.tweetAnalysis.TweetAnalysis;
-import patricklove.com.snowdayalarm.twitter.tweetAnalysis.TweetAnalyzer;
-import patricklove.com.snowdayalarm.utils.DateUtils;
-import patricklove.com.snowdayalarm.utils.FileUtils;
+import com.patricklove.snowdayalarm.database.SpecialDayInterface;
+import com.patricklove.snowdayalarm.database.models.SpecialDate;
+import com.patricklove.snowdayalarm.twitter.tweetAnalysis.TweetAnalysis;
+import com.patricklove.snowdayalarm.twitter.tweetAnalysis.TweetAnalyzer;
+import com.patricklove.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.utils.FileUtils;
 import twitter4j.Status;
 
 /**

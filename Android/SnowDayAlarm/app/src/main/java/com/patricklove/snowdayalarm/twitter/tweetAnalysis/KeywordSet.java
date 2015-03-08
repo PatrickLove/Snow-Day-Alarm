@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter.tweetAnalysis;
+package com.patricklove.snowdayalarm.twitter.tweetAnalysis;
 
 /**
  * Highest level word matching object<br>

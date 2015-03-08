@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.database;
+package com.patricklove.snowdayalarm.database;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -9,8 +9,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
 
 /**
  * Created by Patrick Love on 2/14/2015.

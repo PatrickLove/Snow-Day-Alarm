@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools;
+package com.patricklove.snowdayalarm.alarmTools;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,9 +11,9 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/21/2015.

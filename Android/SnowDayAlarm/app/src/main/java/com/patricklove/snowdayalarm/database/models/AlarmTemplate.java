@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.database.models;
+package com.patricklove.snowdayalarm.database.models;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,12 +6,12 @@ import android.util.Log;
 import java.util.Calendar;
 import java.util.Date;
 
-import patricklove.com.snowdayalarm.activities.RefreshStatesTask;
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.twitter.DayState;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.activities.RefreshStatesTask;
+import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
+import com.patricklove.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/14/2015.

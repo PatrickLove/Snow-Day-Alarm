@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.utils;
+package com.patricklove.snowdayalarm.utils;
 
 import android.content.Context;
 

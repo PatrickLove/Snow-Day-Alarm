@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools.receivers;
+package com.patricklove.snowdayalarm.alarmTools.receivers;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,12 +7,12 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.activities.RefreshStatesTask;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.database.CleanupJob;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.activities.RefreshStatesTask;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
+import com.patricklove.snowdayalarm.database.CleanupJob;
+import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
 
 public class BootReceiver extends WakefulBroadcastReceiver {
     private static String LOG_TAG = "BootReceiver";

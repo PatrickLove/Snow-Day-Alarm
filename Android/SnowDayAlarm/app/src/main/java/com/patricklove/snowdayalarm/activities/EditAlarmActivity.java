@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.activities;
+package com.patricklove.snowdayalarm.activities;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -18,15 +18,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.ToggleButton;
 
-import java.util.List;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
+import com.patricklove.snowdayalarm.database.SnowDayDatabase;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import java.util.List;
 
 public class EditAlarmActivity extends ActionBarActivity {
 

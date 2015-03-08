@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools.scheduling;
+package com.patricklove.snowdayalarm.alarmTools.scheduling;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -9,16 +9,16 @@ import android.util.Log;
 import java.util.Date;
 import java.util.List;
 
-import patricklove.com.snowdayalarm.activities.RingingActivity;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
-import patricklove.com.snowdayalarm.database.SpecialDayInterface;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.twitter.DayState;
-import patricklove.com.snowdayalarm.twitter.TwitterAnalysisBridge;
-import patricklove.com.snowdayalarm.utils.DateUtils;
-import patricklove.com.snowdayalarm.utils.FileUtils;
+import com.patricklove.snowdayalarm.activities.RingingActivity;
+import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
+import com.patricklove.snowdayalarm.database.SnowDayDatabase;
+import com.patricklove.snowdayalarm.database.SpecialDayInterface;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.database.models.DailyAlarm;
+import com.patricklove.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.twitter.TwitterAnalysisBridge;
+import com.patricklove.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.utils.FileUtils;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

@@ -1,13 +1,13 @@
-package patricklove.com.snowdayalarm.activities;
+package com.patricklove.snowdayalarm.activities;
 
 import android.content.Context;
 import android.os.AsyncTask;
 
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.SpecialDayInterface;
-import patricklove.com.snowdayalarm.twitter.DayState;
-import patricklove.com.snowdayalarm.twitter.TwitterAnalysisBridge;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import com.patricklove.snowdayalarm.database.SpecialDayInterface;
+import com.patricklove.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.twitter.TwitterAnalysisBridge;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 3/2/2015.

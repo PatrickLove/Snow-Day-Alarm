@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.activities.mainTabFragments;
+package com.patricklove.snowdayalarm.activities.mainTabFragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,11 +8,11 @@ import android.widget.ListView;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.DailyAlarmListAdapter;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.alarmTools.DailyAlarmListAdapter;
+import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
+import com.patricklove.snowdayalarm.database.models.DailyAlarm;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 /**
  * A fragment representing a list of Items.

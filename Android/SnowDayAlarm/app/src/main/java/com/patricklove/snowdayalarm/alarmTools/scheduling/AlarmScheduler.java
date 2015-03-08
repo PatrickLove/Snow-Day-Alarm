@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools.scheduling;
+package com.patricklove.snowdayalarm.alarmTools.scheduling;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,11 +8,11 @@ import android.util.Log;
 
 import java.util.List;
 
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.twitter.DayState;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
+import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+import com.patricklove.snowdayalarm.database.models.DailyAlarm;
+import com.patricklove.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 2/17/2015.

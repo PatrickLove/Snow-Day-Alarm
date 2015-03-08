@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter.tweetAnalysis;
+package com.patricklove.snowdayalarm.twitter.tweetAnalysis;
 
 /**
  * Lowest level KeywordSet child<br>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="patricklove.com.snowdayalarm" >
+    package="com.patricklove.snowdayalarm" >
 
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -56,7 +56,7 @@
             android:parentActivityName=".activities.MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="patricklove.com.snowdayalarm.activities.MainActivity" />
+                android:value="com.patricklove.snowdayalarm.activities.MainActivity" />
         </activity>
     </application>
 

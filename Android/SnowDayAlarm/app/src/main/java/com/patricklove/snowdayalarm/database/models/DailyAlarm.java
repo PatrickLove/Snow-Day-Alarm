@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.database.models;
+package com.patricklove.snowdayalarm.database.models;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,14 +7,14 @@ import android.util.Log;
 
 import java.util.Date;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.AlarmAction;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
-import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
-import patricklove.com.snowdayalarm.database.SnowDayDatabase;
-import patricklove.com.snowdayalarm.twitter.DayState;
-import patricklove.com.snowdayalarm.utils.DateUtils;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
+import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
+import com.patricklove.snowdayalarm.database.SnowDayDatabase;
+import com.patricklove.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.utils.DateUtils;
 
 public class DailyAlarm {
 

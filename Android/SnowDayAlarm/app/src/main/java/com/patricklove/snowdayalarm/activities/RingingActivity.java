@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.activities;
+package com.patricklove.snowdayalarm.activities;
 
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -13,9 +13,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
-import patricklove.com.snowdayalarm.twitter.DayState;
+import com.patricklove.snowdayalarm.R;
+import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
+import com.patricklove.snowdayalarm.twitter.DayState;
 
 public class RingingActivity extends ActionBarActivity {
 

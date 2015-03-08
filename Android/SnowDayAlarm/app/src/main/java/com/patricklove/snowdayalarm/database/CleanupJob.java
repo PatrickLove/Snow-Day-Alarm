@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.database;
+package com.patricklove.snowdayalarm.database;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

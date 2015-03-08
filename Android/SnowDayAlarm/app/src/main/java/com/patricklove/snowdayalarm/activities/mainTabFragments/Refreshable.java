@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.activities.mainTabFragments;
+package com.patricklove.snowdayalarm.activities.mainTabFragments;
 
 /**
  * Created by Patrick Love on 2/21/2015.

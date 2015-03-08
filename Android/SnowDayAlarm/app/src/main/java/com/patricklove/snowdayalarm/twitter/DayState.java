@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.twitter;
+package com.patricklove.snowdayalarm.twitter;
 
 /**
  * Data type referring to the state of a school day<br>

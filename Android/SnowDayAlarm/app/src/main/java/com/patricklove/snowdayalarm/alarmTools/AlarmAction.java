@@ -1,4 +1,4 @@
-package patricklove.com.snowdayalarm.alarmTools;
+package com.patricklove.snowdayalarm.alarmTools;
 
 import android.content.Context;
 import android.widget.ArrayAdapter;
