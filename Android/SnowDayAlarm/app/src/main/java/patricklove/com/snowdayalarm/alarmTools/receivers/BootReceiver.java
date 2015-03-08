@@ -17,23 +17,29 @@ import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 public class BootReceiver extends WakefulBroadcastReceiver {
     private static String LOG_TAG = "BootReceiver";
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, Intent intent) {
         Log.i(LOG_TAG, "Boot intent received");
-        DailyAlarmInterface dailyAlarmInterface = new DailyAlarmInterface(context);
-        dailyAlarmInterface.open();
-        dailyAlarmInterface.delete(null);
-        dailyAlarmInterface.close();
-        AlarmTemplateInterface alarmTemplateInterface = new AlarmTemplateInterface(context);
-        alarmTemplateInterface.open();
-        List<AlarmTemplate> templates = alarmTemplateInterface.getAll();
-        alarmTemplateInterface.close();
-        AlarmScheduler scheduler = new AlarmScheduler(context);
-        scheduler.open();
-        for(AlarmTemplate t : templates){
-            scheduler.scheduleAsNew(t);
-        }
-        scheduler.close();
-        CleanupJob.schedule(context);
-        new RefreshStatesTask(context).execConcurrent();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i(LOG_TAG, "Running Boot Setup");
+                DailyAlarmInterface dailyAlarmInterface = new DailyAlarmInterface(context);
+                dailyAlarmInterface.open();
+                dailyAlarmInterface.delete(null);
+                dailyAlarmInterface.close();
+                AlarmTemplateInterface alarmTemplateInterface = new AlarmTemplateInterface(context);
+                alarmTemplateInterface.open();
+                List<AlarmTemplate> templates = alarmTemplateInterface.getAll();
+                alarmTemplateInterface.close();
+                AlarmScheduler scheduler = new AlarmScheduler(context);
+                scheduler.open();
+                for(AlarmTemplate t : templates){
+                    scheduler.scheduleAsNew(t);
+                }
+                scheduler.close();
+                CleanupJob.schedule(context);
+                new RefreshStatesTask(context).execConcurrent();
+            }
+        }).start();
     }
 }
