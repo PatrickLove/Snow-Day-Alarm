@@ -41,7 +41,7 @@ public class DailyAlarm {
     }
 
     public Date getCombinedTime(){
-        return new Date(triggerDate.getTime() + triggerTime);
+        return DateUtils.dateTime(triggerDate, triggerTime);
     }
 
     public AlarmAction getState() {

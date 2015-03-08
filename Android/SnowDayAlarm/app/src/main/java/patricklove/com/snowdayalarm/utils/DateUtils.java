@@ -28,25 +28,19 @@ public class DateUtils {
         return new Date(System.currentTimeMillis());
     }
 
-    private static long getOffset(){
-        return Calendar.getInstance().getTimeZone().getRawOffset();
-    }
-
-    public static long getTimeSinceMidnight(Date initial){
-        long millisSinceLocalEpoch = initial.getTime()+getOffset(); //Milliseconds since Jan 1, 1970 in the local time zone (UTC to local conversion)
-        return  (millisSinceLocalEpoch%MILLIS_PER_DAY+MILLIS_PER_DAY)%MILLIS_PER_DAY; //deals with negative modulus millisSinceEpoch < MILLIS_PER_DAY
-    }
-
     public static Date stripTime(Date initial){
-        long currentMillis = initial.getTime();
-        long extraMillis = getTimeSinceMidnight(initial);
-        initial.setTime(currentMillis - extraMillis);
-        return initial;
+        Calendar workingCal = dateToCal(initial);
+        workingCal.set(Calendar.HOUR_OF_DAY, 0);
+        workingCal.set(Calendar.MINUTE, 0);
+        workingCal.set(Calendar.SECOND, 0);
+        workingCal.set(Calendar.MILLISECOND, 0);
+        return workingCal.getTime();
     }
 
     public static Date dateTime(Date date, long time){
-        long totalMillis = stripTime(date).getTime() + time;
-        return new Date(totalMillis);
+        Calendar calDate = dateToCal(stripTime(date));
+        calDate.set(Calendar.MILLISECOND, (int) time);
+        return calDate.getTime();
     }
 
     /**

@@ -114,6 +114,6 @@ public class DailyAlarmInterface {
     }
 
     public void cleanUp() {
-        delete(SnowDayDatabase.COLUMN_ALARM_DATE + "<" + DateUtils.stripTime(DateUtils.getNow()).getTime());
+        delete(SnowDayDatabase.COLUMN_ALARM_DATE + "<" + DateUtils.getToday().getTime());
     }
 }

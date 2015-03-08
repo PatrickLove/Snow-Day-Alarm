@@ -103,6 +103,6 @@ public class SpecialDayInterface {
     }
 
     public void cleanUp() {
-        delete(SnowDayDatabase.COLUMN_DATE + "<" + DateUtils.stripTime(DateUtils.getNow()).getTime());
+        delete(SnowDayDatabase.COLUMN_DATE + "<" + DateUtils.getToday().getTime());
     }
 }
