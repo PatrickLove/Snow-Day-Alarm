@@ -55,6 +55,7 @@ public class AlarmTemplateFragment extends ListFragment implements Refreshable{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         registerForContextMenu(this.getListView());
+        this.setEmptyText(getString(R.string.message_no_templates));
         super.onActivityCreated(savedInstanceState);
     }
 

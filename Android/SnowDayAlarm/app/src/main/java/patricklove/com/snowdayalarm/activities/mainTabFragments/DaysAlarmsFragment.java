@@ -1,12 +1,14 @@
 package patricklove.com.snowdayalarm.activities.mainTabFragments;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
 import java.util.List;
 
+import patricklove.com.snowdayalarm.R;
 import patricklove.com.snowdayalarm.alarmTools.DailyAlarmListAdapter;
 import patricklove.com.snowdayalarm.database.DailyAlarmInterface;
 import patricklove.com.snowdayalarm.database.models.DailyAlarm;
@@ -41,6 +43,12 @@ public class DaysAlarmsFragment extends ListFragment implements Refreshable{
 
         adapter = new DailyAlarmListAdapter(getActivity(), getAlarmList());
         this.setListAdapter(adapter);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        this.setEmptyText(getString(R.string.message_no_alarms));
+        super.onActivityCreated(savedInstanceState);
     }
 
     private List<DailyAlarm> getAlarmList(){
