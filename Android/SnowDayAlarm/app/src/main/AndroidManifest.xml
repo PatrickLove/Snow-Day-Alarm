@@ -51,7 +51,7 @@
             android:excludeFromRecents="true" >
         </activity>
         <activity
-            android:name=".activities.EditAlarm"
+            android:name=".activities.EditAlarmActivity"
             android:label="@string/title_activity_edit_alarm"
             android:parentActivityName=".activities.MainActivity" >
             <meta-data

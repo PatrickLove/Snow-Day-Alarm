@@ -8,7 +8,7 @@
     <string name="title_activity_ringing">Snow Day Alarm</string>
     <string name="done">Done</string>
     <string name="done_caps">DONE</string>
-    <string name="warning_message">Snow day determination could be inaccurate since the device is not connected to the internet\nLast update:\s\s\s</string>
+    <string name="warning_message">Snow day determination could be inaccurate since the device is not connected to the internet\nLast update:   </string>
     <string name="no_state_text">Unknown state</string>
     <string name="message_delay">Sorry, no cancellation, but you did get a delay</string>
     <string name="message_normal">Sorry, looks like school\'s on time today</string>

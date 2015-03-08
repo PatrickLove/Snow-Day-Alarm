@@ -14,7 +14,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import patricklove.com.snowdayalarm.R;
-import patricklove.com.snowdayalarm.activities.EditAlarm;
+import patricklove.com.snowdayalarm.activities.EditAlarmActivity;
 import patricklove.com.snowdayalarm.activities.MainActivity;
 import patricklove.com.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 import patricklove.com.snowdayalarm.database.AlarmTemplateInterface;
@@ -105,8 +105,8 @@ public class AlarmTemplateFragment extends ListFragment implements Refreshable{
     }
 
     private void startEditActivity(long id){
-        Intent intent = new Intent(this.getActivity(), EditAlarm.class);
-        intent.putExtra(EditAlarm.EXTRA_ALARM_ID, id);
+        Intent intent = new Intent(this.getActivity(), EditAlarmActivity.class);
+        intent.putExtra(EditAlarmActivity.EXTRA_ALARM_ID, id);
         this.startActivity(intent);
     }
 }

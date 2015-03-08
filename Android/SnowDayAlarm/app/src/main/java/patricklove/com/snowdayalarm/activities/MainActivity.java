@@ -1,11 +1,5 @@
 package patricklove.com.snowdayalarm.activities;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.app.job.JobInfo;
-import android.app.job.JobScheduler;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -119,7 +113,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_add_alarm){
-            Intent addIntent = new Intent(this, EditAlarm.class);
+            Intent addIntent = new Intent(this, EditAlarmActivity.class);
             this.startActivity(addIntent);
 //            AlarmScheduler scheduler = new AlarmScheduler(this);
 //            scheduler.open();

@@ -3,13 +3,9 @@ package patricklove.com.snowdayalarm.database;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-
-import patricklove.com.snowdayalarm.database.models.DailyAlarm;
-import patricklove.com.snowdayalarm.utils.DateUtils;
 
 /**
  * Created by Patrick Love on 3/6/2015.

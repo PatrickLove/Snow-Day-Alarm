@@ -28,7 +28,7 @@ import patricklove.com.snowdayalarm.database.SnowDayDatabase;
 import patricklove.com.snowdayalarm.database.models.AlarmTemplate;
 import patricklove.com.snowdayalarm.utils.DateUtils;
 
-public class EditAlarm extends ActionBarActivity {
+public class EditAlarmActivity extends ActionBarActivity {
 
     public static final String EXTRA_ALARM_ID = "alarm.id";
     public static final long NO_PREVIOUS_ALARM = -1;
@@ -289,7 +289,7 @@ public class EditAlarm extends ActionBarActivity {
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            EditAlarm activity = (EditAlarm) getActivity();
+            EditAlarmActivity activity = (EditAlarmActivity) getActivity();
             // Create a new instance of TimePickerDialog and return it
             return new TimePickerDialog(getActivity(), this,  activity.getHour(), activity.getMinute(),
                     DateFormat.is24HourFormat(getActivity()));
@@ -297,7 +297,7 @@ public class EditAlarm extends ActionBarActivity {
 
         @Override
         public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-            ((EditAlarm) getActivity()).setTime(hourOfDay * DateUtils.MILLIS_PER_HOUR + minute * DateUtils.MILLIS_PER_MINUTE);
+            ((EditAlarmActivity) getActivity()).setTime(hourOfDay * DateUtils.MILLIS_PER_HOUR + minute * DateUtils.MILLIS_PER_MINUTE);
         }
     }
 }
