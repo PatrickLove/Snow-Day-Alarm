@@ -1,6 +1,7 @@
 package com.patricklove.snowdayalarm.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -17,6 +18,7 @@ public class FileUtils {
     public static final String LAST_UPDATE_FILE = "lastUpdate";
     public static final String LAST_TWEET_FILE = "lastTweet";
     public static final String HAS_RUN_FILE = "hasRun";
+    private static final String LOG_TAG = "FileUtils";
 
     private Context c;
 
@@ -73,7 +75,7 @@ public class FileUtils {
             }
             return file.substring(0, file.length()-1);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Log.w(LOG_TAG, fileName + " was not found");
             return "";  //This ensures that if we are checking for a recent tweet when it does not exist, we will initially load all tweets
                         //most of which will quickly be removed since they are before now
         } catch (IOException e) {
