@@ -6,13 +6,13 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.alarmTools.DailyAlarmListAdapter;
 import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.models.DailyAlarm;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.

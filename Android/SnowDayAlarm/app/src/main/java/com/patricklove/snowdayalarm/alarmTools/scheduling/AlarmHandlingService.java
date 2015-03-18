@@ -6,9 +6,6 @@ import android.content.Intent;
 import android.os.PowerManager;
 import android.util.Log;
 
-import java.util.Date;
-import java.util.List;
-
 import com.patricklove.snowdayalarm.activities.RingingActivity;
 import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.SnowDayDatabase;
@@ -19,6 +16,9 @@ import com.patricklove.snowdayalarm.twitter.DayState;
 import com.patricklove.snowdayalarm.twitter.TwitterAnalysisBridge;
 import com.patricklove.snowdayalarm.utils.DateUtils;
 import com.patricklove.snowdayalarm.utils.FileUtils;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in

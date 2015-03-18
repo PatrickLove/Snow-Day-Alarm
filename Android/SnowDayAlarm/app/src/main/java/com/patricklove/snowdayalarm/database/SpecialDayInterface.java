@@ -6,13 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
 import com.patricklove.snowdayalarm.database.models.SpecialDate;
 import com.patricklove.snowdayalarm.twitter.DayState;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Patrick Love on 2/17/2015.

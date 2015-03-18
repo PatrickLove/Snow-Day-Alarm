@@ -6,13 +6,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
 import com.patricklove.snowdayalarm.database.models.DailyAlarm;
 import com.patricklove.snowdayalarm.twitter.DayState;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.List;
 
 /**
  * Created by Patrick Love on 2/17/2015.

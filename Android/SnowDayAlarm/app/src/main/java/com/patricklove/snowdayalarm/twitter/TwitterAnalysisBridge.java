@@ -4,14 +4,15 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.util.Log;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.database.SpecialDayInterface;
 import com.patricklove.snowdayalarm.database.models.SpecialDate;
 import com.patricklove.snowdayalarm.twitter.tweetAnalysis.TweetAnalysis;
 import com.patricklove.snowdayalarm.twitter.tweetAnalysis.TweetAnalyzer;
 import com.patricklove.snowdayalarm.utils.DateUtils;
 import com.patricklove.snowdayalarm.utils.FileUtils;
+
+import java.util.List;
+
 import twitter4j.Status;
 
 /**

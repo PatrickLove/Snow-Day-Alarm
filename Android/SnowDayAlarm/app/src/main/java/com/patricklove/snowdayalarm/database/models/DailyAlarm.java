@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.util.Log;
 
-import java.util.Date;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
 import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
@@ -15,6 +13,8 @@ import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.SnowDayDatabase;
 import com.patricklove.snowdayalarm.twitter.DayState;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.Date;
 
 public class DailyAlarm {
 

@@ -1,11 +1,11 @@
 package com.patricklove.snowdayalarm.twitter.tweetAnalysis;
 
+import com.patricklove.snowdayalarm.database.models.SpecialDate;
+import com.patricklove.snowdayalarm.twitter.DayState;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import com.patricklove.snowdayalarm.database.models.SpecialDate;
-import com.patricklove.snowdayalarm.twitter.DayState;
 
 
 public class TweetAnalysis {

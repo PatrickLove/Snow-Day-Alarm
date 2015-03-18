@@ -11,8 +11,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.activities.EditAlarmActivity;
 import com.patricklove.snowdayalarm.activities.MainActivity;
@@ -20,6 +18,8 @@ import com.patricklove.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
 import com.patricklove.snowdayalarm.database.SnowDayDatabase;
 import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.

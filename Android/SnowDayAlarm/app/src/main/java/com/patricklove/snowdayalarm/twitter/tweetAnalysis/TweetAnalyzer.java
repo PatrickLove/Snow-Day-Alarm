@@ -2,11 +2,11 @@ package com.patricklove.snowdayalarm.twitter.tweetAnalysis;
 
 import com.joestelmach.natty.DateGroup;
 import com.joestelmach.natty.Parser;
+import com.patricklove.snowdayalarm.twitter.DayState;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.patricklove.snowdayalarm.twitter.DayState;
 import twitter4j.Status;
 
 /**

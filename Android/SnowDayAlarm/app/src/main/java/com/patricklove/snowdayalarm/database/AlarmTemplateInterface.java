@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
 import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Patrick Love on 2/14/2015.

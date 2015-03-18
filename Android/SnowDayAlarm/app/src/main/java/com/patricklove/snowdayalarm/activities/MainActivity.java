@@ -13,9 +13,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.util.List;
-import java.util.Locale;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.activities.mainTabFragments.AlarmTemplateFragment;
 import com.patricklove.snowdayalarm.activities.mainTabFragments.DaysAlarmsFragment;
@@ -23,6 +20,9 @@ import com.patricklove.snowdayalarm.activities.mainTabFragments.Refreshable;
 import com.patricklove.snowdayalarm.alarmTools.AlarmTemplateListAdapter;
 import com.patricklove.snowdayalarm.database.CleanupJob;
 import com.patricklove.snowdayalarm.utils.FileUtils;
+
+import java.util.List;
+import java.util.Locale;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener, AlarmTemplateListAdapter.OnEnableChangeListener {
@@ -115,34 +115,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (id == R.id.action_add_alarm){
             Intent addIntent = new Intent(this, EditAlarmActivity.class);
             this.startActivity(addIntent);
-//            AlarmScheduler scheduler = new AlarmScheduler(this);
-//            scheduler.open();
-//            DailyAlarmInterface dbInterface = new DailyAlarmInterface(this.getApplicationContext());
-//            AlarmTemplateInterface alarmInterface = new AlarmTemplateInterface(this.getApplicationContext());
-//            Log.d("TEST_CODE", "Creating template");
-//            alarmInterface.open();
-//            AlarmTemplate temp = new AlarmTemplate("Test Template", AlarmAction.NO_CHANGE, AlarmAction.NO_CHANGE, new Date(512), true, false, true, false, true, false, true);
-//            temp.save(alarmInterface);
-//            alarmInterface.close();
-//            Log.d("TEST_CODE", "Creating alarm 1");
-//            Calendar now = DateUtils.dateToCal(DateUtils.getNow());
-//            now.add(Calendar.SECOND, 15);
-//            DailyAlarm testAlarm1 = new DailyAlarm("Test Alarm", now.getTime(), AlarmAction.NO_CHANGE, temp);
-////        Log.d("TEST_CODE", "Creating alarm 2");
-////        now.add(Calendar.SECOND, 15);
-////        DailyAlarm testAlarm2 = new DailyAlarm(now.getTime(), AlarmAction.NO_CHANGE, temp);
-//            dbInterface.open();
-//            testAlarm1.save(dbInterface);
-//            Log.d("TEST_CODE", "" + testAlarm1.getId());
-////        testAlarm2.save(dbInterface);
-////        Log.d("TEST_CODE", ""+testAlarm2.getId());
-//            dbInterface.close();
-//            scheduler.close();
-//            Log.d("TEST_CODE", "Scheduling 1");
-//            Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm1)));
-////        Log.d("TEST_CODE", "Scheduling 2");
-////        Log.d("TEST CODE", Boolean.toString(scheduler.schedule(testAlarm2)));
-//            refreshAllLists();
         }
         if(id == R.id.action_refresh_states){
             new RefreshStatesTask(this).execute();

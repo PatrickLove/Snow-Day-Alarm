@@ -5,14 +5,14 @@ import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.activities.RefreshStatesTask;
 import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
 import com.patricklove.snowdayalarm.database.CleanupJob;
 import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
+
+import java.util.List;
 
 public class BootReceiver extends WakefulBroadcastReceiver {
     private static String LOG_TAG = "BootReceiver";

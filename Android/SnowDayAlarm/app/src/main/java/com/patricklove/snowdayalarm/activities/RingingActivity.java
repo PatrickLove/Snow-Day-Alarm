@@ -9,13 +9,13 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmHandlingService;
 import com.patricklove.snowdayalarm.twitter.DayState;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class RingingActivity extends ActionBarActivity {
 

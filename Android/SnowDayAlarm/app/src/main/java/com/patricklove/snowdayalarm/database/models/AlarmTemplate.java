@@ -3,15 +3,15 @@ package com.patricklove.snowdayalarm.database.models;
 import android.content.Context;
 import android.util.Log;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import com.patricklove.snowdayalarm.activities.RefreshStatesTask;
 import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
 import com.patricklove.snowdayalarm.alarmTools.scheduling.AlarmScheduler;
 import com.patricklove.snowdayalarm.database.AlarmTemplateInterface;
 import com.patricklove.snowdayalarm.twitter.DayState;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Patrick Love on 2/14/2015.

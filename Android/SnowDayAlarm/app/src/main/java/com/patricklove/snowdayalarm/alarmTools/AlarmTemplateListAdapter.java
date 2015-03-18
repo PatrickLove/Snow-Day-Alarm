@@ -9,11 +9,11 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import java.util.List;
-
 import com.patricklove.snowdayalarm.R;
 import com.patricklove.snowdayalarm.database.models.AlarmTemplate;
 import com.patricklove.snowdayalarm.utils.DateUtils;
+
+import java.util.List;
 
 /**
  * Created by Patrick Love on 2/21/2015.
