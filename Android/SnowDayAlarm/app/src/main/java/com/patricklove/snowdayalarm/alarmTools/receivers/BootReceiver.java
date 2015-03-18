@@ -29,7 +29,7 @@ public class BootReceiver extends WakefulBroadcastReceiver {
                 dailyAlarmInterface.close();
                 AlarmTemplateInterface alarmTemplateInterface = new AlarmTemplateInterface(context);
                 alarmTemplateInterface.open();
-                List<AlarmTemplate> templates = alarmTemplateInterface.getAll();
+                List<AlarmTemplate> templates = alarmTemplateInterface.getAllEnabled();
                 alarmTemplateInterface.close();
                 AlarmScheduler scheduler = new AlarmScheduler(context);
                 scheduler.open();

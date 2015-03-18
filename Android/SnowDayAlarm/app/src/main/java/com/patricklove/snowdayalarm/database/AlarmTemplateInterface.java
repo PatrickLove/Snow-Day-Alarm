@@ -132,4 +132,8 @@ public class AlarmTemplateInterface {
         dailyAlarmHelper.close();
         this.open();
     }
+
+    public List<AlarmTemplate> getAllEnabled() {
+        return query(SnowDayDatabase.COLUMN_ENABLED + "=1");
+    }
 }

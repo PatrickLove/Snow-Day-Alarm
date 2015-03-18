@@ -42,22 +42,26 @@ public class AlarmScheduler {
     }
 
     public void scheduleAsNew(AlarmTemplate t){
-        if(!scheduleTodayAlarm(t)){
+        if(t.isEnabled() && !scheduleTodayAlarm(t)){
             scheduleNextAlarm(t);
         }
     }
 
     public void scheduleNextAlarm(AlarmTemplate t){
-        DailyAlarm next = t.generateNextAlarm();
-        next.save(dbHelper);
-        schedule(next); //schedule intent
+        if(t.isEnabled()){
+            DailyAlarm next = t.generateNextAlarm();
+            next.save(dbHelper);
+            schedule(next); //schedule intent
+        }
     }
 
     public boolean scheduleTodayAlarm(AlarmTemplate t) {
-        DailyAlarm next = t.generateTodayAlarm();
-        if(next != null){
-            next.save(dbHelper);
-            return schedule(next);
+        if(t.isEnabled()) {
+            DailyAlarm next = t.generateTodayAlarm();
+            if (next != null) {
+                next.save(dbHelper);
+                return schedule(next);
+            }
         }
         return false;
     }
