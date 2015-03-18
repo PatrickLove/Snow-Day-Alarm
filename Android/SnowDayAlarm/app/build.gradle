@@ -4,7 +4,7 @@ android {
     compileSdkVersion 21
     buildToolsVersion "21.1.2"
     defaultConfig {
-        applicationId "patricklove.com.snowdayalarm"
+        applicationId 'com.patricklove.snowdayalarm'
         minSdkVersion 15
         targetSdkVersion 18
         versionCode 1
@@ -19,6 +19,8 @@ android {
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
         exclude 'META-INF/NOTICE.txt'
+    }
+    productFlavors {
     }
 }
 
