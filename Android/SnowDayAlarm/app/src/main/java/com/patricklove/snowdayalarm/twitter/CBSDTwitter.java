@@ -59,7 +59,8 @@ public class CBSDTwitter {
 				e.printStackTrace();
 				break;
 			}
-		} while (tweetCount == 200);
+			i++;
+		} while (tweetCount == 200 && i <= 180); //checks if this is the last page, or if we reached our request limit
 		return allTweets;
 	}
 }
