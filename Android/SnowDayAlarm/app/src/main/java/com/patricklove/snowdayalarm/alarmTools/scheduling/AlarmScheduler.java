@@ -19,6 +19,7 @@ import java.util.List;
  */
 public class AlarmScheduler {
 
+    public static final String EXTRA_STATE_WHEN_SCHEDULED = "alarm.schedulestate";
     private static String LOG_TAG = "AlarmScheduler";
     public static final String EXTRA_ALARM_ID = "alarm.id";
     public static String INTENT_TRIGGER_ALARM = "com.patricklove.snowdayalarm.triggerAlarm";

@@ -100,8 +100,9 @@ public class DailyAlarm {
         }
     }
 
-    public boolean shouldTrigger(DayState state){
-        return associatedAlarm.getAction(state).atOrBefore(this.state);
+    public boolean shouldTrigger(DayState state, AlarmAction scheduledAction){
+        AlarmAction trueAction = associatedAlarm.getAction(state);
+        return trueAction.atOrBefore(scheduledAction);
     }
 
     public boolean isCancelled(){
@@ -112,6 +113,7 @@ public class DailyAlarm {
         Intent ret = new Intent(c, AlarmHandlingService.class);
         ret.setAction(AlarmScheduler.INTENT_TRIGGER_ALARM);
         ret.putExtra(AlarmScheduler.EXTRA_ALARM_ID, this.id);
+        ret.putExtra(AlarmScheduler.EXTRA_STATE_WHEN_SCHEDULED, this.state.getCode());
         return ret;
     }
 

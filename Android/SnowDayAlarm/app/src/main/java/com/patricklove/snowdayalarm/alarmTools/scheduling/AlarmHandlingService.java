@@ -7,6 +7,7 @@ import android.os.PowerManager;
 import android.util.Log;
 
 import com.patricklove.snowdayalarm.activities.RingingActivity;
+import com.patricklove.snowdayalarm.alarmTools.AlarmAction;
 import com.patricklove.snowdayalarm.database.DailyAlarmInterface;
 import com.patricklove.snowdayalarm.database.SnowDayDatabase;
 import com.patricklove.snowdayalarm.database.SpecialDayInterface;
@@ -54,7 +55,8 @@ public class AlarmHandlingService extends IntentService {
             final String action = intent.getAction();
             if(action.equals(AlarmScheduler.INTENT_TRIGGER_ALARM)){
                 final long alarmId = intent.getExtras().getLong(AlarmScheduler.EXTRA_ALARM_ID);
-                AlarmHandler handler = new AlarmHandler(this.getApplicationContext());
+                final AlarmAction actionWhenScheduled = AlarmAction.getFromCode(intent.getExtras().getInt(AlarmScheduler.EXTRA_STATE_WHEN_SCHEDULED));
+                AlarmHandler handler = new AlarmHandler(this.getApplicationContext(), actionWhenScheduled);
                 if(handler.initialize(alarmId)) {
                     handler.handleAlarm();
                 }
@@ -65,17 +67,18 @@ public class AlarmHandlingService extends IntentService {
 
     private class AlarmHandler{
 
-        private AlarmTemplate template;
+        private AlarmAction scheduledAction;
         private DailyAlarm alarm;
         private DailyAlarmInterface dbHelper;
         private AlarmScheduler scheduler;
         private Context context;
         private Date warnLastUpdate = null;
 
-        public AlarmHandler(Context c){
+        public AlarmHandler(Context c, AlarmAction scheduledAction){
             context = c;
             dbHelper = new DailyAlarmInterface(c);
             scheduler = new AlarmScheduler(c);
+            this.scheduledAction = scheduledAction;
         }
 
         public boolean initialize(long alarmId) {
@@ -87,19 +90,22 @@ public class AlarmHandlingService extends IntentService {
                 return false;
             }
             alarm = alarms.get(0);
-            template = alarm.getAssociatedAlarm();
             return true;
         }
 
         public void handleAlarm() {
             //TODO implement alarm handling
-            Log.i(LOG_TAG, "Firing " + alarm.getName());
+            Log.i(LOG_TAG, "Checking " + alarm.getName());
 
             DayState currentState = retrieveCurrentDayState();
 
-            if(alarm.shouldTrigger(currentState)){
+            if(alarm.shouldTrigger(currentState, scheduledAction)){
+                Log.i(LOG_TAG, "Firing " + alarm.getName() + " for state " + currentState.toString());
                 startAlarmActivity(currentState);
                 scheduleNextAlarm();
+            }
+            else{
+                Log.i(LOG_TAG, "Not firing " + alarm.getName() + " for state " + currentState.toString());
             }
             scheduler.open();
             scheduler.updateTodaysAlarms(currentState);
