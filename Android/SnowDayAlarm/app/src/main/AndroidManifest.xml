@@ -48,6 +48,8 @@
         <activity
             android:name=".activities.RingingActivity"
             android:label="@string/title_activity_ringing"
+            android:autoRemoveFromRecents="true"
+            android:showOnLockScreen="true"
             android:excludeFromRecents="true" >
         </activity>
         <activity
